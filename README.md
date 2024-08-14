@@ -1,2 +1,3 @@
 # RubikBMT_website
- This is a website for Rubik BMT
+
+This is a website for Rubik BMT
