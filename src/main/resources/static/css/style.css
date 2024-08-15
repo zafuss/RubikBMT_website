@@ -5,7 +5,7 @@ body {
 }
 
 #intro {
-    background: linear-gradient(135deg, #f5b7b1, #a5c9e8);
+    background: linear-gradient(135deg, #dbf157, #a5c9e8);
     color: #2d676f;
     height: 100vh;
 }
@@ -26,17 +26,52 @@ body {
     background-color: #e6d8a5;
 }
 
-#treatment {
+#about {
     background: linear-gradient(135deg, #f0f4f9, #f7e7e1);
     color: #2d676f;
     padding: 60px 0;
 }
 
-#treatment h1 {
+#about h1 {
+    color: #2d676f;
+    font-weight: bold;
+}
+#shopee {
+    background: linear-gradient(135deg, #f5d5b1, #e18080);
+    color: #2d676f;
+    padding:  0;
+}
+
+#shopee h1 {
     color: #2d676f;
     font-weight: bold;
 }
 
+#shopee h3 {
+    color: #2d676f;
+    font-weight: bold;
+}
+
+#shopee p {
+    color: #2d676f;
+    font-size: 16px;
+}
+
+#shopee h1,
+#shopee p {
+    color: #2d676f;
+}
+
+#shopee button {
+    background-color: #f0e68c;
+    color: #2d676f;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+#shopee button:hover {
+    background-color: #e6d8a5;
+}
 .circle-image {
     width: 200px;
     height: 200px;
@@ -47,21 +82,21 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#treatment h3 {
+#about h3 {
     color: #2d676f;
     font-weight: bold;
 }
 
-#treatment p {
+#about p {
     color: #2d676f;
     font-size: 16px;
 }
 
-#consolutions h2 {
+#social-media h2 {
     color: #024057;
 }
 
-#consolutions .card-title {
+#social-media .card-title {
     color: #024057;
     margin: 0;
     display: flex;
@@ -70,36 +105,36 @@ body {
     text-align: center;
 }
 
-#consolutions .card-text {
+#social-media .card-text {
     color: #4D4D4D;
     margin: 0;
     text-align: center;
 }
 
-#consolutions .card {
+#social-media .card {
     background-color: #FFFFFF;
     border-radius: 15px;
     padding: 20px;
 }
 
-#consolutions .icon {
+#social-media .icon {
     width: 50px;
     height: 50px;
     object-fit: contain;
 }
 
-#consolutions a {
+#social-media a {
     text-decoration: none;
     color: #4D4D4D;
 }
 
-#consolutions a:hover {
+#social-media a:hover {
     text-decoration: underline;
     color: #024057;
 }
 
 #footer {
-    background: linear-gradient(135deg, #f5b7b1, #a5c9e8);
+    background: cornsilk;
     color: #2d676f;
 }
 
@@ -109,6 +144,7 @@ body {
 
 #footer .text-warning {
     color: #000000 !important;
+    font-weight: 600;
 }
 
 #footer .py-4 {
@@ -154,3 +190,9 @@ body {
     height: 70px;
     text-align: center;
 }
+
+.image-container {
+    height: 500px;
+    border-radius: 20px !important;
+}
+
