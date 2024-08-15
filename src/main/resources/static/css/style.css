@@ -29,7 +29,6 @@ body {
 #about {
     background: linear-gradient(135deg, #f0f4f9, #f7e7e1);
     color: #2d676f;
-    padding: 60px 0;
 }
 
 #about h1 {
@@ -90,6 +89,9 @@ body {
 #about p {
     color: #2d676f;
     font-size: 16px;
+}
+#social-media h1 {
+    color: #2d676f;
 }
 
 #social-media h2 {
@@ -187,7 +189,6 @@ body {
     margin: 0;
     display: flex;
     align-items: center;
-    height: 70px;
     text-align: center;
 }
 
