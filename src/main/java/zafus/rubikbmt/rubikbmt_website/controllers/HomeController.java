@@ -1,5 +1,6 @@
 package zafus.rubikbmt.rubikbmt_website.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,13 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 
 public class HomeController {
-    @GetMapping()
-    public String index(){
-        return "home/index";
-    }
 
     @GetMapping("/cube")
     public String cube(){
         return "home/cube";
     }
+    @GetMapping
+    public String index(HttpServletRequest request) {
+        Boolean isBackToSchool = (Boolean) request.getAttribute("isBackToSchool");
+        if (Boolean.TRUE.equals(isBackToSchool)) {
+            return "backToSchool/index"; // Trả về view cho subdomain
+        } else {
+            return "home/index"; // Trả về view cho domain chính
+        }
+    }
+
 }
