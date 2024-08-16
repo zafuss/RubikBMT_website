@@ -12,4 +12,9 @@ public class HomeController {
     public String index(){
         return "home/index";
     }
+
+    @GetMapping("/cube")
+    public String cube(){
+        return "home/cube";
+    }
 }
