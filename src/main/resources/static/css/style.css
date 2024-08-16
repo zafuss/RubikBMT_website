@@ -206,3 +206,17 @@ body {
     border-radius: 20px;
     object-fit: cover;
 }
+
+a {
+    text-decoration: none !important;
+}
+
+.info {
+    display: inline-block;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.info:hover {
+    transform: scale(1.05);
+}
