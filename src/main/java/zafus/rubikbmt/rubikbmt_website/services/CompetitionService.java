@@ -24,6 +24,9 @@ public class CompetitionService {
         return competitionRepo.findById(id).orElse(null);
     }
 
+    public Competition getByName(String name) {
+        return competitionRepo.findByName(name);
+    }
     public Competition create(Competition competition) {
         return competitionRepo.save(competition);
     }
