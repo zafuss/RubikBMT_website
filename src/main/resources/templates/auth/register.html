@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký Tài Khoản</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Đăng Ký Tài Khoản</h2>
+    <form th:action="@{/register}" th:object="${user}" method="post" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="username" class="form-label">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="username" th:field="*{userName}" required>
+            <div class="invalid-feedback">
+                Vui lòng nhập tên đăng nhập.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Họ và tên đệm</label>
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+            <div class="invalid-feedback">
+                Vui lòng họ và tên đệm.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="firstName" class="form-label">Tên</label>
+            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+            <div class="invalid-feedback">
+                Vui lòng nhập tên
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+            <div class="invalid-feedback">
+                Vui lòng nhập email hợp lệ.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required>
+            <div class="invalid-feedback">
+                Vui lòng nhập số điện thoại.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control" id="password" th:field="*{passwordHash}" required>
+            <div class="invalid-feedback">
+                Vui lòng nhập mật khẩu.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+            <input type="password" class="form-control" id="confirmPassword" required>
+            <div class="invalid-feedback">
+                Vui lòng xác nhận mật khẩu.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+
+</body>
+</html>
