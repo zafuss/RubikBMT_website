@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/library/lib.html::head('BACK TO SCHOOL')}"></head>
+    <link rel="stylesheet" href="/css/style_backtoschool.css">
+    <link rel="stylesheet" href="/css/navbar_backtoschool.css">
 <head>
     <meta charset="UTF-8">
     <title>BackToSchool</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/images/AvatarRubikBmt.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Trang chủ</a>
+                </li>
 
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<section id="intro" class="d-flex align-items-center p-3">
+    <div class="container mt-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div id="form-container">
+                    <h2 class="text-center">Đăng ký giải đấu Rubik Back To School</h2>
+                    <form action="/register" method="POST">
+                        <div class="row">
+                            <div class="form-group col-lg-6 mb-0">
+                                <label for="firstName">Họ và tên đệm:</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group col-lg-6 mb-0">
+                                <label for="lastName">Tên:</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dob">Ngày tháng năm sinh:</label>
+                            <input type="date" class="form-control" id="dob" name="dob" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại:</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="events">Môn thi:</label><br>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rubik3x3" name="events" value="RUBIK_3X3">
+                                <label class="form-check-label" for="rubik3x3">Rubik 3x3</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rubik3x3_1hand" name="events" value="RUBIK_3X3_1HAND">
+                                <label class="form-check-label" for="rubik3x3_1hand">Rubik 3x3 bằng 1 tay</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rubik2x2" name="events" value="RUBIK_2X2">
+                                <label class="form-check-label" for="rubik2x2">Rubik 2x2</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 image-container ">
+                <img src="/images/backToSchool.png" alt="Back To School">
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>
