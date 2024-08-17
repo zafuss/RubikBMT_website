@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Đăng Ký Tài Khoản</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom green border for valid fields */
+        .is-valid {
+            border-color: green;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -11,50 +17,64 @@
     <form th:action="@{/register}" th:object="${user}" method="post" class="needs-validation" novalidate>
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
-            <input type="text" class="form-control" id="username" th:field="*{userName}" required>
-            <div class="invalid-feedback">
+            <input type="text" class="form-control" id="username" th:field="*{userName}"
+                   th:classappend="${#fields.hasErrors('userName')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('userName')}">
                 Vui lòng nhập tên đăng nhập.
             </div>
         </div>
         <div class="mb-3">
             <label for="lastName" class="form-label">Họ và tên đệm</label>
-            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
-            <div class="invalid-feedback">
-                Vui lòng họ và tên đệm.
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
+                   th:classappend="${#fields.hasErrors('lastName')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('lastName')}">
+                Vui lòng nhập họ và tên đệm.
             </div>
         </div>
         <div class="mb-3">
             <label for="firstName" class="form-label">Tên</label>
-            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
-            <div class="invalid-feedback">
-                Vui lòng nhập tên
+            <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
+                   th:classappend="${#fields.hasErrors('firstName')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('firstName')}">
+                Vui lòng nhập tên.
             </div>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" required>
-            <div class="invalid-feedback">
+            <input type="email" class="form-control" id="email" th:field="*{email}"
+                   th:classappend="${#fields.hasErrors('email')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('email')}">
                 Vui lòng nhập email hợp lệ.
             </div>
         </div>
         <div class="mb-3">
             <label for="phoneNumber" class="form-label">Số điện thoại</label>
-            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required>
-            <div class="invalid-feedback">
+            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
+                   th:classappend="${#fields.hasErrors('phoneNumber')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('phoneNumber')}">
                 Vui lòng nhập số điện thoại.
             </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Mật khẩu</label>
-            <input type="password" class="form-control" id="password" th:field="*{passwordHash}" required>
-            <div class="invalid-feedback">
+            <input type="password" class="form-control" id="password" th:field="*{passwordHash}"
+                   th:classappend="${#fields.hasErrors('passwordHash')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('passwordHash')}">
                 Vui lòng nhập mật khẩu.
             </div>
         </div>
         <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
-            <input type="password" class="form-control" id="confirmPassword" required>
-            <div class="invalid-feedback">
+            <label for="repassword" class="form-label">Xác nhận mật khẩu</label>
+            <input type="password" class="form-control" id="repassword" th:field="*{repasswordHash}"
+                   th:classappend="${#fields.hasErrors('repasswordHash')}? 'is-invalid' : 'is-valid'" required>
+            <span class="text-danger" th:if="${#fields.hasErrors('repasswordHash')}" th:errors="*{repasswordHash}"></span>
+            <div class="invalid-feedback" th:unless="${#fields.hasErrors('repasswordHash')}">
                 Vui lòng xác nhận mật khẩu.
             </div>
         </div>
@@ -63,7 +83,6 @@
 </div>
 
 <script>
-    // JavaScript for disabling form submissions if there are invalid fields
     (function () {
         'use strict'
         var forms = document.querySelectorAll('.needs-validation')
