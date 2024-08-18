@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Candidate Details</h1>
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th>Last Name</th>
+            <td th:text="${candidate.lastName}"></td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td th:text="${candidate.firstName}"></td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td th:text="${candidate.dateOfBirth}"></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td th:text="${candidate.phoneNumber}"></td>
+        </tr>
+        <tr>
+            <th>Email Address</th>
+            <td th:text="${candidate.email}"></td>
+        </tr>
+        <tr>
+            <th>Email Confirm</th>
+            <td th:text="${candidate.confirmed ? 'Yes' : 'No'}"></td>
+        </tr>
+        <tr>
+            <th>Competition</th>
+            <td>
+                <span th:text="${candidate.competition != null ? candidate.competition.name : 'null'}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Events</th>
+            <td>
+                <ul>
+                    <li th:each="event : ${candidate.events}" th:text="${event.name}"></li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Registration Time</th>
+            <td th:text="${candidate.registrationTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
