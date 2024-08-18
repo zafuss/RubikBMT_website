@@ -6,9 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Competition;
+import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
+import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
+import zafus.rubikbmt.rubikbmt_website.services.MentorService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -16,7 +19,10 @@ import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 public class HomeController {
     @Autowired
     private CompetitionService competitionService;
-
+    @Autowired
+    private LearningTypeService learningTypeService;
+    @Autowired
+    private MentorService mentorService;
     @GetMapping("/cube")
     public String cube(){
         return "home/cube";
@@ -33,8 +39,18 @@ public class HomeController {
             model.addAttribute("candidate",candidate);
             return "backToSchool/index"; // Trả về view cho subdomain
         } else {
+            List<LearningType> learningTypes = learningTypeService.findAll();
+            List<Mentor> mentors = mentorService.findAll();
+            model.addAttribute("learningTypes", learningTypes);
+            model.addAttribute("mentors", mentors);
+            model.addAttribute("student", new Student());
             return "home/index"; // Trả về view cho domain chính
         }
+    }
+
+    @GetMapping("coming-soon")
+    public String comingSoon(HttpServletRequest request, Model model) {
+        return "home/coming-soon";
     }
 
 }

@@ -21,13 +21,13 @@
                         <a class="nav-link" href="#about">Giới thiệu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#social-media">Các nền tảng</a>
+                        <a class="nav-link" href="#social-media">Mạng xã hội</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#shopee">Mua hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#footer">Liên hệ quảng cáo</a>
+                        <a class="nav-link" href="#footer">Liên hệ</a>
                     </li>
                 </ul>
                 <!-- Additional navbar items (optional) -->
@@ -75,7 +75,7 @@
     <!--                    <a class="nav-link" href="#shopee">Mua hàng</a>-->
     <!--                </li>-->
     <!--                <li class="nav-item">-->
-    <!--                    <a class="nav-link" href="#footer">Liên hệ quảng cáo</a>-->
+    <!--                    <a class="nav-link" href="#footer">Liên hệ</a>-->
     <!--                </li>-->
     <!--            </ul>-->
     <!--        </div>-->
@@ -83,6 +83,13 @@
     <!--</nav>-->
 
 
+    <section id="backToSchool" class="d-flex align-items-center">
+        <div class="container mt-3">
+            <div class="row align-items-center">
+                <img style="scale: 0.7 " src="/images/backtoschool_gif.gif">
+            </div>
+        </div>
+    </section>
     <section id="intro" class="d-flex align-items-center">
         <div class="container mt-3">
             <div class="row align-items-center">
@@ -93,55 +100,52 @@
                     <!-- </div> -->
                 </div>
                 <div class="col-md-6">
-                    <h1 class="display-4">RUBIK BMT ACADEMY</h1>
-                    <p class="lead">Học viện có sứ mệnh nâng tầm mạnh mẽ nhận thức và trí tuệ của trẻ em Việt Nam.</p>
-                    <p class="lead">Tạo ra môi trường lành mạnh để cộng đồng trẻ em đam mê các bộ môn logic phát triển.
-                    </p>
+
+<!--                    <h1 class="display-4">RUBIK BMT ACADEMY</h1>-->
+                    <img class="home-logo mb-3" src="/images/newLogo.png";>
+                    <p class="lead">Học viện có sứ mệnh nâng tầm mạnh mẽ nhận thức và trí tuệ của trẻ em Việt Nam.
+                        Là môi trường lý tưởng để khai phá tiềm năng của trẻ.</p>
                     <button type="button" class="btn btn-light btn-lg">
-                        <a href="#about" class="text-dark text-decoration-none">Tìm hiểu thêm</a>
+                        <a href="#mentors" class="text-dark text-decoration-none">Học ngay</a>
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="d-flex align-items-center text-center">
+    <section id="mentors" class="d-flex align-items-center text-center">
         <div class="container my-5">
-            <h1 class="mb-5">Chúng tôi là</h1>
+            <h1 class="mb-5">Chọn một huấn luyện viên</h1>
             <div class="row">
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a href="https://www.facebook.com/tuan.levan.921677" target="_blank">
+                    <a onclick="openDialog()" target="_blank">
                         <div class="info">
-                            <div class="circle-image">
-                                <img src="/images/Tuantinhtao.jpg" alt="Tuan tinh tao image"
-                                    class="img-fluid rounded-circle">
+                            <div class="">
+                                <img src="/images/mentor_haphong.png" alt="Ha Phong image"
+                                    class="mentor-image">
                             </div>
-                            <h3 class="mt-4">Tuấn Tỉnh Táo</h3>
-                            <p>Co-founder</p>
                         </div>
                     </a>
-
                 </div>
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a href="https://www.facebook.com/profile.php?id=100009665823378" target="_blank">
+                    <a onclick="openDialog()" target="_blank">
                         <div class="info">
-                            <div class="circle-image">
-                                <img src="/images/thong.jpg" alt="Thong idol image" class="img-fluid rounded-circle">
+                            <div class="">
+                                <img src="/images/mentor_thienphu.png" alt="thien phu image"
+                                     class="mentor-image">
                             </div>
-                            <h3 class="mt-4">Thông Idol</h3>
-                            <p>Co-founder</p>
                         </div>
-
                     </a>
                 </div>
             </div>
         </div>
     </section>
+
     <section id="social-media" class="d-flex align-items-center"
         style="background: linear-gradient(to right, #b2d3f5, #e1e8f5);">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h1 class="fw-bold">Theo dõi chúng tôi tại</h1>
+                <h1 class="fw-bold">Mạng xã hội</h1>
             </div>
             <div class="row text-center mb-4">
                 <div class="col-lg-4 col-md-4 mb-4">
@@ -160,7 +164,7 @@
                     <div class="card h-100 border-0 shadow-sm">
                         <a href="https://www.facebook.com/groups/274808232920413" target="_blank">
                             <div class="card-body d-flex align-items-center">
-                                <img src="/images/iconFacebook.png" class="icon me-3" alt="Icon 2">
+                                <img src="/images/iconGroup.png" class="icon me-3" alt="Icon 2">
                                 <div>
                                     <h5 class="card-title fw-bold">Cộng đồng Rubik BMT</h5>
                                 </div>
@@ -172,7 +176,7 @@
                     <div class="card h-100 border-0 shadow-sm">
                         <a href="https://www.facebook.com/groups/800477228261027" target="_blank">
                             <div class="card-body d-flex align-items-center">
-                                <img src="/images/iconFacebook.png" class="icon me-3" alt="Icon 3">
+                                <img src="/images/iconClass.png" class="icon me-3" alt="Icon 3">
                                 <div>
                                     <h5 class="card-title fw-bold">Lớp học Rubik</h5>
                                 </div>
@@ -209,13 +213,25 @@
 
                     </div>
                 </div>
+<!--                <div class="col-lg-4 col-md-4 mb-4">-->
+<!--                    <div class="card h-100 border-0 shadow-sm">-->
+<!--                        <a href="https://www.instagram.com/rubikbmt" target="_blank">-->
+<!--                            <div class="card-body d-flex align-items-center">-->
+<!--                                <img src="/images/iconIg.png" class="icon me-3" alt="Icon 7">-->
+<!--                                <div>-->
+<!--                                    <h5 class="card-title fw-bold">Instagram</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="col-lg-4 col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
-                        <a href="https://www.instagram.com/rubikbmt" target="_blank">
+                        <a href="https://shopee.vn/rubikbmtstore" target="_blank">
                             <div class="card-body d-flex align-items-center">
-                                <img src="/images/iconIg.png" class="icon me-3" alt="Icon 7">
+                                <img src="/images/iconShopee.png" class="icon me-3" alt="Icon 7">
                                 <div>
-                                    <h5 class="card-title fw-bold">Instagram</h5>
+                                    <h5 class="card-title fw-bold">Shopee</h5>
                                 </div>
                             </div>
                         </a>
@@ -243,6 +259,38 @@
             </div>
         </div>
     </section>
+    <section id="about" class="d-flex align-items-center text-center">
+        <div class="container my-5">
+<!--            <h1 class="mb-5">Chúng tôi là</h1>-->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <a href="https://www.facebook.com/tuan.levan.921677" target="_blank">
+                        <div class="info">
+                            <div class="circle-image">
+                                <img src="/images/Tuantinhtao.jpg" alt="Tuan tinh tao image"
+                                     class="img-fluid rounded-circle">
+                            </div>
+                            <h3 class="mt-4">Lê Văn Tuấn</h3>
+                            <p>Nhà sáng lập Học viện Rubik BMT</p>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <a href="https://www.facebook.com/profile.php?id=100009665823378" target="_blank">
+                        <div class="info">
+                            <div class="circle-image">
+                                <img src="/images/thong.jpg" alt="Thong idol image" class="img-fluid rounded-circle">
+                            </div>
+                            <h3 class="mt-4">Nguyễn Hữu Thông</h3>
+                            <p>Nhà sáng tạo nội dung hàng đầu Việt Nam về trò chơi trí tuệ</p>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer id="footer" class="text-white py-4">
         <div class="container">
             <div class="row">
@@ -253,7 +301,7 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
-                        <h4 class="text-warning">Liên hệ quảng cáo</h4>
+                        <h4 class="text-warning">Liên hệ</h4>
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-white text-decoration-none">Email: rubikbmt47@gmail.com</a></li>
                         </ul>
@@ -267,6 +315,97 @@
         </div>
     </footer>
     <!-- Bootstrap JS -->
+    <script>
+        function openDialog() {
+            document.getElementById('dialogOverlay').style.display = 'flex';
+        }
+
+        function closeDialog() {
+            document.getElementById('dialogOverlay').style.display = 'none';
+        }
+    </script>
+    <div class="dialog-overlay" id="dialogOverlay">
+        <div class="dialog">
+            <div class="dialog-header">
+                <h2>Khoá học Rubik cao cấp</h2>
+                <span class="dialog-close" onclick="closeDialog()">&times;</span>
+            </div>
+            <div class="dialog-content">
+                <form th:action="@{/students/register}" th:object="${student}" method="post">
+                    <div class="row">
+                        <div class="form-group col-lg-6 mb-0">
+                            <label for="lastName">Họ và tên đệm học viên:</label>
+                            <input class="form-control"  type="text" id="lastName" th:field="*{lastName}" oninput="clearError(this.id+'Error')">
+                            <span class="text-danger" id="lastNameError" th:if="${#fields.hasErrors('lastName')}"
+                                  th:errors="*{lastName}"></span>
+                        </div>
+                        <div class="form-group col-lg-6 mb-0">
+                            <label for="firstName">Tên học viên:</label>
+                            <input class="form-control"  type="text" id="firstName" th:field="*{firstName}" oninput="clearError(this.id+'Error')">
+                            <span class="text-danger" id="firstNameError" th:if="${#fields.hasErrors('firstName')}"
+                                  th:errors="*{firstName}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentName">Tên phụ huynh:</label>
+                        <input class="form-control"  type="text" id="parentName" th:field="*{parentName}" oninput="clearError(this.id+'Error')">
+                        <span class="text-danger" id="parentNameError" th:if="${#fields.hasErrors('parentName')}"
+                              th:errors="*{parentName}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Ngày tháng năm sinh:</label>
+                        <input class="form-control"  type="date" id="dateOfBirth" th:field="*{dateOfBirth}" oninput="clearError(this.id+'Error')">
+                        <span class="text-danger" id="dateOfBirthError" th:if="${#fields.hasErrors('dateOfBirth')}"
+                              th:errors="*{dateOfBirth}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">Số điện thoại:</label>
+                        <input class="form-control"  type="text" id="phoneNumber" th:field="*{phoneNumber}" oninput="clearError(this.id+'Error')">
+                        <span class="text-danger" id="phoneNumberError" th:if="${#fields.hasErrors('phoneNumber')}"
+                              th:errors="*{phoneNumber}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control"  type="email" id="email" th:field="*{email}" oninput="clearError(this.id+'Error')">
+                        <span class="text-danger" id="emailError" th:if="${#fields.hasErrors('email')}"
+                              th:errors="*{email}"></span>
+                    </div>
+                        <label>Hình thức</label>
+                    <div th:each="type : ${learningTypes}">
+                        <input type="radio" th:field="*{learningType}" th:value="${type.learningType}" th:id="${type}">
+                        <label th:for="${type}" th:text="${type.learningType}"></label>
+                    </div>
+                        <label>Chọn huấn luyện viên</label>
+                    <div th:each="mentor : ${mentors}">
+                        <input type="radio" th:field="*{mentor}" th:value="${mentor.id}" th:id="${mentor}">
+                        <label th:for="${mentor}" th:text="${mentor.lastName} + ' ' + ${mentor.firstName}"></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" onclick="">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.success}">
+        <dialog id="successDialog" style="color: #2d676f">
+            <p style="color: #235234">Chúng tôi đã nhận được thông tin và sẽ sớm liên hệ!</p>
+            <button class="dialog-button" onclick="closeDialog()">Đã hiểu</button>
+        </dialog>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var dialog = document.getElementById('successDialog');
+                dialog.showModal();
+            });
+            function closeDialog() {
+                var dialog = document.getElementById('successDialog');
+                if (window.location.search.includes('success')) {
+                    window.location.href = window.location.origin;
+                }
+                dialog.close();
+            }
+        </script>
+    </div>
 </body>
 
 </html>
