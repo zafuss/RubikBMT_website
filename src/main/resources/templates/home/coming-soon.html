@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COMING SOON!</title>
+    <style>
+        body {
+            background-image: url('/images/comingsoon_pattern.svg');
+            background-size: cover; /* Để hình ảnh phủ kín toàn bộ màn hình */
+            background-repeat: repeat; /* Để hình ảnh lặp lại */
+            background-position: center; /* Để hình ảnh ở giữa */
+            background-color: #235234;
+            display: flex;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            height: 100vh; /* Đảm bảo chiều cao body bằng chiều cao của viewport */
+            margin: 0; /* Bỏ margin của body */
+        }
+        .centered-div {
+            text-align: center; /* Đảm bảo hình ảnh được căn giữa bên trong div */
+        }
+        img {
+            max-height: 80%; /* Đảm bảo hình ảnh không vượt quá chiều cao của parent */
+            max-width: 80%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của parent */
+        }
+        @media (min-width: 950px) {
+            img {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="centered-div">
+    <img src="/images/comingsoon-logo.png" alt="Coming Soon Logo">
+</div>
+</body>
+</html>

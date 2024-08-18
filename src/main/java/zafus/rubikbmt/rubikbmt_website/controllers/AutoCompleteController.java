@@ -10,18 +10,22 @@ import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/autocomplete")
+@RequestMapping("")
 public class AutoCompleteController {
     @Autowired
     private CandidateService candidateService;
 
-    @GetMapping("/emails")
-    public List<String> getEmailSuggestions(@RequestParam String term) {
-        return candidateService.getEmailSuggestions(term);
-    }
-
-    @GetMapping("/phoneNumbers")
-    public List<String> getPhoneNumberSuggestions(@RequestParam String term) {
-        return candidateService.getPhoneNumberSuggestions(term);
+    @GetMapping("/api/candidates/autocomplete")
+    public List<String> autocomplete(
+            @RequestParam String input,
+            @RequestParam String type) {
+        switch (type) {
+            case "email":
+                return candidateService.getEmailSuggestions(input);
+            case "phone":
+                return candidateService.getPhoneNumberSuggestions(input);
+            default:
+                return  candidateService.getLastnameFirstnameSuggestions(input);
+        }
     }
 }

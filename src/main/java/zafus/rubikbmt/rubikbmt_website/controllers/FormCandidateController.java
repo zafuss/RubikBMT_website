@@ -30,12 +30,13 @@ public class FormCandidateController {
     private CompetitionService competitionService;
     @GetMapping("")
     public String formManage(Model model,
+                             @RequestParam String searchType,
                              @RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
                              @RequestParam(defaultValue = "") String keyword) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Candidate> candidatePage = candidateService.searchCandidates(keyword, pageable);
+        Page<Candidate> candidatePage = candidateService.searchCandidates(keyword,searchType ,pageable);
         model.addAttribute("candidates", candidatePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", candidatePage.getTotalPages());
@@ -45,11 +46,12 @@ public class FormCandidateController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("keyword") String keyword,
+    public String search(@RequestParam String searchType,
                          @RequestParam(defaultValue = "0") int page,
                          @RequestParam(defaultValue = "10") int size,
+                         @RequestParam(defaultValue = "") String keyword,
                          Model model) {
-        return formManage(model, page, size, keyword);
+        return formManage(model,searchType, page, size, keyword);
     }
 
 

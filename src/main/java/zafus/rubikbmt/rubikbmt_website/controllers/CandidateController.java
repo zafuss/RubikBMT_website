@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
 import zafus.rubikbmt.rubikbmt_website.entities.Competition;
 import zafus.rubikbmt.rubikbmt_website.entities.Event;
@@ -48,6 +49,7 @@ public class CandidateController {
         }
         candidate.setConfirmed(false);
         candidate.setRegistrationTime(LocalDateTime.now());
+        candidate.setFullName();
         candidateService.add(candidate);
         return "redirect:/?success";
     }
@@ -56,10 +58,11 @@ public class CandidateController {
     public String index(Model model,
                              @RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
-                             @RequestParam(defaultValue = "") String keyword) {
+                             @RequestParam(defaultValue = "") String keyword,
+                            @RequestParam(defaultValue = "") String searchType) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Candidate> candidatePage = candidateService.searchCandidates(keyword, pageable);
+        Page<Candidate> candidatePage = candidateService.searchCandidates(keyword, searchType, pageable);
         model.addAttribute("candidates", candidatePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", candidatePage.getTotalPages());
@@ -67,15 +70,7 @@ public class CandidateController {
         model.addAttribute("size", size);
         return "candidate/index";
     }
-    @GetMapping("/edit")
-    public String editCandidate(@RequestParam("id") String id, Model model) {
-        Candidate candidate = candidateService.findById(id);
-        Competition competition = competitionService.getByName("BackToSchool");
-        List<Event> events =  competition.getEvents();
-        model.addAttribute("candidate", candidate);
-        model.addAttribute("events", events);
-        return "candidate/edit";
-    }
+
 
     @GetMapping("/detail")
     public String viewCandidateDetails(@RequestParam("id") String id, Model model) {
@@ -83,10 +78,31 @@ public class CandidateController {
         model.addAttribute("candidate", candidate);
         return "candidate/detail";
     }
+    @GetMapping("/edit")
+    public String editCandidate(@RequestParam("id") String id, Model model) {
+//        Candidate candidate = candidateService.findById(id);
+        RequestUpdateCandidate candidate = RequestUpdateCandidate.fromEntity(candidateService.findById(id));
+        Competition competition = competitionService.getByName("BackToSchool");
+        List<Event> events =  competition.getEvents();
+        model.addAttribute("candidate", candidate);
+        model.addAttribute("events", events);
+        return "candidate/edit";
+    }
 
     @PostMapping("/updateCandidate")
-    public String updateCandidate(@ModelAttribute RequestUpdateCandidate candidate) {
-        candidateService.updateCandidate(candidate);
+    public String updateCandidate(@ModelAttribute("candidate") @Valid RequestUpdateCandidate candidate, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            var errors = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toArray(String[]::new);
+            Competition competition = competitionService.getByName("BackToSchool");
+            List<Event> events =  competition.getEvents();
+            model.addAttribute("errors", errors);
+            model.addAttribute("candidate", candidate);
+            model.addAttribute("events", events);
+            return "candidate/edit";
+        }
+       candidateService.updateCandidate(candidate);
         return "redirect:/candidates/detail?id=" + candidate.getId();
     }
 

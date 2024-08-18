@@ -25,6 +25,27 @@ body {
 #intro button:hover {
     background-color: #e6d8a5;
 }
+#backToSchool {
+    background: linear-gradient(135deg, #e18080, #3f67a8);
+    color: #2d676f;
+    height: 100vh;
+}
+
+#backToSchool h1,
+#backToSchool p {
+    color: #2d676f;
+}
+
+#backToSchool button {
+    background-color: #f0e68c;
+    color: #2d676f;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+#backToSchool button:hover {
+    background-color: #e6d8a5;
+}
 
 #about {
     background: linear-gradient(135deg, #f0f4f9, #f7e7e1);
@@ -219,4 +240,122 @@ a {
 
 .info:hover {
     transform: scale(1.05);
+}
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.dialog-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.dialog-close {
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.dialog-content {
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+#mentors h3 {
+    color: #2d676f;
+    font-weight: bold;
+}
+
+#mentors p {
+    color: #2d676f;
+    font-size: 16px;
+}
+#mentors {
+    background: linear-gradient(135deg, #f0f4f9, #f7e7e1);
+    color: #2d676f;
+}
+
+#mentors h1 {
+    color: #2d676f;
+    font-weight: bold;
+}
+
+.mentor-image {
+    /*width: 300px;*/
+    width: 40vh;
+}
+
+.home-logo {
+    width: 55vh;
+}
+
+@media (max-width: 1024px) {
+    .home-logo {
+        width: 30vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
+    }
+}
+@media (max-width: 767px) {
+    .home-logo {
+        width: 35vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
+    }
+}
+
+@media (max-width: 1024px) {
+    .mentor-image {
+        width: 20vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
+    }
+}
+@media (max-width: 767px) {
+    .mentor-image {
+        width: 32vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
+    }
+}
+dialog {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    color: black !important;
+}
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+.dialog-button {
+    background-color: #f0e68c;
+    color: black;
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.dialog-button:hover {
+    background-color: #e6d8a5;
 }

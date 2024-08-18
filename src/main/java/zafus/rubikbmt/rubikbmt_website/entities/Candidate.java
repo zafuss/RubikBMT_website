@@ -40,7 +40,7 @@ public class Candidate {
     @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
     private String email;
-
+    private String fullName;
     @ManyToOne
     private Competition competition;
 
@@ -49,4 +49,7 @@ public class Candidate {
 
     @ManyToMany
     private List<Event> events;
+    public void setFullName() {
+        this.fullName = this.firstName + " " + this.lastName;
+    }
 }
