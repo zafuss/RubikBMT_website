@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/autocomplete")
-public class AutocompleteController {
+public class AutoCompleteController {
     @Autowired
     private CandidateService candidateService;
 

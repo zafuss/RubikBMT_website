@@ -1,6 +1,5 @@
 package zafus.rubikbmt.rubikbmt_website.config;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +17,10 @@ import zafus.rubikbmt.rubikbmt_website.services.UserService;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @RequiredArgsConstructor
-public class SercurityConfig {
+public class SecurityConfig {
 
     private final UserService userService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserService();
@@ -29,6 +29,7 @@ public class SercurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         var auth = new DaoAuthenticationProvider();
@@ -46,7 +47,8 @@ public class SercurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/", true)
+                        .successHandler(customAuthenticationSuccessHandler)
+//                        .defaultSuccessUrl("/admin", false)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
