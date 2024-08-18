@@ -56,6 +56,6 @@ public class Mentor {
 //
 //    @ManyToMany
 //    private List<Event> events;
-//    @OneToMany
-//    private List<Student> students;
+    @OneToMany
+    private List<Student> students;
 }

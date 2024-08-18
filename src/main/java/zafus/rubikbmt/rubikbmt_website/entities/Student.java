@@ -45,7 +45,7 @@ public class Student {
     private String imageUrl;
     private String learningType;
     private boolean isConfirmed;
-    @OneToOne
+    @ManyToOne
     private Mentor mentor;
 }
 
