@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm ứng viên</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+<form id="searchForm" action="/form" method="get">
+    <label for="searchType">Search by:</label>
+    <select id="searchType" name="searchType">
+        <option value="email">Email</option>
+        <option value="phone">Phone Number</option>
+    </select>
+
+    <input type="text" id="keyword" name="keyword" placeholder="Enter search term..." />
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Họ và tên đệm</th>
+        <th>Tên</th>
+        <th>Email</th>
+        <th>SDT</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="candidate, stat : ${candidates}">
+        <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+        <td th:text="${candidate.firstName}"></td>
+        <td th:text="${candidate.lastName}"></td>
+        <td th:text="${candidate.email}"></td>
+        <td th:text="${candidate.phoneNumber}"></td>
+        <td>
+            <a th:href="@{form/details(id=${candidate.id})}" class="btn btn-secondary">Chi tiết</a>
+            <a th:href="@{form/edit(id=${candidate.id})}" class="btn btn-primary">Sửa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="pagination">
+    <ul>
+        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/form(page=${i}, size=${size}, keyword=${keyword})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''"></a>
+        </li>
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#keyword").autocomplete({
+            source: function(request, response) {
+                var searchType = $("#searchType").val();
+                var url = searchType === "email" ? "/autocomplete/emails" : "/autocomplete/phoneNumbers";
+
+                $.ajax({
+                    url: url,
+                    data: { term: request.term },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Minimum length before autocomplete starts
+        });
+    });
+</script>
+</body>
+</html>

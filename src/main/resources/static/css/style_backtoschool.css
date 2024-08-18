@@ -4,18 +4,19 @@ body {
     padding: 0;
 }
 
-#intro {
+#introBack {
     background: #235234;
     color: #2d676f;
-    height: 100vh;
+    height: 100%;
+    margin-top: 5%;
 }
 
-#intro h1,
-#intro p {
+#introBack h1,
+#introBack p {
     color: white;
 }
 
-#intro button {
+#introBack button {
     background-color: #235234;
     color: white;
     border: #235234 solid;
@@ -23,7 +24,7 @@ body {
     padding: 10px 20px;
 }
 
-#intro button:hover {
+#introBack button:hover {
     background-color: #61836d;
 }
 

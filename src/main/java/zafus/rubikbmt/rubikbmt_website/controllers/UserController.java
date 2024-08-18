@@ -117,7 +117,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(String[]::new);
             model.addAttribute("errors", errors);
-            return "/register";
+            return "auth/register";
         }
         userService.save(requestUser);
         userService.setDefaultRole(requestUser.getUserName());

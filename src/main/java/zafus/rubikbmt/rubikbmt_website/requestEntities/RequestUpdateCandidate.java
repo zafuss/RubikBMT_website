@@ -1,6 +1,5 @@
-package zafus.rubikbmt.rubikbmt_website.entities;
+package zafus.rubikbmt.rubikbmt_website.requestEntities;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -12,21 +11,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import zafus.rubikbmt.rubikbmt_website.entities.Competition;
+import zafus.rubikbmt.rubikbmt_website.entities.Event;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class Candidate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+public class RequestUpdateCandidate {
+    String id;
     @Size(min = 1, max = 50, message = "Họ và tên đệm phải có từ 1 đến 50 ký tự")
     private String lastName;
     @Size(min = 1, max = 50, message = " Tên phải có từ 1 đến 50 ký tự")
@@ -43,10 +41,6 @@ public class Candidate {
 
     @ManyToOne
     private Competition competition;
-
-    private LocalDateTime registrationTime;
-    private boolean isConfirmed;
-
     @ManyToMany
     private List<Event> events;
 }
