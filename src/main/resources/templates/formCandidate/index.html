@@ -10,8 +10,9 @@
 <form id="searchForm" action="/form" method="get">
     <label for="searchType">Search by:</label>
     <select id="searchType" name="searchType">
-        <option value="email">Email</option>
+        <option value="name">Name</option>
         <option value="phone">Phone Number</option>
+        <option value="email">Email</option>
     </select>
 
     <input type="text" id="keyword" name="keyword" placeholder="Enter search term..." />
@@ -61,19 +62,23 @@
         $("#keyword").autocomplete({
             source: function(request, response) {
                 var searchType = $("#searchType").val();
-                var url = searchType === "email" ? "/autocomplete/emails" : "/autocomplete/phoneNumbers";
+                var url = "/api/candidates/autocomplete";
 
                 $.ajax({
                     url: url,
-                    data: { term: request.term },
+                    data: {
+                        input: request.term,
+                        type: searchType
+                    },
                     success: function(data) {
                         response(data);
                     }
                 });
             },
-            minLength: 2 // Minimum length before autocomplete starts
+            minLength: 2
         });
     });
+
 </script>
 </body>
 </html>

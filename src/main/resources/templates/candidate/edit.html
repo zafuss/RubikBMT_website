@@ -32,26 +32,39 @@
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div class="card p-6">
                         <h3>Chỉnh sửa thông tin thí sinh</h3>
-                        <form action="#" th:action="@{updateCandidate(id=${candidate.id})}" method="post">
+                        <form action="#" th:action="@{/candidates/updateCandidate(id=${candidate.id})}" method="post" th:object="${candidate}">
+<!--                            <div th:if="${errors}" class="alert alert-danger justify-content-center" role="alert">-->
+<!--                                <ul>-->
+<!--                                    <li th:each="error : ${errors}"-->
+<!--                                        th:if="${error.objectName == 'candidate'}"-->
+<!--                                        th:text="${error.defaultMessage}" class="text-danger text-start">-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="lastName">Họ và tên đệm</label>
-                                <input type="text" id="lastName" name="lastName" class="form-control" th:value="${candidate.lastName} " th:field="*{candidate.lastName}" required>
+                                <input type="text" id="lastName" name="lastName" class="form-control" th:field="*{firstName}" required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                             </div>
                             <div class="form-group">
                                 <label for="firstName">Tên</label>
-                                <input type="text" id="firstName" name="firstName" class="form-control" th:value="${candidate.firstName}" th:field="*{candidate.firstName}" required>
+                                <input type="text" id="firstName" name="firstName" class="form-control" th:field="*{lastName}" required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                             </div>
                             <div class="form-group">
                                 <label for="dateOfBirth">Ngày tháng năm sinh</label>
-                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" th:value="${candidate.dateOfBirth}" th:field="*{candidate.dateOfBirth}" required>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" th:field="*{dateOfBirth}" required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber">Số điện thoại</label>
-                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" th:value="${candidate.phoneNumber}" th:field="*{candidate.phoneNumber}" required>
+                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" th:field="*{phoneNumber}" required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" th:value="${candidate.email}" th:field="*{candidate.email}" required>
+                                <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                             <div class="form-group">
                                 <label for="competition">Cuộc thi</label>
@@ -60,16 +73,14 @@
                             <div class="form-group">
                                 <label>Môn thi (có thể chọn nhiều môn):</label><br>
                                 <div th:each="event : ${events}">
-                                    <input type="checkbox" th:field="*{candidate.events}" th:value="${event.id}"
-                                           th:id="${event.id}" th:checked="true" />
+                                    <input type="checkbox" th:field="*{events}" th:value="${event.id}" th:id="${event.id}" th:checked="${candidate.events.contains(event)}" />
                                     <label th:for="${event.id}" th:text="${event.name}"></label><br>
                                 </div>
                             </div>
-
-
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                             <a href="/candidates" class="btn btn-secondary">Huỷ</a>
                         </form>
+
                     </div>
                 </div>
                 <!-- Content wrapper -->
@@ -80,6 +91,7 @@
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+</div>
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->

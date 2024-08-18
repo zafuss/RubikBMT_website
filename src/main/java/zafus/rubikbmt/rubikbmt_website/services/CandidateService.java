@@ -71,8 +71,17 @@ public class CandidateService {
         candidateRepository.delete(candidate);
     }
 
-    public Page<Candidate> searchCandidates(String keyword, Pageable pageable) {
-        return candidateRepository.findByEmailContainingOrPhoneNumberContaining(keyword, keyword, pageable);
+    public Page<Candidate> searchCandidates(String keyword, String searchType, Pageable pageable) {
+        switch (searchType) {
+            case "email":
+                return candidateRepository.findByEmailContaining(keyword, pageable);
+            case "phone":
+                return candidateRepository.findByPhoneNumberContaining(keyword, pageable);
+            case "name":
+                return candidateRepository.findByFullNameContaining(keyword, pageable);
+            default:
+                return candidateRepository.findAll(pageable);
+        }
     }
     public List<String> getEmailSuggestions(String email) {
         return candidateRepository.findByEmailContaining(email).stream()
@@ -84,6 +93,12 @@ public class CandidateService {
     public List<String> getPhoneNumberSuggestions(String phoneNumber) {
         return candidateRepository.findByPhoneNumberContaining(phoneNumber).stream()
                 .map(Candidate::getPhoneNumber)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+    public List<String> getLastnameFirstnameSuggestions(String input) {
+        return candidateRepository.findByLastNameContainingOrFirstNameContaining(input, input).stream()
+                .map(candidate -> candidate.getFirstName() + " " +  candidate.getLastName() )
                 .distinct()
                 .collect(Collectors.toList());
     }

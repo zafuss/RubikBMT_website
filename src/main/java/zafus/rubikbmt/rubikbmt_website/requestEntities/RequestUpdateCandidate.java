@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
 import zafus.rubikbmt.rubikbmt_website.entities.Competition;
 import zafus.rubikbmt.rubikbmt_website.entities.Event;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -24,7 +26,7 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestUpdateCandidate {
-    String id;
+    private String id;
     @Size(min = 1, max = 50, message = "Họ và tên đệm phải có từ 1 đến 50 ký tự")
     private String lastName;
     @Size(min = 1, max = 50, message = " Tên phải có từ 1 đến 50 ký tự")
@@ -43,4 +45,24 @@ public class RequestUpdateCandidate {
     private Competition competition;
     @ManyToMany
     private List<Event> events;
+
+    public static RequestUpdateCandidate fromEntity(Candidate candidate) {
+        RequestUpdateCandidate dto = new RequestUpdateCandidate();
+        dto.setId(candidate.getId());
+        dto.setLastName(candidate.getLastName());
+        dto.setFirstName(candidate.getFirstName());
+        dto.setDateOfBirth(candidate.getDateOfBirth());
+        dto.setPhoneNumber(candidate.getPhoneNumber());
+        dto.setEmail(candidate.getEmail());
+
+        // Assuming you want to use IDs for competition and events
+        if (candidate.getCompetition() != null) {
+            dto.setCompetition(candidate.getCompetition());
+        }
+        if (candidate.getEvents() != null) {
+            dto.setEvents(candidate.getEvents());
+        }
+
+        return dto;
+    }
 }
