@@ -11,6 +11,7 @@ import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -29,28 +30,36 @@ public class HomeController {
     }
     @GetMapping
     public String index(HttpServletRequest request, Model model) {
-        Boolean isBackToSchool = (Boolean) request.getAttribute("isBackToSchool");
-        if (Boolean.TRUE.equals(isBackToSchool)) {
-            Candidate candidate = new Candidate();
-            Competition competition = competitionService.getByName("BackToSchool");
-            candidate.setCompetition(competition);
-
-            model.addAttribute("events", competition.getEvents());
-            model.addAttribute("candidate",candidate);
-            return "backToSchool/index"; // Trả về view cho subdomain
-        } else {
-            List<LearningType> learningTypes = learningTypeService.findAll();
-            List<Mentor> mentors = mentorService.findAll();
-            model.addAttribute("learningTypes", learningTypes);
-            model.addAttribute("mentors", mentors);
-            model.addAttribute("student", new Student());
-            return "home/index"; // Trả về view cho domain chính
-        }
+//        Boolean isBackToSchool = (Boolean) request.getAttribute("isBackToSchool");
+//        if (Boolean.TRUE.equals(isBackToSchool)) {
+//            Candidate candidate = new Candidate();
+//            LocalDateTime currentTime = LocalDateTime.now();
+//            LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
+//            if (currentTime.isBefore(openTime)) {
+//                return "home/coming-soon";
+//            } else {
+//                Competition competition = competitionService.getByName("BackToSchool");
+//                candidate.setCompetition(competition);
+//
+//                model.addAttribute("events", competition.getEvents());
+//                model.addAttribute("candidate",candidate);
+//                return "backToSchool/index"; // Trả về view cho subdomain
+//            }
+//        } else {
+//            List<LearningType> learningTypes = learningTypeService.findAll();
+//            List<Mentor> mentors = mentorService.findAll();
+//            model.addAttribute("learningTypes", learningTypes);
+//            model.addAttribute("mentors", mentors);
+//            model.addAttribute("student", new Student());
+//            return "home/index"; // Trả về view cho domain chính
+//        }
+        List<LearningType> learningTypes = learningTypeService.findAll();
+        List<Mentor> mentors = mentorService.findAll();
+        model.addAttribute("learningTypes", learningTypes);
+        model.addAttribute("mentors", mentors);
+        model.addAttribute("student", new Student());
+        return "home/index";
     }
 
-    @GetMapping("coming-soon")
-    public String comingSoon(HttpServletRequest request, Model model) {
-        return "home/coming-soon";
-    }
 
 }

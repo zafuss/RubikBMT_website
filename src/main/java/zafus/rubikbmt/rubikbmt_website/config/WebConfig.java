@@ -9,11 +9,11 @@ import zafus.rubikbmt.rubikbmt_website.components.BackToSchoolInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private BackToSchoolInterceptor backToSchoolInterceptor;
+//    @Autowired
+//    private BackToSchoolInterceptor backToSchoolInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(backToSchoolInterceptor);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(backToSchoolInterceptor);
+//    }
 }
