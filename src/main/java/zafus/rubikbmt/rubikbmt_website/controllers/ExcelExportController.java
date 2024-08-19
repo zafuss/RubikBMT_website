@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.Student;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.ExcelExportService;
+import zafus.rubikbmt.rubikbmt_website.services.StudentService;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,6 +36,8 @@ public class ExcelExportController {
     @Autowired
     private CandidateService candidateService;
 
+    @Autowired
+    private StudentService studentService;
     //    @GetMapping("/exportCandidates")
 //    public ResponseEntity<String> exportCandidates() {
 //        // Default file path to Downloads folder
@@ -63,5 +67,20 @@ public class ExcelExportController {
             return ResponseEntity.status(500).body(null);
         }
     }
+    @GetMapping("/downloadStudentsExcel")
+    public ResponseEntity<Resource> downloadStudentsExcel() {
+        List<Student> students = studentService.findAll();
 
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            // Generate Excel file in memory using ByteArrayOutputStream
+            excelExportService.exportStudentToExcel(students, out);
+
+            // Create a ByteArrayResource from the ByteArrayOutputStream
+            ByteArrayResource resource = new ByteArrayResource(out.toByteArray());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=danh_sach_hocvien.xlsx").contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(resource.contentLength()).body(resource);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }

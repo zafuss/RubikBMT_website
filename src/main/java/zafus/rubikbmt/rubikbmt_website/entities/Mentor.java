@@ -36,7 +36,6 @@ public class Mentor {
     private String firstName;
 
     private String description;
-
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @NotNull(message = "Ngày tháng không được bỏ trống.")
 //    private LocalDate dateOfBirth;
@@ -58,4 +57,5 @@ public class Mentor {
 //    private List<Event> events;
     @OneToMany
     private List<Student> students;
+
 }

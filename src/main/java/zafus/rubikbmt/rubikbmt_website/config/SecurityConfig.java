@@ -40,9 +40,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.csrf(csrf-> csrf
+                .ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/back-to-school/**","/", "/css/**","/admin/**","/images/**","/scripts/**","favicon.ico"
+                               ,"/login/**"
+                        ).permitAll()
+                        .requestMatchers("/admin/**","/students/**","/candidates/**","/api/**").hasAnyAuthority("Admin","SuperAdmin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -54,8 +58,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout").permitAll()
                 )
-                .csrf(csrf -> csrf.disable());
-
+//                .csrf(csrf -> csrf.disable());
+                ;
         return http.build();
     }
 

@@ -6,16 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
+import zafus.rubikbmt.rubikbmt_website.services.StudentService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/api")
 public class AutoCompleteController {
     @Autowired
     private CandidateService candidateService;
 
-    @GetMapping("/api/candidates/autocomplete")
+    @Autowired
+    private StudentService studentService;
+
+    @GetMapping("/candidates/autocomplete")
     public List<String> autocomplete(
             @RequestParam String input,
             @RequestParam String type) {
@@ -28,4 +32,19 @@ public class AutoCompleteController {
                 return  candidateService.getLastnameFirstnameSuggestions(input);
         }
     }
+
+    @GetMapping("/students/autocomplete")
+    public List<String> autocompleteStudnet(
+            @RequestParam String input,
+            @RequestParam String type) {
+        switch (type) {
+            case "email":
+                return studentService.getEmailSuggestions(input);
+            case "phone":
+                return studentService.getPhoneNumberSuggestions(input);
+            default:
+                return  studentService.getLastnameFirstnameSuggestions(input);
+        }
+    }
+
 }

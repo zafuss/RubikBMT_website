@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.Student;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,5 +52,40 @@ public class ExcelExportService {
         workbook.write(outputStream);
         workbook.close();
     }
+    public void exportStudentToExcel(List<Student> students, OutputStream outputStream) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Danh Sach");
 
+        // Create header row
+        Row headerRow = sheet.createRow(0);
+        String[] headers = { "Họ và tên đệm", "Tên", "Ngày sinh", "Số điện thoại", "Email", "Tên Phụ Huynh", "Huấn Luyện Viên", "Xác nhận","Hình Thức Học" };
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        // Fill data rows
+        int rowNum = 1;
+        for (Student student : students) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(student.getFirstName());
+            row.createCell(1).setCellValue(student.getLastName());
+            row.createCell(2).setCellValue(student.getDateOfBirth() != null ? student.getDateOfBirth().toString() : "NULL");
+            row.createCell(3).setCellValue(student.getPhoneNumber());
+            row.createCell(4).setCellValue(student.getEmail());
+            row.createCell(5).setCellValue(student.getParentName());
+            row.createCell(6).setCellValue(student.getMentor().getFirstName() + " " + student.getMentor().getLastName());
+            row.createCell(7).setCellValue(student.isConfirmed());
+            row.createCell(8).setCellValue(student.getLearningType().getLearningType());
+        }
+
+        // Resize columns to fit the content
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Write the output to the provided OutputStream
+        workbook.write(outputStream);
+        workbook.close();
+    }
 }

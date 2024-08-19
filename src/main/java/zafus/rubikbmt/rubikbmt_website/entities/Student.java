@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidStudentEmail;
+import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidStudentPhoneNumber;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,15 +40,23 @@ public class Student {
     private LocalDate dateOfBirth;
     @Length(min = 10, max = 10, message = "Phone phải có 10 số")
     @Pattern(regexp = "^[0-9]*$", message = "Phone phải là số")
+    @ValidStudentPhoneNumber
     private String phoneNumber;
     @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
+    @ValidStudentEmail
     private String email;
     private String imageUrl;
-    private String learningType;
+    @ManyToOne
+    private LearningType learningType;
     private boolean isConfirmed;
     @ManyToOne
     private Mentor mentor;
+
+    private String fullName;
+    public void setFullName() {
+        this.fullName = this.firstName + " " + this.lastName;
+    }
 }
 
 

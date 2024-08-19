@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
 
@@ -101,5 +102,13 @@ public class CandidateService {
                 .map(candidate -> candidate.getFirstName() + " " +  candidate.getLastName() )
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public Candidate findByPhone(String phone) {
+        return candidateRepository.findByPhoneNumber(phone);
+    }
+
+    public Candidate findByEmail(String email) {
+        return candidateRepository.findByEmail(email);
     }
 }
