@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-
 public class HomeController {
     @Autowired
     private CompetitionService competitionService;
@@ -28,7 +27,7 @@ public class HomeController {
     public String cube(){
         return "home/cube";
     }
-    @GetMapping
+    @GetMapping("")
     public String index(HttpServletRequest request, Model model) {
 //        Boolean isBackToSchool = (Boolean) request.getAttribute("isBackToSchool");
 //        if (Boolean.TRUE.equals(isBackToSchool)) {
@@ -60,6 +59,5 @@ public class HomeController {
         model.addAttribute("student", new Student());
         return "home/index";
     }
-
 
 }

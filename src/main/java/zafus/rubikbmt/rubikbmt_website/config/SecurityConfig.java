@@ -40,26 +40,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf-> csrf
-                .ignoringRequestMatchers("/api/**"))
+        http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/back-to-school/**","/", "/css/**","/admin/**","/images/**","/scripts/**","favicon.ico"
-                               ,"/login/**"
-                        ).permitAll()
-                        .requestMatchers("/admin/**","/students/**","/candidates/**","/api/**").hasAnyAuthority("Admin","SuperAdmin")
+                        .requestMatchers("/admin/**","/back-to-school/**", "/", "/css/**", "/images/**", "/scripts/**", "favicon.ico","students/register","candidates/register").permitAll()
+                        .requestMatchers("/students/**", "/candidates/**", "/api/**").hasAnyAuthority("Admin", "SuperAdmin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
                         .successHandler(customAuthenticationSuccessHandler)
-//                        .defaultSuccessUrl("/admin", false)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout").permitAll()
-                )
-//                .csrf(csrf -> csrf.disable());
-                ;
+                );
         return http.build();
     }
 
