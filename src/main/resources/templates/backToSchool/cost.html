@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/library/lib_backtoschool.html::head()}"></head>
+
+<link rel="stylesheet" href="/css/style_backtoschool.css">
+<link rel="stylesheet" href="/css/navbar_backtoschool.css">
+
+<body>
+<nav th:replace="~{/backToSchool/index.html::nav}"></nav>
+<section id="introBack" class="d-flex align-items-center p-3">
+    <div class="container mt-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div id="form-container" style="color: black;">
+
+                    <h2 class="text-center mb-4">Thông tin lệ phí và phương thức thanh toán</h2>
+
+
+                    <p class="mb-0" style="color: black"><span class="section-title">- Lệ phí</span></p>
+                    <ul>
+                        <li>150.000đ/ 1 môn</li>
+                        <li>200.000đ/ 2 môn</li>
+                        <li>250.000đ/ 3 môn</li>
+                    </ul>
+                    <p class="mb-0" style="color: black"><span class="section-title">- Phương thức thanh toán: Chuyển khoản ngân hàng.</span></p>
+                    <ul>
+                        <li><strong>Tên ngân hàng:</strong> Ngân hàng Phương Đông OCB</li>
+                        <li><strong>Số tài khoản:</strong> 0004 1000 3301 3007</li>
+                        <li><strong>Tên người nhận:</strong> Nguyễn Xuân Đức</li>
+                        <li><strong>Nội dung chuyển khoản:</strong> Họ và tên thí sinh + ngày tháng năm sinh</li>
+                    </ul>
+                    <p style="color: black"><span class="section-title">- Đăng ký chỉ được coi là thành công sau khi bạn đã đăng ký trên website và hoàn tất chuyển khoản lệ phí.</span></p>
+                    <p style="color: black"><span class="section-title">- Sau khi đăng ký thành công, tên của bạn sẽ được duyệt lên hệ thống trong 24h tới.</span></p>
+                    <p style="color: black"><span class="section-title">- Bạn cần phải thanh toán thêm 150.000đ tại địa điểm thi nếu không đăng ký online.</span></p>
+                    </div>
+                </div>
+            <div class="col-md-6 ">
+                <div class="form-container">
+                    <img style="width: 60vh" src="/images/qr_duc.png">
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

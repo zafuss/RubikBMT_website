@@ -52,4 +52,40 @@ public class BackToSchoolController {
             return "backToSchool/index";
         }
     }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        Candidate candidate = new Candidate();
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime openTime = LocalDateTime.of(2024, 8, 19, 20, 27);
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            Competition competition = competitionService.getByName("BackToSchool");
+            candidate.setCompetition(competition);
+
+            model.addAttribute("events", competition.getEvents());
+            model.addAttribute("candidate",candidate);
+            return "backToSchool/register";
+        }
+    }
+    @GetMapping("/general")
+    public String general(Model model) {
+        return "backToSchool/general";
+    }
+
+    @GetMapping("/cost")
+    public String cost(Model model) {
+        return "backToSchool/cost";
+    }
+
+    @GetMapping("/schedule")
+    public String schedule(Model model) {
+        return "backToSchool/schedule";
+    }
+
+    @GetMapping("location")
+    public String location(Model model) {
+        return "backToSchool/location";
+    }
 }
