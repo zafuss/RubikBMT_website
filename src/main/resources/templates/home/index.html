@@ -418,6 +418,25 @@
             }
         </script>
     </div>
+    <div th:if="${errors}">
+        <dialog id="successDialog" style="color: #2d676f">
+            <p style="color: #235234">Đã xảy ra lỗi, vui lòng kiểm tra lại thông tin</p>
+            <button class="dialog-button" onclick="closeDialog()">Đã hiểu</button>
+        </dialog>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var dialog = document.getElementById('successDialog');
+                dialog.showModal();
+            });
+            function closeDialog() {
+                var dialog = document.getElementById('successDialog');
+                if (window.location.search.includes('success')) {
+                    window.location.href = window.location.origin;
+                }
+                dialog.close();
+            }
+        </script>
+    </div>
 
 </body>
 
