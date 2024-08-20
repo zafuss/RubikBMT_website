@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{library/lib_backtoschool.html::head()}"></head>
+
+<link rel="stylesheet" href="/css/style_backtoschool.css">
+<link rel="stylesheet" href="/css/navbar_backtoschool.css">
+
+<body>
+<nav th:replace="~{backToSchool/index.html::nav}"></nav>
+<section id="introBack" class="d-flex align-items-center p-3">
+
+    <div class="container mt-3">
+        <div id="form-container">
+            <h2 class="text-center mb-4">Hình ảnh địa điểm thi đấu</h2>
+            <div class="mt-4 mb-4">
+                <h4>Địa điểm thi đấu: AEON HALL Tân Phú Celadon</h4>
+                <img style="max-width: 100%" src="/images/aeon_mall.jpg">
+            </div>
+            <br>
+            <div class="mt-4 mb-4">
+                <h4>Hội trường thi đấu: Tầng 3, hội trường AEON HALL Tân Phú Celadon</h4>
+                <img class="mb-3" style="max-width: 100%" src="/images/ht1.jpg">
+                <img class="mb-3" style="max-width: 100%" src="/images/ht2.jpg">
+                <img class="mb-3" style="max-width: 100%" src="/images/ht3.jpg">
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
