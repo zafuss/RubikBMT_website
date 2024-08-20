@@ -121,7 +121,7 @@
             <h1 class="mb-5">Chọn một huấn luyện viên</h1>
             <div class="row">
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a onclick="openDialog()" target="_blank">
+                    <a onclick="openDialog('lhp', 'Lê Hà Phong')" target="_blank">
                         <div class="info">
                             <div class="">
                                 <img src="/images/mentor_haphong.png" alt="Ha Phong image"
@@ -131,7 +131,7 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a onclick="openDialog()" target="_blank">
+                    <a onclick="openDialog('nhtp', 'Nguyễn Hoàng Thiên Phú')" target="_blank">
                         <div class="info">
                             <div class="">
                                 <img src="/images/mentor_thienphu.png" alt="thien phu image"
@@ -317,10 +317,13 @@
             </div>
         </div>
     </footer>
+
     <!-- Bootstrap JS -->
     <script>
-        function openDialog() {
+        function openDialog(mentorId, mentorName) {
             document.getElementById('dialogOverlay').style.display = 'flex';
+            document.getElementById('mentorId').value = mentorId;
+            document.getElementById('mentorNameLabel').textContent = mentorName;
         }
 
         function closeDialog() {
@@ -338,15 +341,15 @@
                     <div class="row">
                         <div class="form-group col-lg-6 mb-0">
                             <label for="lastName">Họ và tên đệm học viên:</label>
-                            <input class="form-control"  type="text" id="lastName" th:field="*{lastName}" oninput="clearError(this.id+'Error')">
-                            <span class="text-danger" id="lastNameError" th:if="${#fields.hasErrors('lastName')}"
-                                  th:errors="*{lastName}"></span>
+                            <input class="form-control"  type="text" id="lastName" th:field="*{firstName}" oninput="clearError(this.id+'Error')">
+                            <span class="text-danger" id="lastNameError" th:if="${#fields.hasErrors('firstName')}"
+                                  th:errors="*{firstName}"></span>
                         </div>
                         <div class="form-group col-lg-6 mb-0">
                             <label for="firstName">Tên học viên:</label>
-                            <input class="form-control"  type="text" id="firstName" th:field="*{firstName}" oninput="clearError(this.id+'Error')">
-                            <span class="text-danger" id="firstNameError" th:if="${#fields.hasErrors('firstName')}"
-                                  th:errors="*{firstName}"></span>
+                            <input class="form-control"  type="text" id="firstName" th:field="*{lastName}" oninput="clearError(this.id+'Error')">
+                            <span class="text-danger" id="firstNameError" th:if="${#fields.hasErrors('lastName')}"
+                                  th:errors="*{lastName}"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -375,16 +378,22 @@
                         <span class="text-danger" id="emailError" th:if="${#fields.hasErrors('email')}"
                               th:errors="*{email}"></span>
                     </div>
+<!--                        <label>Hình thức</label>-->
+<!--                    <div th:each="type : ${learningTypes}">-->
+<!--                        <input type="radio" th:field="*{learningType}" th:value="${type.learningType}" th:id="${type}">-->
+<!--                        <label th:for="${type}" th:text="${type.learningType}"></label>-->
+<!--                    </div>-->
+
+                    <div class="form-group">
                         <label>Hình thức</label>
-                    <div th:each="type : ${learningTypes}">
-                        <input type="radio" th:field="*{learningType}" th:value="${type.learningType}" th:id="${type}">
-                        <label th:for="${type}" th:text="${type.learningType}"></label>
+                        <div th:each="type : ${learningTypes}">
+                            <input type="radio" th:field="*{learningType}" th:value="${type.id}" th:id="${type.id}" />
+                            <label th:for="${type.id}" th:text="${type.learningType}"></label><br>
+                        </div>
                     </div>
-                        <label>Chọn huấn luyện viên</label>
-                    <div th:each="mentor : ${mentors}">
-                        <input type="radio" th:field="*{mentor}" th:value="${mentor.id}" th:id="${mentor}">
-                        <label th:for="${mentor}" th:text="${mentor.lastName} + ' ' + ${mentor.firstName}"></label>
-                    </div>
+                    <p>Bạn đang chọn huấn luyện viên: <label id="mentorNameLabel"></label></p>
+                    <input type="hidden" id="mentorId" name="mentorId" th:field="*{mentor.id}" />
+
                     <button type="submit" class="btn btn-primary btn-block" onclick="">Đăng ký</button>
                 </form>
             </div>
@@ -409,6 +418,26 @@
             }
         </script>
     </div>
+    <div th:if="${errors}">
+        <dialog id="successDialog" style="color: #2d676f">
+            <p style="color: #235234">Đã xảy ra lỗi, vui lòng kiểm tra lại thông tin</p>
+            <button class="dialog-button" onclick="closeDialog()">Đã hiểu</button>
+        </dialog>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var dialog = document.getElementById('successDialog');
+                dialog.showModal();
+            });
+            function closeDialog() {
+                var dialog = document.getElementById('successDialog');
+                if (window.location.search.includes('success')) {
+                    window.location.href = window.location.origin;
+                }
+                dialog.close();
+            }
+        </script>
+    </div>
+
 </body>
 
 </html>

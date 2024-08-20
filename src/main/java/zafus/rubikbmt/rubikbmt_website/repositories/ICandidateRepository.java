@@ -12,11 +12,14 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
     Page<Candidate> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
 
     Page<Candidate> findByFullNameContaining(String fullName, Pageable pageable);
+
     List<Candidate> findByEmailContaining(String email);
 
     List<Candidate> findByPhoneNumberContaining(String phoneNumber);
 
     List<Candidate> findByLastNameContainingOrFirstNameContaining(String lastName, String firstName);
 
+    Candidate findByEmail(String email);
+    Candidate findByPhoneNumber(String phoneNumber);
 
 }

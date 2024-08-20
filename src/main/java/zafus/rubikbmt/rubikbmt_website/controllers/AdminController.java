@@ -12,7 +12,7 @@ import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/Admin")
 
 public class AdminController {
     @Autowired

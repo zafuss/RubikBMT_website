@@ -58,7 +58,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority("SuperAdmin"));
         if(isAdmin){
-            setDefaultTargetUrl("/admin");
+            setDefaultTargetUrl("/Admin");
         }else{
             setDefaultTargetUrl("/");
         }

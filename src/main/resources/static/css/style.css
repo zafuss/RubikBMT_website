@@ -359,3 +359,14 @@ dialog::backdrop {
 .dialog-button:hover {
     background-color: #e6d8a5;
 }
+
+.btn-primary {
+    background-color: #f0e68c;
+    color: #2d676f;
+    border-radius: 10px;
+    border: transparent;
+    padding: 10px 20px;
+}
+.btn-primary:hover {
+    background-color: #e6d8a5;
+}

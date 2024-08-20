@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
 import zafus.rubikbmt.rubikbmt_website.entities.Student;
 import zafus.rubikbmt.rubikbmt_website.repositories.IStudentRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
@@ -28,6 +29,7 @@ public class StudentService {
     }
 
     public Student add(Student student) {
+        student.setFullName();
         return studentRepository.save(student);
     }
 
@@ -57,6 +59,7 @@ public class StudentService {
             if (request.getDateOfBirth() != null) {
                 existingStudent.setDateOfBirth(request.getDateOfBirth());
             }
+            existingStudent.setConfirmed(request.isConfirmed());
             return studentRepository.save(existingStudent);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating student: " + ex.getMessage());
@@ -67,8 +70,17 @@ public class StudentService {
         studentRepository.delete(student);
     }
 
-    public Page<Student> searchStudents(String keyword, Pageable pageable) {
-        return studentRepository.findByEmailContainingOrPhoneNumberContaining(keyword, keyword, pageable);
+    public Page<Student> searchStudents(String keyword, String searchType, Pageable pageable) {
+        switch (searchType) {
+            case "email":
+                return studentRepository.findByEmailContaining(keyword, pageable);
+            case "phone":
+                return studentRepository.findByPhoneNumberContaining(keyword, pageable);
+            case "name":
+                return studentRepository.findByFullNameContaining(keyword, pageable);
+            default:
+                return studentRepository.findAll(pageable);
+        }
     }
     public List<String> getEmailSuggestions(String email) {
         return studentRepository.findByEmailContaining(email).stream()
@@ -82,5 +94,19 @@ public class StudentService {
                 .map(Student::getPhoneNumber)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+    public List<String> getLastnameFirstnameSuggestions(String input) {
+        return studentRepository.findByLastNameContainingOrFirstNameContaining(input, input).stream()
+                .map(student -> student.getFirstName() + " " +  student.getLastName() )
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public Student findByPhone(String phone) {
+        return studentRepository.findByPhoneNumber(phone);
+    }
+
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
     }
 }

@@ -31,56 +31,51 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div class="card p-6">
-                        <h3>Thông tin chi tiết thí sinh</h3>
+                        <h3>Thông tin chi tiết học sinh</h3>
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
+                                <th>Huấn Luyện Viên</th>
+                                <td th:text="${student.getMentor().getFirstName()} + ' ' + ${student.getMentor().getLastName()}"></td>
+                            </tr>
+                            <tr>
                                 <th>Họ và tên đệm</th>
-                                <td th:text="${candidate.firstName}"></td>
+                                <td th:text="${student.firstName}"></td>
                             </tr>
                             <tr>
                                 <th>Tên</th>
-                                <td th:text="${candidate.lastName}"></td>
+                                <td th:text="${student.lastName}"></td>
                             </tr>
                             <tr>
-                                <th>Ngày tháng năm sinh</th>
-                                <td th:text="${candidate.dateOfBirth}"></td>
-                            </tr>
-                            <tr>
-                                <th>Số điện thoại</th>
-                                <td th:text="${candidate.phoneNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td th:text="${candidate.email}"></td>
-                            </tr>
-                            <tr>
-                                <th>Xác nhận email</th>
-                                <td th:text="${candidate.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Cuộc thi</th>
-                                <td>
-                                    <span th:text="${candidate.competition != null ? candidate.competition.name : 'null'}"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Nội dung thi</th>
-                                <td>
-                                    <ul>
-                                        <li th:each="event : ${candidate.events}" th:text="${event.name}"></li>
-                                    </ul>
-                                </td>
+                                <th>Tên Phụ Huynh</th>
+                                <td th:text="${student.parentName}"></td>
                             </tr>
 
                             <tr>
-                                <th>Thời điểm đăng ký</th>
-                                <td th:text="${candidate.registrationTime}"></td>
+                                <th>Ngày tháng năm sinh</th>
+                                <td th:text="${student.dateOfBirth}"></td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td th:text="${student.phoneNumber}"></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td th:text="${student.email}"></td>
+                            </tr>
+                            <tr>
+                                <th>Xác nhận </th>
+                                <td th:text="${student.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                            </tr>
+                            <tr>
+                                <th>Hình Thức Học</th>
+                                <td th:text="${student.getLearningType().getLearningType()}"></td>
                             </tr>
                             </tbody>
                         </table>
-                        <a href="/candidates" class="btn btn-secondary">Huỷ</a>
                     </div>
+                    <a href="/students" class="btn btn-primary">Trở Về</a>
+
                 </div>
             </div>
             <!-- / Layout page -->
