@@ -50,7 +50,7 @@ public class Candidate {
 
     private LocalDateTime registrationTime;
     private boolean isConfirmed;
-
+    private LocalDateTime timeConfirmed;
     @ManyToMany
     private List<Event> events;
     public void setFullName() {

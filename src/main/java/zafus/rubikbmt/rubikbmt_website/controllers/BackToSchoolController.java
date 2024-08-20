@@ -1,15 +1,21 @@
 package zafus.rubikbmt.rubikbmt_website.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
 import zafus.rubikbmt.rubikbmt_website.entities.Competition;
+import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/back-to-school")
@@ -33,6 +39,8 @@ public class BackToSchoolController {
 //            return "backToSchool/index";
 //        }
 //    }
+    @Autowired
+    private CandidateService candidateService;
     @Autowired
     private CompetitionService competitionService;
 

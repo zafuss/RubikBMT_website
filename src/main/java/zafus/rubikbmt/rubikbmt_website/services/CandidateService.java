@@ -2,6 +2,7 @@ package zafus.rubikbmt.rubikbmt_website.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -11,6 +12,7 @@ import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +64,10 @@ public class CandidateService {
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());
             }
+            existingCandidate.setConfirmed(request.isConfirmed());
+            if ( request.isConfirmed()){
+                existingCandidate.setTimeConfirmed(LocalDateTime.now());
+            }
             return candidateRepository.save(existingCandidate);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating candidate: " + ex.getMessage());
@@ -110,5 +116,9 @@ public class CandidateService {
 
     public Candidate findByEmail(String email) {
         return candidateRepository.findByEmail(email);
+    }
+
+    public Page<Candidate> findUnconfirmedCandidates(Pageable pageable, int size) {
+        return candidateRepository.findUnconfirmedCandidates(pageable, size);
     }
 }

@@ -55,7 +55,7 @@
                                 <td th:text="${candidate.email}"></td>
                             </tr>
                             <tr>
-                                <th>Xác nhận email</th>
+                                <th>Xác nhận</th>
                                 <td th:text="${candidate.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
                             </tr>
                             <tr>
@@ -80,6 +80,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <a href="/candidates" class="btn btn-primary">Trở Về</a>
                 </div>
             </div>
             <!-- / Layout page -->

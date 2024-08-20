@@ -70,6 +70,14 @@
                                 <label for="competition">Cuộc thi</label>
                                 <input type="text" id="competition" name="competition" class="form-control" th:value="${candidate.competition != null ? candidate.competition.name : ''}">
                             </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="status">Xác Nhận:</label>
+                                <select class="form-control" id="status" name="status" th:field="*{confirmed}">
+                                    <option value="true" th:selected="${candidate.confirmed}">Đã Xác Nhận</option>
+                                    <option value="false" th:selected="${!candidate.confirmed}">Chưa Xác Nhận</option>
+                                </select>
+                            </div>
+
                             <div class="form-group">
                                 <label>Môn thi (có thể chọn nhiều môn):</label><br>
                                 <div th:each="event : ${events}">

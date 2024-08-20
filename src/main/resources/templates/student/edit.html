@@ -72,17 +72,15 @@
                                 <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="status"> Xác Nhận:</label><span
-                                    class="text-danger">*</span>
-                                <select class="form-control" id="status" name="status">
-                                    <option value="1" th:selected="${student.confirmed == true}">Đã Xác Nhận</option>
-                                    <option value="0" th:selected="${student.confirmed == false}">Chưa Xác Nhận</option>
+                                <label class="form-label" for="status">Xác Nhận:</label>
+                                <select class="form-control" id="status" name="status" th:field="*{confirmed}">
+                                    <option value="true" th:selected="${student.confirmed}">Đã Xác Nhận</option>
+                                    <option value="false" th:selected="${!student.confirmed}">Chưa Xác Nhận</option>
                                 </select>
                             </div>
 
-
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="/students/" class="btn btn-secondary">Huỷ</a>
+                            <a href="/students" class="btn btn-secondary">Huỷ</a>
                         </form>
 
                     </div>

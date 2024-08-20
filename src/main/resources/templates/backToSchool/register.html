@@ -1,7 +1,31 @@
 <!DOCTYPE html>
 <html lang="vi"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{library/lib_backtoschool.html::head()}"></head>
+<head th:replace="~{library/lib_backtoschool.html::head()}">
+    <style>
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+            color: #0056b3;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
 <link rel="stylesheet" href="/css/style_backtoschool.css">
 <link rel="stylesheet" href="/css/navbar_backtoschool.css">
 <body>
@@ -16,13 +40,15 @@
                         <div class="row">
                             <div class="form-group col-lg-6 mb-0">
                                 <label for="lastName">Họ và tên đệm:</label>
-                                <input class="form-control"  type="text" id="lastName" th:field="*{lastName}" oninput="clearError(this.id+'Error')">
+                                <input class="form-control" type="text" id="lastName" th:field="*{lastName}"
+                                       oninput="clearError(this.id+'Error')">
                                 <span class="text-danger" id="lastNameError" th:if="${#fields.hasErrors('lastName')}"
                                       th:errors="*{lastName}"></span>
                             </div>
                             <div class="form-group col-lg-6 mb-0">
                                 <label for="firstName">Tên:</label>
-                                <input class="form-control"  type="text" id="firstName" th:field="*{firstName}" oninput="clearError(this.id+'Error')">
+                                <input class="form-control" type="text" id="firstName" th:field="*{firstName}"
+                                       oninput="clearError(this.id+'Error')">
                                 <span class="text-danger" id="firstNameError" th:if="${#fields.hasErrors('firstName')}"
                                       th:errors="*{firstName}"></span>
                             </div>
@@ -30,21 +56,24 @@
 
                         <div class="form-group">
                             <label for="dateOfBirth">Ngày tháng năm sinh:</label>
-                            <input class="form-control"  type="date" id="dateOfBirth" th:field="*{dateOfBirth}" oninput="clearError(this.id+'Error')">
+                            <input class="form-control" type="date" id="dateOfBirth" th:field="*{dateOfBirth}"
+                                   oninput="clearError(this.id+'Error')">
                             <span class="text-danger" id="dateOfBirthError" th:if="${#fields.hasErrors('dateOfBirth')}"
                                   th:errors="*{dateOfBirth}"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="phoneNumber">Số điện thoại:</label>
-                            <input class="form-control"  type="text" id="phoneNumber" th:field="*{phoneNumber}" oninput="clearError(this.id+'Error')">
+                            <input class="form-control" type="text" id="phoneNumber" th:field="*{phoneNumber}"
+                                   oninput="clearError(this.id+'Error')">
                             <span class="text-danger" id="phoneNumberError" th:if="${#fields.hasErrors('phoneNumber')}"
                                   th:errors="*{phoneNumber}"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input class="form-control"  type="email" id="email" th:field="*{email}" oninput="clearError(this.id+'Error')">
+                            <input class="form-control" type="email" id="email" th:field="*{email}"
+                                   oninput="clearError(this.id+'Error')">
                             <span class="text-danger" id="emailError" th:if="${#fields.hasErrors('email')}"
                                   th:errors="*{email}"></span>
                         </div>
@@ -55,11 +84,12 @@
                         <div class="form-group">
                             <label for="events">Môn thi (có thể chọn nhiều môn):</label><br>
                             <div th:each="event : ${events}">
-                                <input type="checkbox" th:field="*{events}" th:value="${event.id}" th:id="${event.id}" />
+                                <input type="checkbox" th:field="*{events}" th:value="${event.id}" th:id="${event.id}"/>
                                 <label th:for="${event.id}" th:text="${event.name}"></label><br>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" onclick="validateSelection()">Đăng ký</button>
+                        <button type="submit" class="btn btn-primary btn-block" onclick="validateSelection()">Đăng ký
+                        </button>
                     </form>
                     <div th:if="${param.success}">
                         <dialog id="successDialog" style="color: #2d676f">
@@ -71,6 +101,7 @@
                                 var dialog = document.getElementById('successDialog');
                                 dialog.showModal();
                             });
+
                             function closeDialog() {
                                 var dialog = document.getElementById('successDialog');
                                 if (window.location.search.includes('success')) {
@@ -83,10 +114,20 @@
                 </div>
             </div>
             <div class="col-md-6 image-container ">
-                <img src="/images/backToSchool.png" alt="Back To School">
+                <!--                <img src="/images/backToSchool.png" alt="Back To School">-->
+                <div id="candidates-container">
+                    <ul id="candidates-list"></ul>
+                </div>
+                <div id="pagination-controls">
+                    <button id="prev-page">Previous</button>
+                    <span id="page-numbers"></span>
+                    <button id="next-page">Next</button>
+                </div>
+
             </div>
         </div>
     </div>
 </section>
+<script src="/scripts/candidates/acceptCadidates.js"></script>
 </body>
 </html>

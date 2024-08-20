@@ -6,6 +6,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +34,7 @@ public class CandidateController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        return "/backToSchool/register";
+        return "backToSchool/register";
     }
 
     @PostMapping("/register")
@@ -45,7 +46,7 @@ public class CandidateController {
             model.addAttribute("errors", errors);
             model.addAttribute("events", competition.getEvents());
             model.addAttribute("candidate",candidate);
-            return "/backToSchool/index";
+            return "backToSchool/register";
         }
         candidate.setConfirmed(false);
         candidate.setRegistrationTime(LocalDateTime.now());
@@ -61,7 +62,11 @@ public class CandidateController {
                              @RequestParam(defaultValue = "") String keyword,
                             @RequestParam(defaultValue = "") String searchType) {
 
-        Pageable pageable = PageRequest.of(page, size);
+//        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(
+                Sort.Order.desc("isConfirmed"),
+                Sort.Order.asc("fullName")
+        ));
         Page<Candidate> candidatePage = candidateService.searchCandidates(keyword, searchType, pageable);
         model.addAttribute("candidates", candidatePage.getContent());
         model.addAttribute("currentPage", page);

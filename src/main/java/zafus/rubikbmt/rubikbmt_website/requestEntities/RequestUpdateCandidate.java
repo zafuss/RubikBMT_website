@@ -65,4 +65,7 @@ public class RequestUpdateCandidate {
 
         return dto;
     }
+    private boolean isConfirmed;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime timeConfirmed;
 }

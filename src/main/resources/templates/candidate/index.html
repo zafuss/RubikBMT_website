@@ -57,6 +57,7 @@
             <div class="card">
               <h5 class="card-header">Danh sách thí sinh cuộc thi BackToSchool 2024</h5>
               <a href="/api/export/downloadCandidatesExcel" class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">Xuất Excel</a>              <!-- Search Form -->
+              <a href="/candidates" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Làm Mới</a>
               <form id="searchForm" action="/candidates" method="get" class="mb-4 p-3">
                 <div class="mb-3">
                   <label for="searchType" class="form-label">Tìm kiếm theo:</label>
@@ -81,8 +82,10 @@
                     <th>STT</th>
                     <th>Họ và tên đệm</th>
                     <th>Tên</th>
+                    <th>Ngày tháng năm sinh </th>
                     <th>Email</th>
                     <th>SDT</th>
+                    <th>Xác nhận</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -91,8 +94,10 @@
                     <td th:text="${(currentPage * size) + stat.index + 1}"></td>
                     <td th:text="${candidate.firstName}"></td>
                     <td th:text="${candidate.lastName}"></td>
+                    <td th:text="${candidate.dateOfBirth}"></td>
                     <td th:text="${candidate.email}"></td>
                     <td th:text="${candidate.phoneNumber}"></td>
+                    <td th:text="${candidate.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
                     <td>
                       <a th:href="@{candidates/detail(id=${candidate.id})}" class="btn btn-secondary" type="button">Chi tiết</a>
                       <a th:href="@{candidates/edit(id=${candidate.id})}" class="btn btn-primary" type="button">Sửa</a>

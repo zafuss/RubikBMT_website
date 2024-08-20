@@ -42,13 +42,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**").disable()
+                        .ignoringRequestMatchers("/api/**","/apiCheck/**").disable()
                 )
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/admin/**", "/back-to-school/**", "/css/**", "/images/**", "/scripts/**",
-                                "/favicon.ico", "/students/register", "/candidates/register")
+                                "/favicon.ico", "/students/register", "/candidates/register","/apiCheck/**")
                         .permitAll()
-                        .requestMatchers("/students/**", "/candidates/**", "/api/**", "/Admin/**").hasAnyAuthority("Admin", "SuperAdmin")
+                        .requestMatchers("/students/**", "/candidates/**", "/api/**", "/Admin/**").hasAnyAuthority("Admin", "SuperAdmin","Modifier")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

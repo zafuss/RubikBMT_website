@@ -31,7 +31,7 @@ public class StudentController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("student", new Student());
-        return "/home/index";
+        return "home/index";
     }
 
     @PostMapping("/register")
@@ -43,7 +43,7 @@ public class StudentController {
             List<LearningType> learningTypes = learningTypeService.findAll();
             model.addAttribute("errors", errors);
             model.addAttribute("learningTypes", learningTypes);
-            return "/home/index";
+            return "home/index";
         }
         student.setConfirmed(false);
         studentService.add(student);
