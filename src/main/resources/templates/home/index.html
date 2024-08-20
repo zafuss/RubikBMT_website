@@ -121,7 +121,7 @@
             <h1 class="mb-5">Chọn một huấn luyện viên</h1>
             <div class="row">
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a onclick="openDialog(1)" target="_blank">
+                    <a onclick="openDialog('lhp', 'Lê Hà Phong')" target="_blank">
                         <div class="info">
                             <div class="">
                                 <img src="/images/mentor_haphong.png" alt="Ha Phong image"
@@ -131,7 +131,7 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-md-6 mb-4">
-                    <a onclick="openDialog(2)" target="_blank">
+                    <a onclick="openDialog('nhtp', 'Nguyễn Hoàng Thiên Phú')" target="_blank">
                         <div class="info">
                             <div class="">
                                 <img src="/images/mentor_thienphu.png" alt="thien phu image"
@@ -320,10 +320,11 @@
 
     <!-- Bootstrap JS -->
     <script>
-        function openDialog(mentorId) {
+        function openDialog(mentorId, mentorName) {
             document.getElementById('dialogOverlay').style.display = 'flex';
             document.getElementById('mentorId').value = mentorId;
-            console.log('Selected Mentor ID: ' + mentorId);
+            document.getElementById('fullName').value = mentorName;
+
         }
 
         function closeDialog() {
@@ -387,10 +388,11 @@
                     <div class="form-group">
                         <label>Hình thức</label>
                         <div th:each="type : ${learningTypes}">
-                            <input type="checkbox" th:field="*{learningType}" th:value="${type.id}" th:id="${type.id}" />
+                            <input type="radio" th:field="*{learningType}" th:value="${type.id}" th:id="${type.id}" />
                             <label th:for="${type.id}" th:text="${type.learningType}"></label><br>
                         </div>
                     </div>
+                    <label id="mentorName" th:text="'Bạn đang chọn huấn luyện viên ' + ${mentorName}"></label>
                     <input type="hidden" id="mentorId" name="mentorId" th:field="*{mentor.id}" />
 
                     <button type="submit" class="btn btn-primary btn-block" onclick="">Đăng ký</button>
