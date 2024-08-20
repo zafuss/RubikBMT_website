@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/admin/**", "/back-to-school/**", "/css/**", "/images/**", "/scripts/**",
                                 "/favicon.ico", "/students/register", "/candidates/register")
                         .permitAll()
-                        .requestMatchers("/students/**", "/candidates/**", "/api/**").hasAnyAuthority("Admin", "SuperAdmin")
+                        .requestMatchers("/students/**", "/candidates/**", "/api/**", "/Admin/**").hasAnyAuthority("Admin", "SuperAdmin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
