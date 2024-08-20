@@ -33,7 +33,7 @@ public class CandidateController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        return "/backToSchool/index";
+        return "/backToSchool/register";
     }
 
     @PostMapping("/register")
@@ -51,7 +51,7 @@ public class CandidateController {
         candidate.setRegistrationTime(LocalDateTime.now());
         candidate.setFullName();
         candidateService.add(candidate);
-        return "redirect:/?success";
+        return "redirect:/back-to-school/register?success";
     }
 
     @GetMapping("")

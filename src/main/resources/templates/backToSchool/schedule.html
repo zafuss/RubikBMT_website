@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{library/lib_backtoschool.html::head()}"></head>
+
+<link rel="stylesheet" href="/css/style_backtoschool.css">
+<link rel="stylesheet" href="/css/navbar_backtoschool.css">
+
+<body>
+<nav th:replace="~{backToSchool/index.html::nav}"></nav>
+<section id="introBack" class="d-flex align-items-center p-3">
+
+    <div class="container mt-3">
+        <div style="text-align: center" id="form-container">
+<!--            <h2 class="text-center mb-4">Lịch trình</h2>-->
+            <img style="display: inline-block; max-width: 80%" class="text-center" src="/images/backtoschool_schedule.svg">
+        </div>
+    </div>
+</section>
+</body>
+</html>

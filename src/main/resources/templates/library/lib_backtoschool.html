@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head()" th:replace="~{/library/lib.html::head('BACK TO SCHOOL')}">
+    <link rel="stylesheet" href="/css/style_backtoschool.css">
+    <link rel="stylesheet" href="/css/navbar_backtoschool.css">
+</head>
+<body>
+<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/images/AvatarRubikBmt.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/back-to-school">Thông tin chung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/back-to-school/schedule">Lịch trình</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/back-to-school/cost">Lệ phí</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/back-to-school/location">Địa điểm thi đấu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/back-to-school/register">ĐĂNG KÝ NGAY</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
