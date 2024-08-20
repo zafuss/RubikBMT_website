@@ -40,7 +40,7 @@ public class BackToSchoolController {
     public String index(Model model) {
         Candidate candidate = new Candidate();
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime openTime = LocalDateTime.of(2024, 8, 19, 20, 27);
+        LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
         if (currentTime.isBefore(openTime)) {
             return "home/coming-soon";
         } else {
