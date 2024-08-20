@@ -323,8 +323,7 @@
         function openDialog(mentorId, mentorName) {
             document.getElementById('dialogOverlay').style.display = 'flex';
             document.getElementById('mentorId').value = mentorId;
-            document.getElementById('fullName').value = mentorName;
-
+            document.getElementById('mentorNameLabel').textContent = mentorName;
         }
 
         function closeDialog() {
@@ -392,7 +391,7 @@
                             <label th:for="${type.id}" th:text="${type.learningType}"></label><br>
                         </div>
                     </div>
-                    <label id="mentorName" th:text="'Bạn đang chọn huấn luyện viên ' + ${mentorName}"></label>
+                    <p>Bạn đang chọn huấn luyện viên: <label id="mentorNameLabel"></label></p>
                     <input type="hidden" id="mentorId" name="mentorId" th:field="*{mentor.id}" />
 
                     <button type="submit" class="btn btn-primary btn-block" onclick="">Đăng ký</button>
