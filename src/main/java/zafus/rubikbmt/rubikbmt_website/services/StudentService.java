@@ -59,6 +59,7 @@ public class StudentService {
             if (request.getDateOfBirth() != null) {
                 existingStudent.setDateOfBirth(request.getDateOfBirth());
             }
+            existingStudent.setConfirmed(request.isConfirmed());
             return studentRepository.save(existingStudent);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating student: " + ex.getMessage());

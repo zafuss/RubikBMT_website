@@ -71,8 +71,18 @@
                                 <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required>
                                 <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="status"> Xác Nhận:</label><span
+                                    class="text-danger">*</span>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="1" th:selected="${student.confirmed == true}">Đã Xác Nhận</option>
+                                    <option value="0" th:selected="${student.confirmed == false}">Chưa Xác Nhận</option>
+                                </select>
+                            </div>
+
+
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="/candidates" class="btn btn-secondary">Huỷ</a>
+                            <a href="/students/" class="btn btn-secondary">Huỷ</a>
                         </form>
 
                     </div>

@@ -33,7 +33,7 @@ public class Student {
     private String lastName;
     @Size(min = 1, max = 50, message = " Tên phải có từ 1 đến 50 ký tự")
     private String firstName;
-    @Size(min = 1, max = 50, message = "Họ và tên phụ huynh phải có từ 1 đến 50 ký tự")
+//    @Size(min = 1, max = 50, message = "Họ và tên phụ huynh phải có từ 1 đến 50 ký tự")
     private String parentName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Ngày tháng không được bỏ trống.")
