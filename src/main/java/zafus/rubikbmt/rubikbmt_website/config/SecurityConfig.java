@@ -42,9 +42,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**"))
+                        .ignoringRequestMatchers("/api/**").disable()
+                )
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/admin/**","/back-to-school/**", "/", "/css/**", "/images/**", "/scripts/**", "favicon.ico","students/register","candidates/register").permitAll()
+                        .requestMatchers("/", "/admin/**", "/back-to-school/**", "/css/**", "/images/**", "/scripts/**",
+                                "/favicon.ico", "/students/register", "/candidates/register")
+                        .permitAll()
                         .requestMatchers("/students/**", "/candidates/**", "/api/**").hasAnyAuthority("Admin", "SuperAdmin")
                         .anyRequest().authenticated()
                 )
@@ -58,5 +61,6 @@ public class SecurityConfig {
                 );
         return http.build();
     }
+
 
 }
