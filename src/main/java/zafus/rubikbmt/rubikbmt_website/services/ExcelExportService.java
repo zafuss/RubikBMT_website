@@ -58,7 +58,7 @@ public class ExcelExportService {
 
         // Create header row
         Row headerRow = sheet.createRow(0);
-        String[] headers = { "Họ và tên đệm", "Tên", "Ngày sinh", "Số điện thoại", "Email", "Tên Phụ Huynh", "Huấn Luyện Viên", "Xác nhận","Hình Thức Học" };
+        String[] headers = { "Họ và tên đệm", "Tên", "Ngày sinh", "Số điện thoại", "Email", "Tên Phụ Huynh", "Huấn Luyện Viên", "Ngày đăng ký","Ngày xác nhận","Hình Thức Học","Ghi chú" };
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
             cell.setCellValue(headers[i]);
@@ -74,9 +74,11 @@ public class ExcelExportService {
             row.createCell(3).setCellValue(student.getPhoneNumber());
             row.createCell(4).setCellValue(student.getEmail());
             row.createCell(5).setCellValue(student.getParentName());
-            row.createCell(6).setCellValue(student.getMentor().getFirstName() + " " + student.getMentor().getLastName());
-            row.createCell(7).setCellValue(student.isConfirmed());
-            row.createCell(8).setCellValue(student.getLearningType().getLearningType());
+            row.createCell(6).setCellValue(student.getMentor().getLastName() + " " + student.getMentor().getFirstName());
+            row.createCell(7).setCellValue(student.getRegistrationDate() != null ? student.getRegistrationDate().toString() : "");
+            row.createCell(8).setCellValue(student.getConfirmationDate() != null ? student.getConfirmationDate().toString() : "Chưa xác nhận");
+            row.createCell(9).setCellValue(student.getLearningType().getLearningType());
+            row.createCell(10).setCellValue(student.getNote());
         }
 
         // Resize columns to fit the content

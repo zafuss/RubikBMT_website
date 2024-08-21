@@ -65,7 +65,9 @@
                                         <th>SDT</th>
                                         <th>Huấn luyện viên</th>
                                         <th>Hình thức học</th>
+                                        <th>Ngày đăng ký</th>
                                         <th>Xác nhận</th>
+                                        <th>Ghi chú</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -77,9 +79,11 @@
                                         <td th:text="${student.parentName}"></td>
                                         <td th:text="${student.email}"></td>
                                         <td th:text="${student.phoneNumber}"></td>
-                                        <td th:text="${student.getMentor().getFirstName()} + ' ' + ${student.getMentor().getLastName()}"></td>
+                                        <td th:text="${student.getMentor().getLastName()} + ' ' + ${student.getMentor().getFirstName()}"></td>
                                         <td th:text="${student.getLearningType().getLearningType()}"></td>
-                                        <td th:text="${student.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                                        <td th:text="${student.getRegistrationDate()}"></td>
+                                        <td th:text="${student.confirmationDate != null ? 'Đã xác nhận vào ' + student.confirmationDate : 'Chưa xác nhận'}"></td>
+                                        <td th:text="${student.getNote()}"></td>
                                         <td>
                                             <a th:href="@{students/detail(id=${student.id})}" class="btn btn-secondary">Chi tiết</a>
                                             <a th:href="@{students/edit(id=${student.id})}" class="btn btn-primary">Sửa</a>

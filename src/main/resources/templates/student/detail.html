@@ -35,8 +35,8 @@
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <th>Huấn Luyện Viên</th>
-                                <td th:text="${student.getMentor().getFirstName()} + ' ' + ${student.getMentor().getLastName()}"></td>
+                                <th>Huấn luyện viên</th>
+                                <td th:text="${student.getMentor().getLastName()} + ' ' + ${student.getMentor().getFirstName()}"></td>
                             </tr>
                             <tr>
                                 <th>Họ và tên đệm</th>
@@ -64,8 +64,11 @@
                                 <td th:text="${student.email}"></td>
                             </tr>
                             <tr>
-                                <th>Xác nhận </th>
-                                <td th:text="${student.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                                <th>Xác nhận</th>
+                                <td th:text="${student.confirmationDate != null ? 'Đã xác nhận vào ' + student.confirmationDate : 'Chưa xác nhận'}"></td>
+                            </tr>                            <tr>
+                                <th>Ghi chú</th>
+                                <td th:text="${student.note}"></td>
                             </tr>
                             <tr>
                                 <th>Hình Thức Học</th>
