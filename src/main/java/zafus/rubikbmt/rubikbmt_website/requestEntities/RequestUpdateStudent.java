@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import zafus.rubikbmt.rubikbmt_website.entities.Competition;
 import zafus.rubikbmt.rubikbmt_website.entities.Event;
+import zafus.rubikbmt.rubikbmt_website.entities.Mentor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,4 +42,7 @@ public class RequestUpdateStudent {
     @Email(message = "Không đúng định dạng Email")
     private String email;
     private boolean isConfirmed;
+    private LocalDateTime confirmationDate;
+    private String note;
+    private Mentor mentor;
 }
