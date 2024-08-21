@@ -11,6 +11,7 @@ import zafus.rubikbmt.rubikbmt_website.entities.Student;
 import zafus.rubikbmt.rubikbmt_website.repositories.IStudentRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,9 +48,6 @@ public class StudentService {
             if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
                 existingStudent.setFirstName(request.getFirstName());
             }
-            if (request.getParentName() != null && !request.getParentName().isEmpty()) {
-                existingStudent.setParentName(request.getParentName());
-            }
             if (request.getEmail() != null && !request.getEmail().isEmpty()) {
                 existingStudent.setEmail(request.getEmail());
             }
@@ -59,7 +57,10 @@ public class StudentService {
             if (request.getDateOfBirth() != null) {
                 existingStudent.setDateOfBirth(request.getDateOfBirth());
             }
-            existingStudent.setConfirmed(request.isConfirmed());
+            existingStudent.setParentName(request.getParentName());
+            existingStudent.setNote(request.getNote());
+            existingStudent.setConfirmationDate(request.isConfirmed() ?
+                    (existingStudent.getConfirmationDate() != null ? existingStudent.getConfirmationDate() : LocalDateTime.now()) : null);
             return studentRepository.save(existingStudent);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating student: " + ex.getMessage());

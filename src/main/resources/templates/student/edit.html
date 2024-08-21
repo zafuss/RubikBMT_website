@@ -52,9 +52,8 @@
                                 <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                             </div>
                             <div class="form-group">
-                                <label for="parentName">Tên Phụ Huynh</label>
-                                <input type="text" id="parentName" name="parentName" class="form-control" th:field="*{parentName}" required>
-                                <span class="text-danger" th:if="${#fields.hasErrors('parentName')}" th:errors="*{parentName}"></span>
+                                <label for="parentName">Tên phụ huynh</label>
+                                <input type="text" id="parentName" name="parentName" class="form-control" th:field="*{parentName}" >
                             </div>
                             <div class="form-group">
                                 <label for="dateOfBirth">Ngày tháng năm sinh</label>
@@ -67,18 +66,32 @@
                                 <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
                             </div>
                             <div class="form-group">
+                                <label for="mentor">Huấn luyện viên</label>
+                                <select id="mentor" name="mentor" class="form-control" th:field="*{mentor}">
+                                    <option value="" th:if="${student.mentor == null}">-- Chọn một Mentor --</option>
+                                    <option th:each="mentor : ${mentors}"
+                                            th:value="${mentor.id}"
+                                            th:text="${mentor.lastName} + ' ' + ${mentor.firstName}"
+                                            th:selected="${student.mentor != null && student.mentor.id == mentor.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required>
                                 <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="status">Xác Nhận:</label>
-                                <select class="form-control" id="status" name="status" th:field="*{confirmed}">
-                                    <option value="true" th:selected="${student.confirmed}">Đã Xác Nhận</option>
-                                    <option value="false" th:selected="${!student.confirmed}">Chưa Xác Nhận</option>
+                                <label class="form-label" for="isConfirmed">Xác Nhận:</label>
+                                <select class="form-control" id="isConfirmed" name="isConfirmed">
+                                    <option value="true" th:selected="${isConfirmed}">Đã Xác Nhận</option>
+                                    <option value="false" th:selected="${!isConfirmed}">Chưa Xác Nhận</option>
                                 </select>
                             </div>
-
+                            <div class="form-group">
+                                <label for="note">Ghi chú</label>
+                                <input type="text" id="note" name="note" class="form-control" th:field="*{note}" >
+                            </div>
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                             <a href="/students" class="btn btn-secondary">Huỷ</a>
                         </form>
