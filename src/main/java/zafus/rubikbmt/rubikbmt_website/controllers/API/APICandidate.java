@@ -24,35 +24,35 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/apiCheck/candidates")
 public class APICandidate {
-    @Autowired
-    private CandidateService candidateService;
-    @GetMapping("/accept")
-    public ResponseEntity<Map<String, Object>> getCandidates(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size) {
-        if (page < 0 || size <= 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        @Autowired
+        private CandidateService candidateService;
+
+        @GetMapping("/accept")
+        public ResponseEntity<Map<String, Object>> getCandidates(
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size) {
+                if (page < 0 || size <= 0) {
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+
+                Pageable pageable = PageRequest.of(page, size);
+                Page<Candidate> candidatesPage = candidateService.findUnconfirmedCandidates(pageable, size);
+
+                List<CandidateDTO> candidateDTOs = candidatesPage.getContent().stream()
+                                .map(candidate -> new CandidateDTO(
+                                                candidate.getFullName(),
+                                                candidate.getPhoneNumber(),
+                                                candidate.getEvents().stream()
+                                                                .map(event -> new EventDTO(event.getName()))
+                                                                .collect(Collectors.toList())))
+                                .collect(Collectors.toList());
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("candidates", candidateDTOs);
+                response.put("currentPage", candidatesPage.getNumber());
+                response.put("totalPages", candidatesPage.getTotalPages());
+                response.put("totalCandidates", candidatesPage.getTotalElements());
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
         }
-
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Candidate> candidatesPage = candidateService.findUnconfirmedCandidates(pageable,size);
-
-        List<CandidateDTO> candidateDTOs = candidatesPage.getContent().stream()
-                .map(candidate -> new CandidateDTO(
-                        candidate.getFullName(),
-                        candidate.getPhoneNumber(),
-                        candidate.getEvents().stream()
-                                .map(event -> new EventDTO(event.getName()))
-                                .collect(Collectors.toList())
-                ))
-                .collect(Collectors.toList());
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("candidates", candidateDTOs);
-        response.put("currentPage", candidatesPage.getNumber());
-        response.put("totalPages", candidatesPage.getTotalPages());
-        response.put("totalCandidates", candidatesPage.getTotalElements());
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

@@ -283,3 +283,46 @@ dialog::backdrop {
 .dialog-button:hover {
     background-color: #45a049;
 }
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adjust spacing between elements */
+    margin-top: 20px; /* Add space above the pagination */
+}
+
+.page-numbers-container {
+    display: flex;
+    gap: 5px; /* Adjust spacing between page number buttons */
+}
+
+.page-numbers-container button {
+    padding: 5px 10px;
+}
+
+#register-success-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50vh;
+    position: relative;
+    padding-bottom: 50px; /* Space for the pagination */
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adjust spacing between elements */
+    margin-top: auto; /* Push to the bottom */
+    padding-top: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.page-numbers-container {
+    display: flex;
+    gap: 5px; /* Adjust spacing between page number buttons */
+}

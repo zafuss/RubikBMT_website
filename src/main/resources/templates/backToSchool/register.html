@@ -114,16 +114,32 @@
                 </div>
             </div>
             <div class="col-md-6 image-container ">
-                <!--                <img src="/images/backToSchool.png" alt="Back To School">-->
-                <div id="candidates-container">
-                    <ul id="candidates-list"></ul>
-                </div>
-                <div id="pagination-controls">
-                    <button id="prev-page">Previous</button>
-                    <span id="page-numbers"></span>
-                    <button id="next-page">Next</button>
-                </div>
+                <div id="form-container" style="max-height: 80%; min-height: 20vh">
+                    <h2 class="text-center">Các thí sinh đã đăng ký thành công</h2>
+                    <p style="color: black" >* Danh sách chỉ hiển thị các thí sinh đã hoàn thành lệ phí và được xác nhận sau 24h kể từ khi đóng lệ phí</p>
+                    <div id="register-success-list">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Họ và tên thí sinh</th>
+                                <th>Số điện thoại</th>
+                                <th>Bộ môn dự thi</th>
+                            </tr>
+                            </thead>
+                            <tbody id="candidates-table-body">
+                            <!-- Candidate rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
 
+                        <!-- Pagination controls -->
+
+                        <div class=" pagination-controls">
+                            <button id="prev-page" disabled>Trang trước</button>
+                            <div id="page-numbers"></div>
+                            <button id="next-page" disabled>Trang sau</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

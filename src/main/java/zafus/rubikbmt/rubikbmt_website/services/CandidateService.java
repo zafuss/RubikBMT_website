@@ -108,7 +108,7 @@ public class CandidateService {
     }
     public List<String> getLastnameFirstnameSuggestions(String input) {
         return candidateRepository.findByLastNameContainingOrFirstNameContaining(input, input).stream()
-                .map(candidate -> candidate.getFirstName() + " " +  candidate.getLastName() )
+                .map(candidate -> candidate.getLastName() + " " +  candidate.getFirstName() )
                 .distinct()
                 .collect(Collectors.toList());
     }

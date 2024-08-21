@@ -36,11 +36,11 @@
                             <tbody>
                             <tr>
                                 <th>Họ và tên đệm</th>
-                                <td th:text="${candidate.firstName}"></td>
+                                <td th:text="${candidate.lastName}"></td>
                             </tr>
                             <tr>
                                 <th>Tên</th>
-                                <td th:text="${candidate.lastName}"></td>
+                                <td th:text="${candidate.firstName}"></td>
                             </tr>
                             <tr>
                                 <th>Ngày tháng năm sinh</th>
@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <th>Xác nhận</th>
-                                <td th:text="${candidate.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                                <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed : 'Chưa xác nhận'}"></td>
                             </tr>
                             <tr>
                                 <th>Cuộc thi</th>

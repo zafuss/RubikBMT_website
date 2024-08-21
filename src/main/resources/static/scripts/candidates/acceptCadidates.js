@@ -2,21 +2,24 @@ let currentPage = 0;
 let totalPages = 0;
 
 function loadPage(page) {
-
     fetch(`/apiCheck/candidates/accept?page=${page}`)
         .then(response => response.json())
         .then(data => {
-            const candidatesList = document.getElementById('candidates-list');
-            candidatesList.innerHTML = '';
-            data.candidates.forEach(candidate => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div>${candidate.fullName} ${candidate.phoneNumber}</div>
-                    <div id="events-${candidate.id}"></div>
-                `;
-                candidatesList.appendChild(li);
+            const candidatesTableBody = document.getElementById('candidates-table-body');
+            candidatesTableBody.innerHTML = ''; // Clear existing table rows
 
-                renderEvents(candidate.id, candidate.events);
+            data.candidates.forEach((candidate, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${candidate.fullName}</td>
+                    <td>${candidate.phoneNumber}</td>
+                    <td id="events-${index}"></td>
+                `;
+                candidatesTableBody.appendChild(row);
+
+                // Pass the index to ensure correct targeting
+                const eventsContainer = document.getElementById(`events-${index}`);
+                renderEvents(eventsContainer, candidate.events);
             });
 
             currentPage = data.currentPage;
@@ -30,8 +33,7 @@ function loadPage(page) {
         .catch(error => console.error('Error loading page:', error));
 }
 
-function renderEvents(candidateId, events) {
-    const eventsContainer = document.getElementById(`events-${candidateId}`);
+function renderEvents(eventsContainer, events) {
     eventsContainer.innerHTML = '';
     events.forEach(event => {
         const eventDiv = document.createElement('div');
@@ -65,4 +67,3 @@ document.getElementById('prev-page').addEventListener('click', () => {
 document.getElementById('next-page').addEventListener('click', () => {
     loadPage(currentPage + 1);
 });
-

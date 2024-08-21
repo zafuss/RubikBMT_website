@@ -92,12 +92,12 @@
                   <tbody class="table-border-bottom-0">
                   <tr th:each="candidate, stat : ${candidates}">
                     <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                    <td th:text="${candidate.firstName}"></td>
                     <td th:text="${candidate.lastName}"></td>
+                    <td th:text="${candidate.firstName}"></td>
                     <td th:text="${candidate.dateOfBirth}"></td>
                     <td th:text="${candidate.email}"></td>
                     <td th:text="${candidate.phoneNumber}"></td>
-                    <td th:text="${candidate.confirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                    <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed : 'Chưa xác nhận'}"></td>
                     <td>
                       <a th:href="@{candidates/detail(id=${candidate.id})}" class="btn btn-secondary" type="button">Chi tiết</a>
                       <a th:href="@{candidates/edit(id=${candidate.id})}" class="btn btn-primary" type="button">Sửa</a>

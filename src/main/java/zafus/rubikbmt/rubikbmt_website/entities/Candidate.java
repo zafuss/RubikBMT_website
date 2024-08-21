@@ -54,6 +54,6 @@ public class Candidate {
     @ManyToMany
     private List<Event> events;
     public void setFullName() {
-        this.fullName = this.firstName + " " + this.lastName;
+        this.fullName = this.lastName + " " + this.firstName;
     }
 }
