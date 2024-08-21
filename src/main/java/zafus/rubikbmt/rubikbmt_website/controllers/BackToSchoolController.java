@@ -43,12 +43,11 @@ public class BackToSchoolController {
     private CandidateService candidateService;
     @Autowired
     private CompetitionService competitionService;
-
+    LocalDateTime currentTime = LocalDateTime.now();
+    LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
     @GetMapping()
     public String index(Model model) {
         Candidate candidate = new Candidate();
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
         if (currentTime.isBefore(openTime)) {
             return "home/coming-soon";
         } else {
@@ -64,8 +63,7 @@ public class BackToSchoolController {
     @GetMapping("/register")
     public String register(Model model) {
         Candidate candidate = new Candidate();
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
+
         if (currentTime.isBefore(openTime)) {
             return "home/coming-soon";
         } else {
@@ -79,21 +77,37 @@ public class BackToSchoolController {
     }
     @GetMapping("/general")
     public String general(Model model) {
-        return "backToSchool/general";
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/general";
+        }
     }
 
     @GetMapping("/cost")
     public String cost(Model model) {
-        return "backToSchool/cost";
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/cost";
+        }
     }
 
     @GetMapping("/schedule")
     public String schedule(Model model) {
-        return "backToSchool/schedule";
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/schedule";
+        }
     }
 
     @GetMapping("location")
     public String location(Model model) {
-        return "backToSchool/location";
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/location";
+        }
     }
 }

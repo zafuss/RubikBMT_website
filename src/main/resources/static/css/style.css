@@ -307,7 +307,8 @@ a {
 
 .mentor-image {
     /*width: 300px;*/
-    width: 40vh;
+    /*width: 40vh;*/
+    max-width: 75%;
 }
 
 .home-logo {
@@ -325,16 +326,16 @@ a {
     }
 }
 
-@media (max-width: 1024px) {
-    .mentor-image {
-        width: 20vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
-    }
-}
-@media (max-width: 767px) {
-    .mentor-image {
-        width: 32vh; /* Giảm chiều cao trên màn hình nhỏ hơn */
-    }
-}
+/*@media (max-width: 1024px) {*/
+/*    .mentor-image {*/
+/*        width: 20vh; !* Giảm chiều cao trên màn hình nhỏ hơn *!*/
+/*    }*/
+/*}*/
+/*@media (max-width: 767px) {*/
+/*    .mentor-image {*/
+/*        width: 32vh; !* Giảm chiều cao trên màn hình nhỏ hơn *!*/
+/*    }*/
+/*}*/
 dialog {
     border: none;
     border-radius: 20px;
