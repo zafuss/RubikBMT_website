@@ -41,7 +41,6 @@ public class APICandidate {
                 List<CandidateDTO> candidateDTOs = candidatesPage.getContent().stream()
                                 .map(candidate -> new CandidateDTO(
                                                 candidate.getFullName(),
-                                                candidate.getPhoneNumber(),
                                                 candidate.getEvents().stream()
                                                                 .map(event -> new EventDTO(event.getName()))
                                                                 .collect(Collectors.toList())))

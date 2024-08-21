@@ -8,11 +8,18 @@ function loadPage(page) {
             const candidatesTableBody = document.getElementById('candidates-table-body');
             candidatesTableBody.innerHTML = ''; // Clear existing table rows
 
+            if (data.candidates.length === 0) {
+                candidatesTableBody.innerHTML = '<tr><td colspan="2">No candidates found.</td></tr>';
+                document.getElementById('page-numbers').innerHTML = '';
+                document.getElementById('prev-page').disabled = true;
+                document.getElementById('next-page').disabled = true;
+                return;
+            }
+
             data.candidates.forEach((candidate, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${candidate.fullName}</td>
-                    <td>${candidate.phoneNumber}</td>
                     <td id="events-${index}"></td>
                 `;
                 candidatesTableBody.appendChild(row);
@@ -25,10 +32,8 @@ function loadPage(page) {
             currentPage = data.currentPage;
             totalPages = data.totalPages;
 
-            document.getElementById('prev-page').disabled = currentPage === 0;
-            document.getElementById('next-page').disabled = currentPage + 1 === totalPages;
-
             updatePageNumbers();
+            updatePaginationControls();
         })
         .catch(error => console.error('Error loading page:', error));
 }
@@ -56,14 +61,22 @@ function updatePageNumbers() {
     }
 }
 
+function updatePaginationControls() {
+    document.getElementById('prev-page').disabled = currentPage === 0;
+    document.getElementById('next-page').disabled = currentPage + 1 === totalPages;
+
+    // Update current page display
+    document.getElementById('current-page').textContent = `Page ${currentPage + 1} of ${totalPages}`;
+}
+
 // Initial load
 loadPage(0);
 
 // Event listeners for pagination buttons
 document.getElementById('prev-page').addEventListener('click', () => {
-    loadPage(currentPage - 1);
+    if (currentPage > 0) loadPage(currentPage - 1);
 });
 
 document.getElementById('next-page').addEventListener('click', () => {
-    loadPage(currentPage + 1);
+    if (currentPage < totalPages - 1) loadPage(currentPage + 1);
 });

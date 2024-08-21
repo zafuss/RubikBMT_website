@@ -3,32 +3,47 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{library/lib_backtoschool.html::head()}">
     <style>
-        .pagination .page-item.active .page-link {
-            background-color: #007bff;
-            border-color: #007bff;
-            color: white;
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .pagination .page-link {
-            color: #007bff;
+        #register-success-list {
+            flex-grow: 1;
+            overflow-x: auto;
+            margin-bottom: 10px;
+        }
+
+        .table {
+            width: 100%;
+            min-width: 600px;
+            white-space: nowrap;
+        }
+
+        #pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px; /* Optional: Add margin if needed */
+        }
+
+        #page-numbers {
+            display: flex;
+            gap: 5px; /* Optional: Add gap between page numbers if needed */
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
             cursor: pointer;
         }
-
-        .pagination .page-link:hover {
-            background-color: #e9ecef;
-            color: #0056b3;
-        }
-
-        .pagination .page-item.disabled .page-link {
-            color: #6c757d;
-            cursor: not-allowed;
-        }
-
     </style>
 </head>
+<body>
 <link rel="stylesheet" href="/css/style_backtoschool.css">
 <link rel="stylesheet" href="/css/navbar_backtoschool.css">
-<body>
 <nav th:replace="~{library/lib_backtoschool.html::nav}"></nav>
 <section id="introBack" class="d-flex align-items-center p-3">
     <div class="container mt-3">
@@ -113,16 +128,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 image-container ">
-                <div id="form-container" style="max-height: 80%; min-height: 20vh">
+            <div class="col-md-6 image-container">
+                <div id="form-container" style="max-height: 80%; min-height: 20vh;">
                     <h2 class="text-center">Các thí sinh đã đăng ký thành công</h2>
-                    <p style="color: black" >* Danh sách chỉ hiển thị các thí sinh đã hoàn thành lệ phí và được xác nhận sau 24h kể từ khi đóng lệ phí</p>
-                    <div id="register-success-list">
+                    <p style="color: black;">* Danh sách chỉ hiển thị các thí sinh đã hoàn thành lệ phí và được xác nhận sau 24h kể từ khi đóng lệ phí</p>
+                    <div id="register-success-list" class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Họ và tên thí sinh</th>
-                                <th>Số điện thoại</th>
                                 <th>Bộ môn dự thi</th>
                             </tr>
                             </thead>
@@ -130,17 +144,16 @@
                             <!-- Candidate rows will be dynamically inserted here -->
                             </tbody>
                         </table>
-
-                        <!-- Pagination controls -->
-
-                        <div class=" pagination-controls">
-                            <button id="prev-page" disabled>Trang trước</button>
-                            <div id="page-numbers"></div>
-                            <button id="next-page" disabled>Trang sau</button>
+                        <div id="page-numbers"></div>
+                        <div id="pagination-controls">
+                            <button id="prev-page">Trang trước</button>
+                            <button id="next-page">Trang kế</button>
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
