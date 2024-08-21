@@ -57,11 +57,13 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        }
 
         boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority("SuperAdmin"));
-        if(isAdmin){
+        boolean isModifier = authentication.getAuthorities().contains(new SimpleGrantedAuthority("Modifier"));
+        if(isAdmin || isModifier){
             setDefaultTargetUrl("/Admin");
-        }else{
+        } else {
             setDefaultTargetUrl("/");
         }
+
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
