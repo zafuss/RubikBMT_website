@@ -85,12 +85,14 @@ public class CandidateController {
     }
     @GetMapping("/edit")
     public String editCandidate(@RequestParam("id") String id, Model model) {
-//        Candidate candidate = candidateService.findById(id);
+//      Candidate candidate = candidateService.findById(id);
         RequestUpdateCandidate candidate = RequestUpdateCandidate.fromEntity(candidateService.findById(id));
         Competition competition = competitionService.getByName("BackToSchool");
         List<Event> events =  competition.getEvents();
+        boolean isConfirmed = candidate.getTimeConfirmed() != null;
         model.addAttribute("candidate", candidate);
         model.addAttribute("events", events);
+        model.addAttribute("isConfirmed",isConfirmed);
         return "candidate/edit";
     }
 

@@ -41,13 +41,13 @@ public class CandidateService {
         try {
             Candidate existingCandidate = candidateRepository.findById(request.getId())
                     .orElseThrow(() -> new RuntimeException("Candidate not found"));
-
             if (request.getLastName() != null && !request.getLastName().isEmpty()) {
                 existingCandidate.setLastName(request.getLastName());
             }
             if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
                 existingCandidate.setFirstName(request.getFirstName());
             }
+            existingCandidate.setFullName();
             if (request.getEmail() != null && !request.getEmail().isEmpty()) {
                 existingCandidate.setEmail(request.getEmail());
             }
@@ -64,9 +64,12 @@ public class CandidateService {
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());
             }
-            existingCandidate.setConfirmed(request.isConfirmed());
             if ( request.isConfirmed()){
+                existingCandidate.setConfirmed(true);
                 existingCandidate.setTimeConfirmed(LocalDateTime.now());
+            }else{
+                existingCandidate.setConfirmed(false);
+                existingCandidate.setTimeConfirmed(null);
             }
             return candidateRepository.save(existingCandidate);
         } catch (Exception ex) {

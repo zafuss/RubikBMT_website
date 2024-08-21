@@ -54,7 +54,7 @@ public class RequestUpdateCandidate {
         dto.setDateOfBirth(candidate.getDateOfBirth());
         dto.setPhoneNumber(candidate.getPhoneNumber());
         dto.setEmail(candidate.getEmail());
-
+        dto.setConfirmed(candidate.isConfirmed());
         // Assuming you want to use IDs for competition and events
         if (candidate.getCompetition() != null) {
             dto.setCompetition(candidate.getCompetition());

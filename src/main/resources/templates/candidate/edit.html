@@ -73,8 +73,8 @@
                             <div class="mb-4">
                                 <label class="form-label" for="status">Xác Nhận:</label>
                                 <select class="form-control" id="status" name="status" th:field="*{confirmed}">
-                                    <option value="true" th:selected="${candidate.confirmed}">Đã Xác Nhận</option>
-                                    <option value="false" th:selected="${!candidate.confirmed}">Chưa Xác Nhận</option>
+                                    <option value="true" th:selected="${isConfirmed}">Đã Xác Nhận</option>
+                                    <option value="false" th:selected="${!isConfirmed}">Chưa Xác Nhận</option>
                                 </select>
                             </div>
 
