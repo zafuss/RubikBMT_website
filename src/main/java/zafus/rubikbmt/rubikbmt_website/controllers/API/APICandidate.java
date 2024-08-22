@@ -42,7 +42,7 @@ public class APICandidate {
                                 .map(candidate -> new CandidateDTO(
                                                 candidate.getFullName(),
                                                 candidate.getEvents().stream()
-                                                                .map(event -> new EventDTO(event.getName()))
+                                                                .map(event -> new EventDTO(event.getName(),event.getImageURL()))
                                                                 .collect(Collectors.toList())))
                                 .collect(Collectors.toList());
 

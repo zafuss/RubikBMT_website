@@ -18,4 +18,5 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+    private String imageURL;
 }
