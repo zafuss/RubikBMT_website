@@ -60,7 +60,6 @@ public class CandidateService {
             if (request.getDateOfBirth() != null) {
                 existingCandidate.setDateOfBirth(request.getDateOfBirth());
             }
-                existingCandidate.setNote(request.getNote());
 
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());
@@ -68,8 +67,7 @@ public class CandidateService {
             if ( request.isConfirmed()){
                 existingCandidate.setConfirmed(true);
                 existingCandidate.setTimeConfirmed(LocalDateTime.now());
-            }
-            else{
+            }else{
                 existingCandidate.setConfirmed(false);
                 existingCandidate.setTimeConfirmed(null);
             }

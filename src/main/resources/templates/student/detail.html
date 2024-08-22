@@ -40,14 +40,14 @@
                             </tr>
                             <tr>
                                 <th>Họ và tên đệm</th>
-                                <td th:text="${student.lastName}"></td>
-                            </tr>
-                            <tr>
-                                <th>Tên</th>
                                 <td th:text="${student.firstName}"></td>
                             </tr>
                             <tr>
-                                <th>Tên phụ huynh</th>
+                                <th>Tên</th>
+                                <td th:text="${student.lastName}"></td>
+                            </tr>
+                            <tr>
+                                <th>Tên Phụ Huynh</th>
                                 <td th:text="${student.parentName}"></td>
                             </tr>
 
@@ -71,7 +71,7 @@
                                 <td th:text="${student.note}"></td>
                             </tr>
                             <tr>
-                                <th>Hình thức học</th>
+                                <th>Hình Thức Học</th>
                                 <td th:text="${student.getLearningType().getLearningType()}"></td>
                             </tr>
                             </tbody>

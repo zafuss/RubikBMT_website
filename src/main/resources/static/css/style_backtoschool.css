@@ -22,15 +22,6 @@ body {
     border: #235234 solid;
     border-radius: 10px;
     padding: 10px 20px;
-    margin-right: 5px;
-}
-#introBack button.outline-button {
-    background-color: #f5f8f6;
-    color: #235234;
-    border: #235234 solid;
-    border-radius: 10px;
-    padding: 10px 20px;
-    margin-right: 5px;
 }
 
 #introBack button:hover {
@@ -256,14 +247,12 @@ body {
     margin: 18px 0;
 }
 
-button.active {
+button {
       background-color: #235234;
       color: white;
       border-radius: 10px;
       padding: 10px 20px;
-      margin-right: 5px;
 }
-
 
 
 button:hover {
