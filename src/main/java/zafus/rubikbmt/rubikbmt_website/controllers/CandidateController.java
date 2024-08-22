@@ -45,7 +45,7 @@ public class CandidateController {
             candidate.setCompetition(competition);
             model.addAttribute("errors", errors);
             model.addAttribute("events", competition.getEvents());
-            model.addAttribute("candidate",candidate);
+            model.addAttribute("candidate", candidate);
             return "backToSchool/register";
         }
         candidate.setConfirmed(false);
@@ -64,8 +64,8 @@ public class CandidateController {
 
 //        Pageable pageable = PageRequest.of(page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by(
-                Sort.Order.desc("isConfirmed"),
-                Sort.Order.asc("fullName")
+                Sort.Order.asc("isConfirmed"),
+                Sort.Order.desc("registrationTime")
         ));
         Page<Candidate> candidatePage = candidateService.searchCandidates(keyword, searchType, pageable);
         model.addAttribute("candidates", candidatePage.getContent());

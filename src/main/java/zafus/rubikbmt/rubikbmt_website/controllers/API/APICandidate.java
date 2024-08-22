@@ -30,7 +30,7 @@ public class APICandidate {
         @GetMapping("/accept")
         public ResponseEntity<Map<String, Object>> getCandidates(
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size) {
+                        @RequestParam(defaultValue = "5") int size) {
                 if (page < 0 || size <= 0) {
                         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }

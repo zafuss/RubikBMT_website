@@ -308,7 +308,7 @@ a {
 .mentor-image {
     /*width: 300px;*/
     /*width: 40vh;*/
-    max-width: 75%;
+    max-width: 80%;
 }
 
 .home-logo {
@@ -326,9 +326,9 @@ a {
     }
 }
 
-/*@media (max-width: 1024px) {*/
+/*@media (max-width: 991px) {*/
 /*    .mentor-image {*/
-/*        width: 20vh; !* Giảm chiều cao trên màn hình nhỏ hơn *!*/
+/*        max-width: 50%;*/
 /*    }*/
 /*}*/
 /*@media (max-width: 767px) {*/

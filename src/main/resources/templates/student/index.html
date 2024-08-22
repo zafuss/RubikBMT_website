@@ -75,8 +75,8 @@
                                     <tbody class="table-border-bottom-0">
                                     <tr th:each="student, stat : ${students}">
                                         <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                                        <td th:text="${student.firstName}"></td>
                                         <td th:text="${student.lastName}"></td>
+                                        <td th:text="${student.firstName}"></td>
                                         <td th:text="${student.dateOfBirth}"></td>
                                         <td th:text="${student.parentName}"></td>
                                         <td th:text="${student.email}"></td>
