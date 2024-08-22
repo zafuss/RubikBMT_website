@@ -45,8 +45,10 @@ function renderEvents(eventsContainer, events) {
         img.className = 'event-image';
         img.src = event.imageURL;
         img.alt = event.name;
-        img.style.width = '40px';
-        img.style.height = '40px';
+        img.style.width = '25px';
+        img.style.height = '25px';
+        img.style.borderRadius = '0';
+        img.style.margin = '5px 5px';
         eventsContainer.appendChild(img);
     });
 }
@@ -84,6 +86,7 @@ function setActivePageButton(pageIndex) {
     // Add active class to the clicked page number button
     pageButtons[pageIndex].classList.add('active');
 }
+
 function updatePaginationControls() {
     document.getElementById('prev-page').disabled = currentPage === 0;
     document.getElementById('next-page').disabled = currentPage + 1 === totalPages;
