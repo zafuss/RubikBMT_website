@@ -41,10 +41,13 @@ function loadPage(page) {
 function renderEvents(eventsContainer, events) {
     eventsContainer.innerHTML = '';
     events.forEach(event => {
-        const eventDiv = document.createElement('div');
-        eventDiv.className = 'event-container';
-        eventDiv.textContent = event.name;
-        eventsContainer.appendChild(eventDiv);
+        const img = document.createElement('img');
+        img.className = 'event-image';
+        img.src = event.imageURL;
+        img.alt = event.name;
+        img.style.width = '40px';
+        img.style.height = '40px';
+        eventsContainer.appendChild(img);
     });
 }
 
