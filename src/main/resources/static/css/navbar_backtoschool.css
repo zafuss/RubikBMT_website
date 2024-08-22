@@ -36,11 +36,18 @@
     color: #dad7d7;
 }
 
+
+
 @media (max-width: 992px) {
     .nav-link {
         color: black;
     }
     .nav-link:hover {
         color: rgba(0, 0, 0, 0.45);
+    }
+}
+@media (min-width: 992px) {
+    #navbar-button {
+        display: none;
     }
 }
