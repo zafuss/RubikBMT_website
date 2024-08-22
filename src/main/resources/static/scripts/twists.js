@@ -81,12 +81,12 @@ ERNO.Twist.prototype.set = function( command, degrees ){
 		vector =  0,
 		wise   = 'unwise';
 
-		if( command === command.toLowerCase() ){
+		if( command === command.toUpperCase() ){
 
 			vector =  1;
 			wise   = 'clockwise';
 		}
-		else if( command === command.toUpperCase() ){
+		else if( command === command.toLowerCase() ){
 
 			vector = -1;
 			wise   = 'anticlockwise';

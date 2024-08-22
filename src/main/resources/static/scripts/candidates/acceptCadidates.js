@@ -61,7 +61,19 @@ function updatePageNumbers() {
         const pageButton = document.createElement('button');
         pageButton.textContent = i + 1;
         pageButton.disabled = i === currentPage;
-        pageButton.addEventListener('click', () => loadPage(i));
+
+        // Add active class to the current page button
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        } else {
+            pageButton.classList.add('outline-button')
+        }
+
+        pageButton.addEventListener('click', () => {
+            loadPage(i);
+            setActivePageButton(i);  // Update active state when page is clicked
+        });
+
         pageNumbersContainer.appendChild(pageButton);
     }
 }
