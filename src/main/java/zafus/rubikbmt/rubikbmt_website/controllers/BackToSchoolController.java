@@ -44,7 +44,7 @@ public class BackToSchoolController {
     @Autowired
     private CompetitionService competitionService;
     LocalDateTime currentTime = LocalDateTime.now();
-    LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
+    LocalDateTime openTime = LocalDateTime.of(2024, 8, 21, 0, 0);
     @GetMapping()
     public String index(Model model) {
         Candidate candidate = new Candidate();

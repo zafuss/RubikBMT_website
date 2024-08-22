@@ -22,21 +22,23 @@
         }
 
         #pagination-controls {
-            display: flex;               /* Enable flexbox for horizontal alignment */
-            justify-content: space-between; /* Distribute space between elements */
-            align-items: center;         /* Vertically align items */
-            width: 100%;                 /* Ensure the container takes full width */
-            max-width: 500px;            /* Set a max-width if needed */
-            margin: 0 auto;              /* Center the container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px; /* Optional: Add margin if needed */
         }
-
 
         #page-numbers {
             display: flex;
-            align-items: center;  /* Align page numbers to the center */
-            gap: 10px;  /* Add spacing between page numbers */
+            gap: 5px; /* Optional: Add gap between page numbers if needed */
         }
 
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -142,14 +144,12 @@
                             <!-- Candidate rows will be dynamically inserted here -->
                             </tbody>
                         </table>
+                        <div id="page-numbers"></div>
+                        <div id="pagination-controls">
+                            <button id="prev-page">Trang trước</button>
+                            <button id="next-page">Trang kế</button>
+                        </div>
 
-                    </div>
-                    <div class="mt-3" id="pagination-controls">
-
-<!--                            <button id="prev-page">Trang trước</button>-->
-
-                        <div style="" id="page-numbers"></div>
-<!--                        <button id="next-page">Trang kế</button>-->
                     </div>
                 </div>
             </div>

@@ -77,11 +77,6 @@
                                     <option value="false" th:selected="${!isConfirmed}">Chưa Xác Nhận</option>
                                 </select>
                             </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="note">Ghi chú:</label>
-                                <input type="text" id="note" name="note" class="form-control" th:field="*{note}">
-                                <span class="text-danger" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>
-                            </div>
 
                             <div class="form-group">
                                 <label>Môn thi (có thể chọn nhiều môn):</label><br>

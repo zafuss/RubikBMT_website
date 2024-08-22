@@ -85,10 +85,7 @@
                     <th>Ngày tháng năm sinh </th>
                     <th>Email</th>
                     <th>SDT</th>
-                    <th>Thời điểm đăng ký</th>
                     <th>Xác nhận</th>
-                    <th>Ghi chú</th>
-                    <th>Nội dung thi</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -100,14 +97,7 @@
                     <td th:text="${candidate.dateOfBirth}"></td>
                     <td th:text="${candidate.email}"></td>
                     <td th:text="${candidate.phoneNumber}"></td>
-                    <td th:text="${candidate.registrationTime}"></td>
                     <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed : 'Chưa xác nhận'}"></td>
-                    <td th:text="${candidate.note}"></td>
-                    <td>
-                      <ul>
-                        <li th:each="event : ${candidate.events}" th:text="${event.name}"></li>
-                      </ul>
-                    </td>
                     <td>
                       <a th:href="@{candidates/detail(id=${candidate.id})}" class="btn btn-secondary" type="button">Chi tiết</a>
                       <a th:href="@{candidates/edit(id=${candidate.id})}" class="btn btn-primary" type="button">Sửa</a>
