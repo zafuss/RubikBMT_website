@@ -4,78 +4,42 @@
 <head th:fragment="head()" th:replace="~{library/lib.html::head('BACK TO SCHOOL')}">
     <link rel="stylesheet" href="/css/style_backtoschool.css">
     <link rel="stylesheet" href="/css/navbar_backtoschool.css">
-    <style>
-        .navbar-nav.flex-row {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: nowrap;
-            padding-left: 0;
-        }
-
-        .nav-item {
-            margin-right: 8px;
-        }
-
-        .nav-link.small-text {
-            font-size: 10px;
-            padding: 5px 8px;
-        }
-    </style>
 </head>
 
 <body>
-<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="/images/AvatarRubikBmt.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
-        </a>
-        <div class="d-block d-md-none">
-            <ul class="navbar-nav flex-row ">
-                <li class="nav-item ">
-                    <a class="nav-link small-text " href="/back-to-school" style="font-size: 15px">Thông tin chung</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small-text" href="/back-to-school/schedule" style="font-size: 15px">Lịch trình</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small-text" href="/back-to-school/cost" style="font-size: 15px">Lệ phí</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small-text" href="/back-to-school/location" style="font-size: 15px">Địa điểm thi đấu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small-text" href="/back-to-school/register" style="font-size: 15px">ĐĂNG KÝ NGAY</a>
-                </li>
-            </ul>
+    <nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/AvatarRubikBmt.png" alt="Logo" width="30" height="30"
+                    class="d-inline-block align-top">
+            </a>
+            <a id="navbar-button" class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="">Chi tiết về giải đấu</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/back-to-school">Thông tin chung</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/back-to-school/schedule">Lịch trình</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/back-to-school/cost">Lệ phí</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/back-to-school/location">Địa điểm thi đấu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/back-to-school/register">ĐĂNG KÝ NGAY</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-
-        <!-- Toggle button and collapsible content for larger screens -->
-<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
-<!--                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
-<!--                aria-label="Toggle navigation">-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--        </button>-->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/back-to-school">Thông tin chung</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/back-to-school/schedule">Lịch trình</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/back-to-school/cost">Lệ phí</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/back-to-school/location">Địa điểm thi đấu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/back-to-school/register">ĐĂNG KÝ NGAY</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 </body>
+
 </html>

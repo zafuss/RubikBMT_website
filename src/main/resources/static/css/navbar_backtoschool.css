@@ -44,3 +44,9 @@
         color: rgba(0, 0, 0, 0.45);
     }
 }
+
+@media (min-width: 992px) {
+    #navbar-button {
+        display: none;
+    }
+}
