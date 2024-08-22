@@ -56,4 +56,5 @@ public class Candidate {
     public void setFullName() {
         this.fullName = this.lastName + " " + this.firstName;
     }
+    private String Note;
 }
