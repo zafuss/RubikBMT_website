@@ -62,7 +62,7 @@ public class ExcelExportController {
             // Create a ByteArrayResource from the ByteArrayOutputStream
             ByteArrayResource resource = new ByteArrayResource(out.toByteArray());
 
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=danh_sach_ungvien.xlsx").contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(resource.contentLength()).body(resource);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=thi_sinh_BackToSchool.xlsx").contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(resource.contentLength()).body(resource);
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
         }
