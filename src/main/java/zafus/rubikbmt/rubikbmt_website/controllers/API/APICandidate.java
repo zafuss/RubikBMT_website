@@ -30,7 +30,7 @@ public class APICandidate {
         @GetMapping("/accept")
         public ResponseEntity<Map<String, Object>> getCandidates(
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size) {
+                        @RequestParam(defaultValue = "5") int size) {
                 if (page < 0 || size <= 0) {
                         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
@@ -42,7 +42,8 @@ public class APICandidate {
                                 .map(candidate -> new CandidateDTO(
                                                 candidate.getFullName(),
                                                 candidate.getEvents().stream()
-                                                                .map(event -> new EventDTO(event.getName(),event.getImageURL()))
+                                                                .map(event -> new EventDTO(event.getName(),
+                                                                                event.getImageURL()))
                                                                 .collect(Collectors.toList())))
                                 .collect(Collectors.toList());
 

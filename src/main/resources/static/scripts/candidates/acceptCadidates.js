@@ -45,12 +45,13 @@ function renderEvents(eventsContainer, events) {
         img.className = 'event-image';
         img.src = event.imageURL;
         img.alt = event.name;
-        img.style.width = '40px';
-        img.style.height = '40px';
+        img.style.width = '25px';
+        img.style.height = '25px';
+        img.style.borderRadius = '0';
+        img.style.margin = '5px 5px';
         eventsContainer.appendChild(img);
     });
 }
-
 
 function updatePageNumbers() {
     const pageNumbersContainer = document.getElementById('page-numbers');
@@ -60,9 +61,30 @@ function updatePageNumbers() {
         const pageButton = document.createElement('button');
         pageButton.textContent = i + 1;
         pageButton.disabled = i === currentPage;
-        pageButton.addEventListener('click', () => loadPage(i));
+
+        // Add active class to the current page button
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        } else {
+            pageButton.classList.add('outline-button')
+        }
+
+        pageButton.addEventListener('click', () => {
+            loadPage(i);
+            setActivePageButton(i);  // Update active state when page is clicked
+        });
+
         pageNumbersContainer.appendChild(pageButton);
     }
+}
+
+function setActivePageButton(pageIndex) {
+    // Remove active class from all page number buttons
+    const pageButtons = document.querySelectorAll('#page-numbers button');
+    pageButtons.forEach(button => button.classList.remove('active'));
+
+    // Add active class to the clicked page number button
+    pageButtons[pageIndex].classList.add('active');
 }
 
 function updatePaginationControls() {
