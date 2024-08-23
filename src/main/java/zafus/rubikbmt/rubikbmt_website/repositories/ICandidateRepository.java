@@ -1,5 +1,6 @@
 package zafus.rubikbmt.rubikbmt_website.repositories;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -7,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+
+import java.time.LocalDate;
 import java.util.List;
 public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
@@ -19,7 +22,9 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
     List<Candidate> findByEmailContaining(String email);
 
     List<Candidate> findByPhoneNumberContaining(String phoneNumber);
-
+    @Query("SELECT c FROM Candidate c WHERE " +
+            "STR(c.dateOfBirth) LIKE %:input%")
+    List<Candidate> findByDateOfBirth(@Param("input") String input);
     List<Candidate> findByLastNameContainingOrFirstNameContaining(String lastName, String firstName);
     @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.name = :eventName")
     Page<Candidate> findByEventNameContaining(@Param("eventName") String eventName, Pageable pageable);
