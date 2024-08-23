@@ -1,5 +1,6 @@
 package zafus.rubikbmt.rubikbmt_website.requestEntities;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -8,14 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 import zafus.rubikbmt.rubikbmt_website.entities.Role;
 import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidEmail;
 import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidPhoneNumber;
 import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidUserName;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,10 +21,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RequestCreateUser {
+public class RequestUpdateUser {
+    @Id
+    private String id;
     @ValidUserName
     @Size(min = 1, max = 50, message = "Tên Tài Khoản phải có từ 1 đến 50 ký tự")
-    private String userName;
+    private String username;
     @Pattern(regexp =  "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#@$%&? \"]).*$", message = "Mặt khẩu không hợp lệ")
     private String passwordHash;
     private String repasswordHash;
@@ -38,9 +38,9 @@ public class RequestCreateUser {
     @Pattern(regexp = "^[0-9]*$", message = "Phone phải là số")
     @ValidPhoneNumber
     private String phoneNumber;
-    private LocalDateTime createDate;
     private String avatarUrl;
     private String firstName;
     private String lastName;
+    private boolean enabled;
     private Set<Role> roles;
 }

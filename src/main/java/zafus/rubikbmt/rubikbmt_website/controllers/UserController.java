@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +21,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.Role;
+import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateUser;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateUser;
+import zafus.rubikbmt.rubikbmt_website.services.RoleService;
 import zafus.rubikbmt.rubikbmt_website.services.UserService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,8 +56,30 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleService roleService;
 
+    private PasswordEncoder passwordEncoder;
+    @GetMapping("/users")
+    public String index(Model model,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size,
+                        @RequestParam(defaultValue = "") String keyword,
+                        @RequestParam(defaultValue = "") String searchType) {
+
+        Pageable pageable = PageRequest.of(page, size);
+//        Pageable pageable = PageRequest.of(page, size, Sort.by(
+//                Sort.Order.asc("isConfirmed"),
+//                Sort.Order.desc("registrationTime")
+//        ));
+        Page<User> userPage = userService.searchUsers(keyword, searchType, pageable);
+        model.addAttribute("users", userPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("size", size);
+        return "user/index";
+    }
 
     @GetMapping("/user")
     public String displayAllUser(Model model) {
@@ -60,27 +89,57 @@ public class UserController {
         return "user/index";
     }
 
-    @GetMapping("/user/new")
+    @GetMapping("/users/add")
     public String showFormAdd(Model model) {
         model.addAttribute("user", new RequestCreateUser());
-        return "user/new";
+        model.addAttribute("roles", roleService.findAll());
+        return "user/add";
     }
 
-
+    @PostMapping("/users/add")
+    public String addUser(@ModelAttribute RequestCreateUser user, @RequestParam List<String> roles) {
+        Set<Role> selectedRoles = new HashSet<>();
+        for (String roleId : roles) {
+            Role role = roleService.findById(roleId);
+            if (role != null) {
+                selectedRoles.add(role);
+            }
+        }
+        user.setRoles(selectedRoles);
+        userService.save(user);
+        return "redirect:/users";
+    }
+    @PostMapping("/users/edit")
+    public String edit(@ModelAttribute RequestUpdateUser user, @RequestParam List<String> roles) {
+        Set<Role> selectedRoles = new HashSet<>();
+        for (String roleId : roles) {
+            Role role = roleService.findById(roleId);
+            if (role != null) {
+                selectedRoles.add(role);
+            }
+        }
+        user.setRoles(selectedRoles);
+        userService.update(user);
+        return "redirect:/users/detail?id=" + user.getId();
+    }
+    @GetMapping("/users/detail")
+    public String detail(@RequestParam("id") String id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "user/detail";
+    }
     @PostMapping("/user/add_new")
     public String addNewUser(@ModelAttribute("user") RequestCreateUser requesUser,
-                             @RequestParam("photo") MultipartFile multipartFile,
                              RedirectAttributes redirectAttributes) {
-        User use = userService.addNewUser(requesUser, multipartFile);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm tài khoản thành công");
         return "redirect:/user";
     }
 
-    @GetMapping("/user/edit/{id}")
-    public String edit(@PathVariable String id,
+    @GetMapping("/users/edit")
+    public String edit(@RequestParam("id") String id,
                        Model model) {
         model.addAttribute("user", userService.findById(id));
-
+        model.addAttribute("roles", roleService.findAll());
         return "user/edit";
     }
 
