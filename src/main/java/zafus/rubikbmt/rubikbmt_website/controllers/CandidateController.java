@@ -117,4 +117,11 @@ public class CandidateController {
         return "redirect:/candidates/detail?id=" + candidate.getId();
     }
 
+    @GetMapping("/stat")
+    public String getCandidateStatistics(Model model) {
+        List<Object[]> statistics = candidateService.getCountCandidatesByEvent();
+        model.addAttribute("statistics", statistics);
+        return "candidate/stat"; // Tên view bạn muốn render
+    }
+
 }

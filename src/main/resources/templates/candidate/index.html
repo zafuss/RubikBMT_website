@@ -56,8 +56,35 @@
             <!-- Basic Bootstrap Table -->
             <div class="card">
               <h5 class="card-header">Danh sách thí sinh cuộc thi BackToSchool 2024</h5>
-              <a href="/api/export/downloadCandidatesExcel" class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">Xuất Excel</a>              <!-- Search Form -->
+              <a href="/api/export/downloadCandidatesExcel" class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">Xuất toàn bộ danh sách</a>              <!-- Search Form -->
               <a href="/candidates" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Làm Mới</a>
+
+              <!-- Event Filter Buttons -->
+              <div class="justify-content-md-start" style="display: flex; align-items: center;">
+
+<!--                &lt;!&ndash; Lọc theo bộ môn &ndash;&gt;-->
+<!--                <div class="p-3">-->
+<!--                  <h6>Lọc theo bộ môn:</h6>-->
+<!--                  <div class="btn-group">-->
+<!--                    <a href="/candidates?searchType=event&keyword=2x2" class="btn btn-info">2x2</a>-->
+<!--                    <a href="/candidates?searchType=event&keyword=3x3" class="btn btn-info">3x3</a>-->
+<!--                    <a href="/candidates?searchType=event&keyword=3x3+One+Hand" class="btn btn-info">3x3 One Hand</a>-->
+<!--                    &lt;!&ndash; Thêm các nút khác tương ứng với các event &ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+
+                <!-- Xuất Excel theo sự kiện -->
+                <div class="p-3">
+                  <h6>Xuất Excel theo sự kiện:</h6>
+                  <div class="btn-group">
+                    <a href="/api/export/downloadCandidatesExcelByEvent?eventName=2x2" class="btn btn-success">Xuất 2x2</a>
+                    <a href="/api/export/downloadCandidatesExcelByEvent?eventName=3x3" class="btn btn-success">Xuất 3x3</a>
+                    <a href="/api/export/downloadCandidatesExcelByEvent?eventName=3x3+One+Hand" class="btn btn-success">Xuất 3x3 One Hand</a>
+                    <!-- Thêm các nút khác tương ứng với các event -->
+                  </div>
+                </div>
+
+              </div>
               <form id="searchForm" action="/candidates" method="get" class="mb-4 p-3">
                 <div class="mb-3">
                   <label for="searchType" class="form-label">Tìm kiếm theo:</label>
@@ -66,6 +93,7 @@
                     <option value="name">Tên</option>
                     <option value="phone">Số điện thoại</option>
                     <option value="email">Email</option>
+<!--                    <option value="event">Tên Sự Kiện</option>-->
                   </select>
                 </div>
                 <div class="input-group mb-3">
@@ -73,6 +101,7 @@
                   <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </div>
                 <div id="autocomplete-results" class="autocomplete-results"></div>
+<!--                <h4 th:text="'Tổng số thí sinh tìm được: ' + ${candidates.size()}"></h4>-->
               </form>
 
               <!-- Table -->

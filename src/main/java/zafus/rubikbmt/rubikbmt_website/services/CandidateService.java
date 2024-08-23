@@ -109,6 +109,10 @@ public class CandidateService {
         candidateRepository.delete(candidate);
     }
 
+    public List<Object[]> getCountCandidatesByEvent() {
+        return candidateRepository.countCandidatesByEvent();
+    }
+
     public Page<Candidate> searchCandidates(String keyword, String searchType, Pageable pageable) {
         switch (searchType) {
             case "email":
@@ -118,10 +122,16 @@ public class CandidateService {
             case "name":
             case "date":
                 return candidateRepository.findByFullNameContaining(keyword, pageable);
+            case "event":
+                return candidateRepository.findByEventNameContaining(keyword, pageable);
             default:
                 return candidateRepository.findAll(pageable);
         }
     }
+    public List<Candidate> getCandidatesByEventName(String eventName) {
+        return candidateRepository.findCandidatesByEventName(eventName);
+    }
+
     public List<String> getEmailSuggestions(String email) {
         return candidateRepository.findByEmailContaining(email).stream()
                 .map(Candidate::getEmail)
