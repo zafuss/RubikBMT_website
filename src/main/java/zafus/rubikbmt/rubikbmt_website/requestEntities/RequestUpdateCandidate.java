@@ -40,7 +40,7 @@ public class RequestUpdateCandidate {
     @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
     private String email;
-
+    private String note;
     @ManyToOne
     private Competition competition;
     @ManyToMany

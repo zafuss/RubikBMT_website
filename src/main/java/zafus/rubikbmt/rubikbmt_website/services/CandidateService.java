@@ -12,10 +12,13 @@ import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,28 +29,37 @@ import java.util.stream.Collectors;
         rollbackFor = {Exception.class, Throwable.class})
 public class CandidateService {
     private final ICandidateRepository candidateRepository;
+    private  String outputDate;
 
-    private String normalizeDateInput(String input) {
-        input = input.trim();
-
-        String[] possibleFormats = {"dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd"};
-        for (String format : possibleFormats) {
-            Optional<String> normalized = convertDateString(input, format);
-            if (normalized.isPresent()) {
-                return normalized.get();
-            }
-        }
-
-        return input;
-    }
-
-    private Optional<String> convertDateString(String dateString, String format) {
+    public static String formatDate(String inputDate) {
+        SimpleDateFormat inputFormat;
+        SimpleDateFormat outputFormat;
+        inputDate = inputDate.replace("-", "/");
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-            LocalDate date = LocalDate.parse(dateString, formatter);
-            return Optional.of(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
-        } catch (DateTimeParseException e) {
-            return Optional.empty();
+            switch (inputDate.length()) {
+                case 2: // dd hoặc MM hoặc yyyy
+                case 4: // yyyy
+                    return inputDate; // Không cần chuyển đổi
+
+                case 5: // dd/MM
+                    inputFormat = new SimpleDateFormat("dd/MM");
+                    outputFormat = new SimpleDateFormat("MM-dd");
+                    break;
+
+                case 10: // dd/MM/yyyy
+                    inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Định dạng ngày không hợp lệ");
+            }
+
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Lỗi phân tích ngày";
         }
     }
     public List<Candidate> findAll() {
@@ -120,6 +132,7 @@ public class CandidateService {
             case "phone":
                 return candidateRepository.findByPhoneNumberContaining(keyword, pageable);
             case "name":
+                return candidateRepository.findByDateOfBirthAndFullName(outputDate,keyword,pageable);
             case "date":
                 return candidateRepository.findByFullNameContaining(keyword, pageable);
             case "event":
@@ -153,8 +166,8 @@ public class CandidateService {
     }
 
     public List<String> getLastnameFirstnameSuggestionsbyDateofBirth(String dateOfBirth) {
-        String normalizedInput = normalizeDateInput(dateOfBirth);
-        return candidateRepository.findByDateOfBirth(normalizedInput).stream()
+        outputDate = formatDate(dateOfBirth);
+        return candidateRepository.findByDateOfBirth(outputDate).stream()
                 .map(candidate -> candidate.getLastName() + " " +  candidate.getFirstName() )
                 .distinct()
                 .collect(Collectors.toList());
