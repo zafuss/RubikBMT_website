@@ -54,6 +54,43 @@ public class ExcelExportService {
         workbook.write(outputStream);
         workbook.close();
     }
+    public void exportCandidatesByEventToExcel(List<Candidate> candidates, OutputStream outputStream, String eventName) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Danh Sach");
+
+        // Create header row
+        Row headerRow = sheet.createRow(0);
+        String[] headers = { "Họ và tên đệm", "Tên", "Ngày sinh", "Số điện thoại", "Email", "Cuộc thi", "Thời gian đăng ký","Môn thi", "Xác nhận", "Ghi chú" };
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        // Fill data rows
+        int rowNum = 1;
+        for (Candidate candidate : candidates) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(candidate.getLastName());
+            row.createCell(1).setCellValue(candidate.getFirstName());
+            row.createCell(2).setCellValue(candidate.getDateOfBirth() != null ? candidate.getDateOfBirth().toString() : "NULL");
+            row.createCell(3).setCellValue(candidate.getPhoneNumber());
+            row.createCell(4).setCellValue(candidate.getEmail());
+            row.createCell(5).setCellValue(candidate.getCompetition() != null ? candidate.getCompetition().getName() : "NULL");
+            row.createCell(6).setCellValue(candidate.getRegistrationTime() != null ? candidate.getRegistrationTime().toString() : "NULL");
+            row.createCell(7).setCellValue(eventName);
+            row.createCell(8).setCellValue(candidate.isConfirmed());
+            row.createCell(9).setCellValue(candidate.getNote() != null ? candidate.getNote() : "");
+        }
+
+        // Resize columns to fit the content
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Write the output to the provided OutputStream
+        workbook.write(outputStream);
+        workbook.close();
+    }
     public void exportStudentToExcel(List<Student> students, OutputStream outputStream) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Danh Sach");

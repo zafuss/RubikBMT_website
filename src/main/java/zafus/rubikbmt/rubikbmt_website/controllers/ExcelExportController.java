@@ -83,4 +83,27 @@ public class ExcelExportController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/downloadCandidatesExcelByEvent")
+    public ResponseEntity<Resource> downloadCandidatesExcelByEvent(@RequestParam("eventName") String eventName) {
+        // Thiết lập tiêu đề cho file Excel
+
+        // Lấy danh sách Candidate theo sự kiện
+        List<Candidate> candidates = candidateService.getCandidatesByEventName(eventName);
+
+        // Gọi hàm xuất Excel (giống như bạn đã làm cho export tổng quát)
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            // Generate Excel file in memory using ByteArrayOutputStream
+            excelExportService.exportCandidatesByEventToExcel(candidates, out, eventName);
+
+            // Create a ByteArrayResource from the ByteArrayOutputStream
+            ByteArrayResource resource = new ByteArrayResource(out.toByteArray());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=thi_sinh_BackToSchool.xlsx").contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(resource.contentLength()).body(resource);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+
 }
