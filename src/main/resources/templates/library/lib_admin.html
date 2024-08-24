@@ -4,6 +4,7 @@
         lang="en"
         class="light-style layout-menu-fixed layout-compact"
         dir="ltr"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         data-theme="theme-default"
         data-assets-path="/admin/assets/"
         data-template="vertical-menu-template-free"
@@ -75,8 +76,8 @@
     <!-- Menu -->
 
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" th:fragment="sidebar">
-      <div class="app-brand demo">
-        <a href="#" class="app-brand-link">
+      <div class="app-brand demo " sec:authorize="isAuthenticated()">
+        <a href="/dashboard" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img height="25px" src="/images/newLogo.png">
 
@@ -93,82 +94,62 @@
 
       <ul class="menu-inner py-1">
         <!-- Dashboards -->
-        <li class="">
-          <!--          <a href="javascript:void(0);" class="menu-link menu-toggle">-->
-          <!--            <i class="menu-icon tf-icons bx bx-home-smile"></i>-->
-          <!--            <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>-->
-          <!--&lt;!&ndash;            <span class="badge rounded-pill bg-danger ms-auto">5</span>&ndash;&gt;-->
-          <!--          </a>-->
-          <!--          <ul class="menu-sub">-->
-          <!--            <li class="menu-item active">-->
-          <!--              <a href="index.html" class="menu-link">-->
-          <!--                <div class="text-truncate" data-i18n="Analytics">Analytics</div>-->
-          <!--              </a>-->
-          <!--            </li>-->
-          <!--            <li class="menu-item">-->
-          <!--              <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"-->
-          <!--                      target="_blank"-->
-          <!--                      class="menu-link">-->
-          <!--                <div class="text-truncate" data-i18n="CRM">CRM</div>-->
-          <!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
-          <!--              </a>-->
-          <!--            </li>-->
-          <!--            <li class="menu-item">-->
-          <!--              <a-->
-          <!--                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-ecommerce-dashboard.html"-->
-          <!--                      target="_blank"-->
-          <!--                      class="menu-link">-->
-          <!--                <div class="text-truncate" data-i18n="eCommerce">eCommerce</div>-->
-          <!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
-          <!--              </a>-->
-          <!--            </li>-->
-          <!--            <li class="menu-item">-->
-          <!--              <a-->
-          <!--                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-logistics-dashboard.html"-->
-          <!--                      target="_blank"-->
-          <!--                      class="menu-link">-->
-          <!--                <div class="text-truncate" data-i18n="Logistics">Logistics</div>-->
-          <!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
-          <!--              </a>-->
-          <!--            </li>-->
-          <!--            <li class="menu-item">-->
-          <!--              <a href="app-academy-dashboard.html" target="_blank" class="menu-link">-->
-          <!--                <div class="text-truncate" data-i18n="Academy">Academy</div>-->
-          <!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
-          <!--              </a>-->
-          <!--            </li>-->
-          <!--          </ul>-->
-          <!--        </li>-->
+        <li class="" >
 
-          <!-- Layouts -->
-        <li class="menu-item">
-          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-group"></i>
-            <div class="text-truncate" data-i18n="Layouts">Quản lý tài khoản</div>
-          </a>
+<!--          <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--            <i class="menu-icon tf-icons bx bx-home-smile"></i>-->
+<!--            <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>-->
+<!--&lt;!&ndash;            <span class="badge rounded-pill bg-danger ms-auto">5</span>&ndash;&gt;-->
+<!--          </a>-->
+<!--          <ul class="menu-sub">-->
+<!--            <li class="menu-item active">-->
+<!--              <a href="index.html" class="menu-link">-->
+<!--                <div class="text-truncate" data-i18n="Analytics">Analytics</div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="menu-item">-->
+<!--              <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"-->
+<!--                      target="_blank"-->
+<!--                      class="menu-link">-->
+<!--                <div class="text-truncate" data-i18n="CRM">CRM</div>-->
+<!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="menu-item">-->
+<!--              <a-->
+<!--                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-ecommerce-dashboard.html"-->
+<!--                      target="_blank"-->
+<!--                      class="menu-link">-->
+<!--                <div class="text-truncate" data-i18n="eCommerce">eCommerce</div>-->
+<!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="menu-item">-->
+<!--              <a-->
+<!--                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-logistics-dashboard.html"-->
+<!--                      target="_blank"-->
+<!--                      class="menu-link">-->
+<!--                <div class="text-truncate" data-i18n="Logistics">Logistics</div>-->
+<!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="menu-item">-->
+<!--              <a href="app-academy-dashboard.html" target="_blank" class="menu-link">-->
+<!--                <div class="text-truncate" data-i18n="Academy">Academy</div>-->
+<!--                <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </li>-->
 
-          <ul class="menu-sub">
+        <!-- Layouts -->
 
-            <li class="menu-item">
-              <a href="/users/add" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
-                <div class="text-truncate" data-i18n="Tables">Thêm tài khoản</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/users" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div class="text-truncate" data-i18n="Tables">Danh sách tài khoản</div>
-              </a>
-          </ul>
-        </li>
 
         <li class="menu-item">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-joystick"></i>
             <div class="text-truncate" data-i18n="Layouts">Back To School</div>
           </a>
-
           <ul class="menu-sub">
 
             <li class="menu-item">
@@ -182,6 +163,35 @@
                 <div class="text-truncate" data-i18n="Tables">Thống kê môn thi</div>
               </a>
             </li>
+          </ul>
+        </li>
+        <li class="menu-item">
+          <a href="/students" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-table"></i>
+            <div class="text-truncate" data-i18n="Tables">Danh sách học viên đăng ký</div>
+          </a>
+        </li>
+        <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">SuperAdmin only</span>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-group"></i>
+            <div class="text-truncate" data-i18n="Layouts">Quản lý tài khoản</div>
+          </a>
+          <ul class="menu-sub" sec:authorize="hasAnyRole('ROLE_SUPER_ADMIN')">
+
+            <li class="menu-item">
+              <a href="/users/add" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+                <div class="text-truncate" data-i18n="Tables">Thêm tài khoản</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/users" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div class="text-truncate" data-i18n="Tables">Danh sách tài khoản</div>
+              </a>
           </ul>
         </li>
 
@@ -538,12 +548,7 @@
         </li>
         <!-- Tables -->
 
-        <li class="menu-item">
-          <a href="/students" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-table"></i>
-            <div class="text-truncate" data-i18n="Tables">Danh sách học viên đăng ký</div>
-          </a>
-        </li>
+
         <!-- Data Tables -->
 
       </ul>

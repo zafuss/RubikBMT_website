@@ -31,7 +31,18 @@
             <!-- Content -->
 
             <!-- / Content -->
-
+            <div th:fragment="content">
+              <div class="container-xxl flex-grow-1 container-p-y">
+                <!-- Basic Bootstrap Table -->
+                <div class="card">
+                  <h5 class="card-header">Thống kê truy cập (beta)</h5>
+                  <div class="p-6">
+                    <h6  th:text="'Đang truy cập: ' + ${currentVisitors}"></h6>
+                    <h6 th:text="'Truy cập hôm nay: ' + ${dailyVisitors}"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- Footer -->
             <footer th:replace="~{library/lib_admin.html::footer}"></footer>
             <!-- / Footer -->

@@ -82,7 +82,6 @@
                                 <input type="text" id="note" name="note" class="form-control" th:field="*{note}">
                                 <span class="text-danger" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>
                             </div>
-
                             <div class="form-group">
                                 <label>Môn thi (có thể chọn nhiều môn):</label><br>
                                 <div th:each="event : ${events}">

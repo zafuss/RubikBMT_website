@@ -60,7 +60,7 @@ public class CandidateService {
             if (request.getDateOfBirth() != null) {
                 existingCandidate.setDateOfBirth(request.getDateOfBirth());
             }
-                existingCandidate.setNote(request.getNote());
+            existingCandidate.setNote(request.getNote());
 
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());

@@ -49,7 +49,9 @@ public class SecurityConfig {
                                 "/favicon.ico", "/students/register", "/candidates/register","/apiCheck/**", "/cube")
                         .permitAll()
                         .requestMatchers("/students/**", "/candidates/**", "/api/**",
-                                "/Admin/**","/user/**","/form/**","/api/export/**","/users/**").hasAnyAuthority("Admin", "SuperAdmin","Modifier")
+                                "/dashboard/**","/user/**","/form/**","/api/export/**").hasAnyAuthority("Admin","Modifier", "SuperAdmin")
+                        .requestMatchers("/students/**", "/candidates/**", "/api/**",
+                        "/dashboard/**","/user/**","/form/**","/api/export/**", "/users/**").hasAnyAuthority("SuperAdmin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

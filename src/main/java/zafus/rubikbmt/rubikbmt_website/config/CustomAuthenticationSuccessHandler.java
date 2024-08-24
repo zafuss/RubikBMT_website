@@ -59,7 +59,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority("SuperAdmin"));
         boolean isModifier = authentication.getAuthorities().contains(new SimpleGrantedAuthority("Modifier"));
         if(isAdmin || isModifier){
-            setDefaultTargetUrl("/Admin");
+            setDefaultTargetUrl("/dashboard");
         } else {
             setDefaultTargetUrl("/");
         }
