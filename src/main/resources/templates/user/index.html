@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr"
+      data-theme="theme-default" data-assets-path="/admin/assets/"
+      data-template="vertical-menu-template-free" data-style="light">
+<head th:replace="~{library/lib_admin.html::head('User Management')}">
+    <style>
+        /* Bạn có thể thêm các style tùy chỉnh ở đây */
+    </style>
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div th:fragment="content">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <!-- Basic Bootstrap Table -->
+                        <div class="card">
+                            <h5 class="card-header">Danh sách người dùng</h5>
+                            <a href="/api/export/downloadUsersExcel"
+                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">
+                                Xuất Excel
+                            </a>
+
+                            <a href="/users" class="btn btn-primary position-absolute"
+                               style="top: 3.5rem; right: 1rem;">Làm Mới</a>
+
+                            <!-- Search Form -->
+                            <form id="searchForm" action="/users" method="get" class="mb-4 p-3">
+                                <div class="mb-3">
+                                    <label for="searchType" class="form-label">Tìm kiếm theo:</label>
+                                    <select id="searchType" name="searchType" class="form-select">
+                                        <option value="userName">Tên người dùng</option>
+                                        <option value="email">Email</option>
+                                        <option value="phoneNumber">Số điện thoại</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" id="keyword" name="keyword"
+                                           placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+
+                            <!-- Table -->
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Họ và tên</th>
+                                        <th>Email</th>
+                                        <th>SDT</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Trạng thái</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                    <tr th:each="user, stat : ${users}">
+                                        <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                        <td th:text="${user.username}"></td>
+                                        <td th:text="${user.lastName} + ' ' + ${user.firstName}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.phoneNumber}"></td>
+                                        <td th:text="${user.createDate}"></td>
+                                        <td th:text="${user.isEnabled() == true ? 'Hoạt động' : 'Bị khóa'}"></td>
+                                        <td>
+                                            <ul>
+                                                <li th:each="role : ${user.roles}" th:text="${role.roleName}"></li> <!-- Hiển thị Role -->
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{users/detail(id=${user.id})}"
+                                               class="btn btn-secondary" type="button">Chi tiết</a>
+                                            <a th:href="@{users/edit(id=${user.id})}"
+                                               class="btn btn-primary" type="button">Sửa</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div id="pagination" class="mt-4 p-3">
+                                <ul class="pagination">
+                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
+                                        <a th:href="@{/users(page=${i}, size=${size}, keyword=${keyword})}"
+                                           th:text="${i + 1}"
+                                           th:classappend="${i == currentPage} ? 'active' : ''"
+                                           class="page-link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

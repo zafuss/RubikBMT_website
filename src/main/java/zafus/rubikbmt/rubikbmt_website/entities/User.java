@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -31,12 +32,11 @@ public class User implements UserDetails {
     private String email;
     private String phoneNumber;
     private String avatarUrl;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
+    private LocalDateTime createDate;
     private String firstName;
     private String lastName;
     private int countFail;
-    private Date lockExpired;
+    private LocalDateTime lockExpired;
     private boolean enabled;
     private String resetPasswordToken;
     private Date resetPasswordTokenExpired;
@@ -72,23 +72,5 @@ public class User implements UserDetails {
         return avatarUrl;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

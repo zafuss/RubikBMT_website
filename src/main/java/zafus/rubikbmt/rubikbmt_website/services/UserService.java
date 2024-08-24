@@ -3,6 +3,8 @@ package zafus.rubikbmt.rubikbmt_website.services;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,13 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
+import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRoleRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.IUserRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateUser;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateUser;
 import zafus.rubikbmt.rubikbmt_website.utilities.RandomUtils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,8 +53,7 @@ public class UserService  implements UserDetailsService {
             user.setAvatarUrl(requestUser.getAvatarUrl());
             user.setPasswordHash(requestUser.getPasswordHash());
             user.setPhoneNumber(requestUser.getPhoneNumber());
-            Date date = new Date(System.currentTimeMillis());
-            user.setCreateDate(date);
+            user.setCreateDate(requestUser.getCreateDate());
             userRepository.save(user);
             return user;
         } catch (Exception ex) {
@@ -56,20 +61,40 @@ public class UserService  implements UserDetailsService {
         }
     }
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
-    public void save(@NotNull RequestCreateUser requesUser) {
+    public void save(@NotNull RequestCreateUser requestUser) {
         try {
             User user = new User();
-            user.setUserName(requesUser.getUserName());
-            user.setEmail(requesUser.getEmail());
+            user.setUserName(requestUser.getUserName());
+            user.setEmail(requestUser.getEmail());
             user.setPasswordHash(new BCryptPasswordEncoder()
-                    .encode(requesUser.getPasswordHash()));
-            user.setFirstName(requesUser.getFirstName());
-            user.setLastName(requesUser.getLastName());
+                    .encode(requestUser.getPasswordHash()));
+            user.setFirstName(requestUser.getFirstName());
+            user.setLastName(requestUser.getLastName());
+            user.setRoles(requestUser.getRoles());
+            user.setPhoneNumber(requestUser.getPhoneNumber());
+            user.setCreateDate(LocalDateTime.now());
+            user.setEnabled(true);
             userRepository.save(user);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
+    @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
+    public void update(@NotNull RequestUpdateUser requestUser) {
+        try {
+            User user = userRepository.findUserByUserName(requestUser.getUsername());
+            user.setEmail(requestUser.getEmail());
+            user.setPhoneNumber(requestUser.getPhoneNumber());
+            user.setFirstName(requestUser.getFirstName());
+            user.setLastName(requestUser.getLastName());
+            user.setRoles(requestUser.getRoles());
+            user.setEnabled(requestUser.isEnabled());
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
     public void setDefaultRole(String username) {
         userRepository.findUserByUserName(username)
@@ -187,4 +212,36 @@ public class UserService  implements UserDetailsService {
         user.setLockExpired(null);
         userRepository.save(user);
     }
+
+    public Page<User> searchUsers(String keyword, String searchType, Pageable pageable) {
+        switch (searchType) {
+            case "email":
+                return userRepository.findByEmailContaining(keyword, pageable);
+            case "phone":
+                return userRepository.findByPhoneNumberContaining(keyword, pageable);
+            default:
+                return userRepository.findAll(pageable);
+        }
+    }
+    public List<String> getEmailSuggestions(String email) {
+        return userRepository.findByEmailContaining(email).stream()
+                .map(User::getEmail)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getPhoneNumberSuggestions(String phoneNumber) {
+        return userRepository.findByPhoneNumberContaining(phoneNumber).stream()
+                .map(User::getPhoneNumber)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+    public List<String> getLastnameFirstnameSuggestions(String input) {
+        return userRepository.findByLastNameContainingOrFirstNameContaining(input, input).stream()
+                .map(user -> user.getLastName() + " " +  user.getFirstName() )
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+
 }

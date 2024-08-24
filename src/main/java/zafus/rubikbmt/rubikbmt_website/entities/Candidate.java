@@ -47,7 +47,7 @@ public class Candidate {
     private String fullName;
     @ManyToOne
     private Competition competition;
-
+    private String note;
     private LocalDateTime registrationTime;
     private boolean isConfirmed;
     private LocalDateTime timeConfirmed;
