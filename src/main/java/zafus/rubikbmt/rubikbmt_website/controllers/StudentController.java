@@ -30,7 +30,7 @@ public class StudentController {
     private MentorService mentorService;
     @Autowired
     private LearningTypeService learningTypeService;
-
+    private List<Mentor> mentors;
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("student", new Student());
@@ -82,7 +82,7 @@ public class StudentController {
     @GetMapping("/edit")
     public String editStudent(@RequestParam("id") String id, Model model) {
         Student student = studentService.findById(id);
-        List<Mentor> mentors = mentorService.findAll();
+        mentors = mentorService.findAll();
         boolean isConfirmed = student.getConfirmationDate() != null;
         model.addAttribute("student", student);
         model.addAttribute("mentors", mentors);
@@ -91,12 +91,16 @@ public class StudentController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute("student") @Valid RequestUpdateStudent student,BindingResult bindingResult,  @RequestParam("isConfirmed") boolean isConfirmed,  Model model ) {
+    public String updateStudent(@ModelAttribute("student") @Valid RequestUpdateStudent student,
+                                BindingResult bindingResult,
+                                @RequestParam("isConfirmed") boolean isConfirmed,  Model model ) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
+            model.addAttribute("isConfirmed",isConfirmed);
+            model.addAttribute("mentors", mentors);
             return "student/edit";
         }
         if (isConfirmed) {

@@ -40,12 +40,12 @@ public class RequestUpdateCandidate {
     @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
     private String email;
-
+    private String note;
     @ManyToOne
     private Competition competition;
     @ManyToMany
     private List<Event> events;
-    private String note;
+
     public static RequestUpdateCandidate fromEntity(Candidate candidate) {
         RequestUpdateCandidate dto = new RequestUpdateCandidate();
         dto.setId(candidate.getId());
@@ -55,7 +55,6 @@ public class RequestUpdateCandidate {
         dto.setPhoneNumber(candidate.getPhoneNumber());
         dto.setEmail(candidate.getEmail());
         dto.setConfirmed(candidate.isConfirmed());
-        dto.setNote(candidate.getNote());
         // Assuming you want to use IDs for competition and events
         if (candidate.getCompetition() != null) {
             dto.setCompetition(candidate.getCompetition());

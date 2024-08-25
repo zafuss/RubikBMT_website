@@ -28,6 +28,8 @@ public class AutoCompleteController {
                 return candidateService.getEmailSuggestions(input);
             case "phone":
                 return candidateService.getPhoneNumberSuggestions(input);
+            case "date":
+                return candidateService.getLastnameFirstnameSuggestionsbyDateofBirth(input);
             default:
                 return  candidateService.getLastnameFirstnameSuggestions(input);
         }

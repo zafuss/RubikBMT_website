@@ -12,8 +12,15 @@ import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +29,39 @@ import java.util.stream.Collectors;
         rollbackFor = {Exception.class, Throwable.class})
 public class CandidateService {
     private final ICandidateRepository candidateRepository;
+    private  String outputDate;
+
+    public static String formatDate(String inputDate) {
+        SimpleDateFormat inputFormat;
+        SimpleDateFormat outputFormat;
+        inputDate = inputDate.replace("-", "/");
+        try {
+            switch (inputDate.length()) {
+                case 2: // dd hoặc MM hoặc yyyy
+                case 4: // yyyy
+                    return inputDate; // Không cần chuyển đổi
+
+                case 5: // dd/MM
+                    inputFormat = new SimpleDateFormat("dd/MM");
+                    outputFormat = new SimpleDateFormat("MM-dd");
+                    break;
+
+                case 10: // dd/MM/yyyy
+                    inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Định dạng ngày không hợp lệ");
+            }
+
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Lỗi phân tích ngày";
+        }
+    }
     public List<Candidate> findAll() {
         return candidateRepository.findAll();
     }
@@ -60,7 +100,6 @@ public class CandidateService {
             if (request.getDateOfBirth() != null) {
                 existingCandidate.setDateOfBirth(request.getDateOfBirth());
             }
-            existingCandidate.setNote(request.getNote());
 
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());
@@ -68,8 +107,7 @@ public class CandidateService {
             if ( request.isConfirmed()){
                 existingCandidate.setConfirmed(true);
                 existingCandidate.setTimeConfirmed(LocalDateTime.now());
-            }
-            else{
+            }else{
                 existingCandidate.setConfirmed(false);
                 existingCandidate.setTimeConfirmed(null);
             }
@@ -93,6 +131,8 @@ public class CandidateService {
                 return candidateRepository.findByEmailContaining(keyword, pageable);
             case "phone":
                 return candidateRepository.findByPhoneNumberContaining(keyword, pageable);
+            case "date":
+                return candidateRepository.findByDateOfBirthAndFullName(outputDate,keyword,pageable);
             case "name":
                 return candidateRepository.findByFullNameContaining(keyword, pageable);
             case "event":
@@ -125,6 +165,13 @@ public class CandidateService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getLastnameFirstnameSuggestionsbyDateofBirth(String dateOfBirth) {
+        outputDate = formatDate(dateOfBirth);
+        return candidateRepository.findByDateOfBirth(outputDate).stream()
+                .map(candidate -> candidate.getLastName() + " " +  candidate.getFirstName() )
+                .distinct()
+                .collect(Collectors.toList());
+    }
     public Candidate findByPhone(String phone) {
         return candidateRepository.findByPhoneNumber(phone);
     }

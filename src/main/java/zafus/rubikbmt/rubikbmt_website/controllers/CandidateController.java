@@ -30,8 +30,9 @@ public class CandidateController {
     private CandidateService candidateService;
     @Autowired
     private CompetitionService competitionService;
-
-
+    private boolean isConfirmed;
+    private List<Event> events;
+    private Competition competitionTMP;
     @GetMapping("/register")
     public String register(Model model) {
         return "backToSchool/register";
@@ -45,7 +46,7 @@ public class CandidateController {
             candidate.setCompetition(competition);
             model.addAttribute("errors", errors);
             model.addAttribute("events", competition.getEvents());
-            model.addAttribute("candidate", candidate);
+            model.addAttribute("candidate",candidate);
             return "backToSchool/register";
         }
         candidate.setConfirmed(false);
@@ -57,10 +58,10 @@ public class CandidateController {
 
     @GetMapping("")
     public String index(Model model,
-                             @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "10") int size,
-                             @RequestParam(defaultValue = "") String keyword,
-                            @RequestParam(defaultValue = "") String searchType) {
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size,
+                        @RequestParam(defaultValue = "") String keyword,
+                        @RequestParam(defaultValue = "") String searchType) {
 
 //        Pageable pageable = PageRequest.of(page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by(
@@ -88,28 +89,31 @@ public class CandidateController {
 //      Candidate candidate = candidateService.findById(id);
         RequestUpdateCandidate candidate = RequestUpdateCandidate.fromEntity(candidateService.findById(id));
         Competition competition = competitionService.getByName("BackToSchool");
-        List<Event> events =  competition.getEvents();
-        boolean isConfirmed = candidate.getTimeConfirmed() != null;
+        events =  competition.getEvents();
+        isConfirmed = candidate.getTimeConfirmed() != null;
         model.addAttribute("candidate", candidate);
         model.addAttribute("events", events);
         model.addAttribute("isConfirmed",isConfirmed);
+        competitionTMP = candidate.getCompetition();
         return "candidate/edit";
     }
 
     @PostMapping("/updateCandidate")
-    public String updateCandidate(@ModelAttribute("candidate") @Valid RequestUpdateCandidate candidate, BindingResult bindingResult, Model model) {
+    public String updateCandidate(@ModelAttribute("candidate") @Valid RequestUpdateCandidate candidate,
+                                  BindingResult bindingResult
+            , Model model) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
-            Competition competition = competitionService.getByName("BackToSchool");
-            List<Event> events =  competition.getEvents();
+            candidate.setCompetition(competitionTMP);
             model.addAttribute("errors", errors);
             model.addAttribute("candidate", candidate);
+            model.addAttribute("isConfirmed",isConfirmed);
             model.addAttribute("events", events);
             return "candidate/edit";
         }
-       candidateService.updateCandidate(candidate);
+        candidateService.updateCandidate(candidate);
         return "redirect:/candidates/detail?id=" + candidate.getId();
     }
 
