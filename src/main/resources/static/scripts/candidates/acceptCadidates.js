@@ -47,6 +47,7 @@ function renderEvents(eventsContainer, events) {
         img.alt = event.name;
         img.style.width = '25px';
         img.style.height = '25px';
+        img.style.objectFit = 'contain';
         img.style.borderRadius = '0';
         img.style.margin = '5px 5px';
         eventsContainer.appendChild(img);

@@ -130,8 +130,8 @@
                     <td th:text="${candidate.dateOfBirth}"></td>
                     <td th:text="${candidate.email}"></td>
                     <td th:text="${candidate.phoneNumber}"></td>
-                    <td th:text="${candidate.registrationTime}"></td>
-                    <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed : 'Chưa xác nhận'}"></td>
+                    <td th:text="${candidate.registrationTime.plusHours(7)}"></td>
+                    <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed.plusHours(7) : 'Chưa xác nhận'}"></td>
                     <td th:text="${candidate.note}"></td>
                     <td>
                       <ul>

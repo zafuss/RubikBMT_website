@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <th>Xác nhận</th>
-                                <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed : 'Chưa xác nhận'}"></td>
+                                <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed.plusHours(7) : 'Chưa xác nhận'}"></td>
                             </tr>
                             <tr>
                                 <th>Cuộc thi</th>
@@ -74,7 +74,7 @@
                             </tr>
                             <tr>
                                 <th>Thời điểm đăng ký</th>
-                                <td th:text="${candidate.registrationTime}"></td>
+                                <td th:text="${candidate.registrationTime.plusHours(7)}"></td>
                             </tr>
                             <tr>
                                 <th>Ghi chú</th>

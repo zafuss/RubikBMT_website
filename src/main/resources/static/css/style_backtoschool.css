@@ -31,6 +31,7 @@ body {
     border-radius: 10px;
     padding: 10px 20px;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 #introBack button:hover {
