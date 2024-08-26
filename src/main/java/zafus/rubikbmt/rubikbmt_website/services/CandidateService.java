@@ -111,6 +111,7 @@ public class CandidateService {
                 existingCandidate.setConfirmed(false);
                 existingCandidate.setTimeConfirmed(null);
             }
+            existingCandidate.setNote(request.getNote());
             return candidateRepository.save(existingCandidate);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating candidate: " + ex.getMessage());
