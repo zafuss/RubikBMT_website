@@ -54,5 +54,8 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
     @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.name = :eventName")
     List<Candidate> findCandidatesByEventName(@Param("eventName") String eventName);
 
+    List<Candidate> findByCompetitionIdAndEventsId(String competitionId, String eventId);
 
+    @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.id = :eventId AND c.competition.id = :competitionId AND c.isConfirmed = true")
+    Page<Candidate> findByCompetitionIdAndEventsId(@Param("competitionId") String competitionId, @Param("eventId") String eventId, Pageable pageable);
 }

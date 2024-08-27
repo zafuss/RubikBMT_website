@@ -1,5 +1,6 @@
 package zafus.rubikbmt.rubikbmt_website.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -122,6 +123,34 @@ public class CandidateController {
         List<Object[]> statistics = candidateService.getCountCandidatesByEvent();
         model.addAttribute("statistics", statistics);
         return "candidate/stat"; // Tên view bạn muốn render
+    }
+
+    @GetMapping("/byEventAndCompetition/{competitionId}/{eventId}")
+    public String getCandidatesByEventAndCompetition(
+            @PathVariable("competitionId") String competitionId,
+            @PathVariable("eventId") String eventId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "") String searchType,
+            HttpSession httpSession,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(
+                Sort.Order.asc("isConfirmed"),
+                Sort.Order.desc("registrationTime")
+        ));
+        List<Candidate> candidates = candidateService.findCandidateByCompetitionIdAndEventId(competitionId, eventId);
+        httpSession.setAttribute("candidates", candidates);
+        Page<Candidate> candidatePage = candidateService.findCandidateByCompetitionAndEvent(competitionId, eventId, pageable);
+        model.addAttribute("candidates", candidatePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", candidatePage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("eventId", eventId);
+        model.addAttribute("competitionId", competitionId);
+        model.addAttribute("size", size);
+        return "candidate/byEventAndCompetition";
     }
 
 }

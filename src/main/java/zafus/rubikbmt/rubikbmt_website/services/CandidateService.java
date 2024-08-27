@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.Competition;
+import zafus.rubikbmt.rubikbmt_website.entities.Event;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
@@ -182,5 +184,14 @@ public class CandidateService {
 
     public Page<Candidate> findUnconfirmedCandidates(Pageable pageable, int size) {
         return candidateRepository.findUnconfirmedCandidates(pageable, size);
+    }
+
+    public List<Candidate> findCandidateByCompetitionIdAndEventId(String competitionId, String eventId) {
+        return candidateRepository.findByCompetitionIdAndEventsId(competitionId, eventId);
+    }
+    public Page<Candidate> findCandidateByCompetitionAndEvent(String competitionId, String eventId, Pageable pageable) {
+        return candidateRepository.findByCompetitionIdAndEventsId(
+                competitionId, eventId, pageable
+        );
     }
 }
