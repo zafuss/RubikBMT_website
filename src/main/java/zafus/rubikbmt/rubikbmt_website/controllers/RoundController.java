@@ -2,12 +2,14 @@ package zafus.rubikbmt.rubikbmt_website.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Round;
-import zafus.rubikbmt.rubikbmt_website.entities.RoundDetail;
+import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 import zafus.rubikbmt.rubikbmt_website.services.EventService;
 import zafus.rubikbmt.rubikbmt_website.services.RoundDetailService;
@@ -41,6 +43,20 @@ public class RoundController {
         model.addAttribute("competitions", competitionService.getAll());
         return "round/add";
     }
+    @GetMapping("/addFromPreviousRound/{roundId}")
+    public String addFromPreviousRound(Model model,
+                                   @PathVariable("roundId") String roundId, HttpSession session) {
+
+        Round currentRound = roundService.findById(roundId);
+        Round newRound = new Round();
+        newRound.setCompetition(currentRound.getCompetition());
+        newRound.setEvent(currentRound.getEvent());
+        model.addAttribute("round", new Round());
+        model.addAttribute("currentRound", currentRound);
+        model.addAttribute("competitions", competitionService.getAll());
+        model.addAttribute("events", eventService.findAll());
+        return "round/addFromPreviousRound";
+    }
 
     @PostMapping("/add")
     public String add( @ModelAttribute Round round, HttpSession session) {
@@ -49,10 +65,60 @@ public class RoundController {
         Round newRound = roundService.add(round);
         for (Candidate candidate : candidates) {
             RoundDetail roundDetail = new RoundDetail();
-            roundDetail.setRoundId(newRound);
+            roundDetail.setRound(newRound);
             roundDetail.setCandidate(candidate);
             roundDetailService.add(roundDetail);
         }
-        return "round/add";
+        return "redirect:/roundDetails/byRound/" + newRound.getId();
+    }
+
+    @PostMapping("/addFromPreviousRound/{roundId}")
+    public String addFromBeforeRound( @ModelAttribute Round round, HttpSession session, @PathVariable("roundId") String roundId, Pageable pageable) {
+        Round currentRound = roundService.findById(roundId);
+        round.setCompetition(currentRound.getCompetition());
+        round.setEvent(currentRound.getEvent());
+        Round newRound = roundService.add(round);
+
+        List<RoundDetail> roundDetails = roundDetailService.findListByRoundId(roundId);
+        List<RoundDetail> sortedCandidates = roundDetails.stream()
+                .sorted((c1, c2) -> RoundDetail.collator.compare(c1.getCandidate().getFirstName(), c2.getCandidate().getFirstName()))
+                .toList();
+
+        for (int i = 0; i < newRound.getNumOfCandidate(); i++) {
+            RoundDetail newRoundDetail = new RoundDetail();
+            newRoundDetail.setRound(newRound);
+            newRoundDetail.setCandidate(sortedCandidates.get(i).getCandidate());
+            roundDetailService.add(newRoundDetail);
+        }
+
+        return "redirect:/roundDetails/byRound/" + newRound.getId();
+
+    }
+
+    @GetMapping("/byEventAndCompetition/{competitionId}/{eventId}")
+    public String getRoundsByEventAndCompetition(
+            @PathVariable("competitionId") String competitionId,
+            @PathVariable("eventId") String eventId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "") String searchType,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(
+                Sort.Order.desc("numOfCandidate")
+        ));
+
+        Event event = eventService.findById(eventId);
+        Competition competition = competitionService.getById(competitionId);
+        Page<Round> roundPage = roundService.findRoundByCompetitionAndEventsId(competitionId, eventId, pageable);
+        model.addAttribute("rounds", roundPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", roundPage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("event", event);
+        model.addAttribute("competition", competition);
+        model.addAttribute("size", size);
+        return "round/byEventAndCompetition";
     }
 }

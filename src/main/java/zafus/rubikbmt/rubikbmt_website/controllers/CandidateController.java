@@ -23,6 +23,7 @@ import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/candidates")
@@ -140,7 +141,9 @@ public class CandidateController {
                 Sort.Order.asc("isConfirmed"),
                 Sort.Order.desc("registrationTime")
         ));
-        List<Candidate> candidates = candidateService.findCandidateByCompetitionIdAndEventId(competitionId, eventId);
+        List<Candidate> candidates = candidateService.findCandidateByCompetitionIdAndEventId(competitionId, eventId).stream()
+                .filter(Candidate::isConfirmed)
+                .collect(Collectors.toList());;
         httpSession.setAttribute("candidates", candidates);
         Page<Candidate> candidatePage = candidateService.findCandidateByCompetitionAndEvent(competitionId, eventId, pageable);
         model.addAttribute("candidates", candidatePage.getContent());

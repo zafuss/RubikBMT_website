@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.Collator;
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @NoArgsConstructor
@@ -16,6 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 public class RoundDetail {
+    public static Collator collator = Collator.getInstance(new Locale("vi", "VN"));
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -33,7 +37,7 @@ public class RoundDetail {
     private Solve worst;
 
     @ManyToOne
-    private Round roundId;
+    private Round round;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Solve> solves;

@@ -180,7 +180,7 @@
           </a>
           <ul class="menu-sub">
             <li th:each="event : ${competition.events}" class="menu-item">
-              <a th:href="@{/candidates/byEventAndCompetition/{competitionId}/{eventId}(competitionId=${competition.id}, eventId=${event.id})}" class="menu-link">
+              <a th:href="@{/rounds/byEventAndCompetition/{competitionId}/{eventId}(competitionId=${competition.id}, eventId=${event.id})}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div class="text-truncate" th:text="${event.name}">Event Name</div>
               </a>

@@ -1,9 +1,22 @@
 package zafus.rubikbmt.rubikbmt_website.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import zafus.rubikbmt.rubikbmt_website.entities.Round;
 import zafus.rubikbmt.rubikbmt_website.entities.RoundDetail;
 
+import java.util.List;
+
 public interface IRoundDetailRepository extends JpaRepository<RoundDetail, String> {
+//    @Query("SELECT c FROM RoundDetail c WHERE c.roundId.id = :roundId ORDER BY COALESCE(c.avg.duration, c.best.duration, 'P9999D') ASC, c.id ASC")
+    @Query("SELECT c FROM RoundDetail c WHERE c.round.id = :roundId")
+    Page<RoundDetail> findByRoundId(@Param("roundId") String roundId, Pageable pageable);
+
+    @Query("SELECT c FROM RoundDetail c WHERE c.round.id = :roundId")
+    List<RoundDetail> findListByRoundId(@Param("roundId") String roundId);
 }
 
 
