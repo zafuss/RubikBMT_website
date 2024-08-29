@@ -123,8 +123,10 @@ public class RoundDetailController {
         Page<RoundDetail> roundDetailPage = roundDetailService.findByRoundId(roundId, pageable);
         List<RoundDetail> sortedCandidates = roundDetailPage.getContent().stream()
                 .sorted(Comparator
-                        .comparing((RoundDetail rd) -> rd.getAvg() != null ? rd.getAvg().getDuration() : Duration.ZERO, Comparator.reverseOrder())
-                        .thenComparing(rd -> rd.getCandidate().getFirstName(), collator))
+                        .comparing((RoundDetail rd) -> rd.getAvg() != null && rd.getBest() != null ? 0 : 1)
+                        .thenComparing((RoundDetail rd) -> rd.getAvg() != null ? rd.getAvg().getDuration() : Duration.ZERO, Comparator.naturalOrder())
+                        .thenComparing((RoundDetail rd) -> rd.getBest() != null ? rd.getBest().getDuration() : Duration.ZERO, Comparator.naturalOrder())
+                        .thenComparing(rd -> rd.getCandidate().getFirstName(), Comparator.naturalOrder()))
                 .toList();
 
         model.addAttribute("roundDetails", sortedCandidates);
