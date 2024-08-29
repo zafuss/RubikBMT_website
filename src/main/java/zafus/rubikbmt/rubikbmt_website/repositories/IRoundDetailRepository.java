@@ -17,6 +17,9 @@ public interface IRoundDetailRepository extends JpaRepository<RoundDetail, Strin
 
     @Query("SELECT c FROM RoundDetail c WHERE c.round.id = :roundId")
     List<RoundDetail> findListByRoundId(@Param("roundId") String roundId);
+
+    @Query("select c from RoundDetail c where c.round.id = :roundId and c.candidate.id = :candidateId")
+    RoundDetail findRoundDetailByCandidateAndRound(@Param("roundId") String roundId, @Param("candidateId") String candidateId);
 }
 
 

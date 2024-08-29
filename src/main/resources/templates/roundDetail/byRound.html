@@ -73,21 +73,21 @@
                                     </thead>
                                     <tbody class="table-border-bottom-0">
                                     <tr th:each="roundDetail, stat : ${roundDetails}">
-                                        <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                                        <td th:text="${roundDetail.candidate.fullName}"></td>
-                                        <td th:text="${roundDetail.best != null ? roundDetail.best.durationString : ''}"></td>
-                                        <td th:text="${roundDetail.avg != null ? roundDetail.best.durationString : ''}"></td>
-                                        <td th:text="${roundDetail.ao5 != null ? roundDetail.best.durationString : ''}"></td>
-                                        <td th:text="${roundDetail.worst != null ? roundDetail.best.durationString : ''}"></td>
-                                        <td>
-                                            <ul>
-                                                <li th:each="solve : ${roundDetail.getSolves()}" th:text="${solve.durationString}"></li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <a th:href="@{roundDetails/detail(id=${roundDetail.id})}" class="btn btn-secondary">Chi tiết</a>
-                                            <a th:href="@{roundDetails/edit(id=${roundDetail.id})}" class="btn btn-primary">Sửa</a>
-                                        </td>
+                                            <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                            <td th:text="${roundDetail.candidate.fullName}"></td>
+                                            <td th:text="${roundDetail.best != null ?   T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.best.durationString) : ''}"></td>
+                                            <td th:text="${roundDetail.avg != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.avg.durationString) : ''}"></td>
+                                            <td th:text="${roundDetail.ao5 != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.ao5.durationString) : ''}"></td>
+                                            <td th:text="${roundDetail.worst != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.worst.durationString) : ''}"></td>
+                                            <td>
+                                                <ul>
+                                                    <li th:each="solve : ${roundDetail.getSolves()}" th:text="${ T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString)}"></li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a th:href="@{/roundDetails/detail(id=${roundDetail.id})}" class="btn btn-secondary">Chi tiết</a>
+                                                <a th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}" class="btn btn-primary">Nhập điểmt</a>
+                                            </td>
                                     </tr>
                                     </tbody>
                                 </table>

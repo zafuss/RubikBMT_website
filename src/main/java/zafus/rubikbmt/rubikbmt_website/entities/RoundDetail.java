@@ -47,28 +47,27 @@ public class RoundDetail {
     private Candidate candidate;
 
 
-    public void findBest() {
-        this.best = solves.stream()
+    public static Solve findBest(List<Solve> solves) {
+        return solves.stream()
                 .filter(solve -> !solve.isDNF())
                 .min(Comparator.comparing(Solve::getDuration))
                 .orElse(null);
     }
 
-    public void findWorst() {
-        this.worst = solves.stream()
+    public static Solve findWorst(List<Solve> solves) {
+        return solves.stream()
                 .max(Comparator.comparing(solve -> solve.isDNF() ?
                         Solve.DNF_DURATION : solve.getDuration()))
                 .orElse(null);
     }
 
-    public void findAvg() {
+    public static Solve findAvg(List<Solve> solves) {
         long count = solves.stream()
                 .filter(solve -> !solve.isDNF())
                 .count();
 
         if (count == 0) {
-            this.avg = new Solve(Duration.ZERO, false);
-            return;
+            return new Solve(Duration.ZERO, false);
         }
 
         Duration sum = solves.stream()
@@ -77,15 +76,15 @@ public class RoundDetail {
                 .reduce(Duration.ZERO, Duration::plus);
 
         Duration avgDuration = sum.dividedBy(count);
-        this.avg = new Solve(avgDuration, false);
+        return new Solve(avgDuration, false);
     }
 
-    public void findAo5() {
+    public static Solve  findAo5(List<Solve> solves) {
         long dnfCount = solves.stream().filter(Solve::isDNF).count();
 
         if (dnfCount >= 2) {
-            this.ao5 = new Solve(Solve.DNF_DURATION, true);
-            return;
+            return new Solve(Solve.DNF_DURATION, true);
+
         }
 
         List<Solve> validSolves = solves.stream()
@@ -94,8 +93,7 @@ public class RoundDetail {
                 .toList();
 
         if (validSolves.size() < 3) {
-            this.ao5 = new Solve( Duration.ZERO, false);
-            return;
+            return new Solve( Duration.ZERO, false);
         }
 
         Duration sum = validSolves.subList(1, validSolves.size() - 1).stream()
@@ -103,7 +101,7 @@ public class RoundDetail {
                 .reduce(Duration.ZERO, Duration::plus);
 
         Duration ao5Duration = sum.dividedBy(validSolves.size() - 2);
-        this.ao5 = new Solve(ao5Duration, false);
+        return new Solve(ao5Duration, false);
     }
 
 }

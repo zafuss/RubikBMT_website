@@ -47,5 +47,7 @@ public class RoundDetailService {
         roundDetailRepository.delete(roundDetail);
     }
 
-
+    public RoundDetail findRoundDetailByCandidateAndRound(String roundId ,String candidateId){
+        return roundDetailRepository.findRoundDetailByCandidateAndRound(roundId,candidateId);
+    }
 }
