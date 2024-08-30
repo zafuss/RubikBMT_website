@@ -36,6 +36,7 @@ import static zafus.rubikbmt.rubikbmt_website.entities.RoundDetail.*;
 
 @Controller
 @RequestMapping("/roundDetails")
+@SessionAttributes("roundDetail")
 public class RoundDetailController {
 
     @Autowired
@@ -50,62 +51,166 @@ public class RoundDetailController {
     @Autowired
     private SolveService solveService;
 
+    private RoundDetail round;
 
-    @GetMapping("/editCandidate")
-    public String roundEdit(Model model, @RequestParam("id1") String roundID,@RequestParam("id2") String candidateID ) {
+
+    @GetMapping("/addCandidate")
+    public String roundAdd(Model model, @RequestParam("id1") String roundID, @RequestParam("id2") String candidateID) {
 //        Candidate candidate = candidateService.findById(candidateId);
         RequestCreateSolve requestCreateSolve = new RequestCreateSolve();
         requestCreateSolve.setRoundId(roundID);
         requestCreateSolve.setCandidateId(candidateID);
 //        model.addAttribute("candidate",candidate);
         model.addAttribute("requestCreateSolve", requestCreateSolve);
-        return "roundDetail/edit";
+        return "roundDetail/add";
     }
 
     @PostMapping("/updateCandidate")
-    public String updateDetail(@Valid @ModelAttribute RequestCreateSolve requestCreateSolve, BindingResult bindingResult, Model model) {
+    public String updateDetail(@Valid @ModelAttribute RequestCreateSolve requestCreateSolve,
+                               BindingResult bindingResult, Model model) {
         try {
-            Solve solve;
             String roundId = requestCreateSolve.getRoundId();
             String candidateId = requestCreateSolve.getCandidateId();
             RoundDetail roundDetail = roundDetailService.findRoundDetailByCandidateAndRound(roundId, candidateId);
             List<Solve> solves = new ArrayList<>();
-            Duration duration ;
-            for (int i = 1; i <= 5; i++) {
-                if (requestCreateSolve.getSolve(i).equals("out")){
-                    duration = Solve.DNF_DURATION;
-                    solve = new Solve();
-                    solve.setDNF(true);
-                    solve.setDuration(duration);
-                    solve.setDurationString(duration.toString());
-                }
-                else{
-                    String formatted = ConvertToDuration.convertToFormat(requestCreateSolve.getSolve(i));
-                    duration = ConvertToDuration.parseDuration(formatted);
-                    solve = new Solve();
-                    solve.setDuration(duration);
-                    solve.setDurationString(duration.toString());
-                }
-                Solve solvetmp = solveService.add(solve);
-                solves.add(solvetmp);
-            }
-            roundDetail.setSolves(solves);
-            roundDetail.setBest(findBest(solves));
-            roundDetail.setWorst(findWorst(solves));
-            Solve solveAvg = findAvg(solves);
-            solveAvg.setDurationString(solveAvg.getDuration().toString());
-            Solve solvetmpAvg = solveService.add(solveAvg);
-            roundDetail.setAvg(solvetmpAvg);
-            Solve solveAo5 = findAo5(solves);
-            solveAo5.setDurationString(solveAo5.getDuration().toString());
-            Solve solvetmpAo5 = solveService.add(solveAo5);
-            roundDetail.setAo5(solvetmpAo5);
-            roundDetailService.update(roundDetail);
+            processValue(requestCreateSolve, roundDetail, solves);
             return "redirect:/roundDetails/byRound/" + roundId;
         } catch (Exception ex) {
             throw new RuntimeException("loi add");
         }
     }
+
+    @GetMapping("/editCandidate")
+    public String roundEdit(Model model, @RequestParam("id1") String roundID,
+                            @RequestParam("id2") String candidateID) {
+        try {
+            RequestCreateSolve requestCreateSolve = new RequestCreateSolve();
+            RoundDetail roundDetail = roundDetailService.findRoundDetailByCandidateAndRound(roundID, candidateID);
+            requestCreateSolve.setRoundId(roundID);
+            requestCreateSolve.setCandidateId(candidateID);
+            if (roundDetail == null) {
+                return "redirect:/roundDetails/byRound/" + roundID;
+            } else if (roundDetail.getSolves().isEmpty()) {
+                model.addAttribute("requestCreateSolve", requestCreateSolve);
+            } else {
+                List<Solve> solves = roundDetail.getSolves();
+                for (int i = 0; i < solves.size(); i++) {
+                    String durationString = solves.get(i).getDurationString();
+                    if (durationString.equals("PT10H")) {
+                        durationString = "dnf";
+                    } else {
+                        System.out.println(durationString);
+                        durationString = ConvertToDuration.convertToNumber(durationString);
+                    }
+                    switch (i) {
+                        case 0:
+                            requestCreateSolve.setSolve1(durationString);
+                            break;
+                        case 1:
+                            requestCreateSolve.setSolve2(durationString);
+                            break;
+                        case 2:
+                            requestCreateSolve.setSolve3(durationString);
+                            break;
+                        case 3:
+                            requestCreateSolve.setSolve4(durationString);
+                            break;
+                        case 4:
+                            requestCreateSolve.setSolve5(durationString);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                model.addAttribute("requestCreateSolve", requestCreateSolve);
+                round = roundDetail;
+            }
+
+            return "roundDetail/edit";
+        } catch (Exception ex) {
+            throw new RuntimeException("Lỗi trong quá trình xử lý: " + ex.getMessage(), ex);
+        }
+    }
+
+    @PostMapping("/updateAddCandidate")
+    public String addCandidate(@Valid @ModelAttribute RequestCreateSolve requestCreateSolve,
+                               BindingResult bindingResult, Model model) {
+        try {
+            String roundId = requestCreateSolve.getRoundId();
+            RoundDetail roundDetail = round;
+            List<Solve> solves = new ArrayList<>();
+            if (!roundDetail.getSolves().isEmpty()) {
+                solves = roundDetail.getSolves();
+                processValueEdit(requestCreateSolve, roundDetail, solves);
+            } else {
+                processValue(requestCreateSolve, roundDetail, solves);
+            }
+
+            return "redirect:/roundDetails/byRound/" + roundId;
+        } catch (Exception ex) {
+            throw new RuntimeException("loi update");
+        }
+    }
+
+    private void processValueEdit(@ModelAttribute @Valid RequestCreateSolve requestCreateSolve, RoundDetail roundDetail, List<Solve> solves) {
+        Duration duration;
+        Solve solve;
+        for (int i = 1; i <= 5; i++) {
+            if (requestCreateSolve.getSolve(i).equals("dnf")) {
+                duration = Solve.DNF_DURATION;
+                solve = solves.get(i - 1);
+                solve.setDNF(true);
+                solve.setDuration(duration);
+                solve.setDurationString(duration.toString());
+            } else {
+                String formatted = ConvertToDuration.convertToFormat(requestCreateSolve.getSolve(i));
+                duration = ConvertToDuration.parseDuration(formatted);
+                solve = solves.get(i - 1);
+                solve.setDuration(duration);
+                solve.setDurationString(duration.toString());
+            }
+        }
+        saveRoundDetail(roundDetail, solves);
+    }
+
+    private void saveRoundDetail(RoundDetail roundDetail, List<Solve> solves) {
+        roundDetail.setSolves(solves);
+        roundDetail.setBest(findBest(solves));
+        roundDetail.setWorst(findWorst(solves));
+        Solve solveAvg = findAvg(solves);
+        solveAvg.setDurationString(solveAvg.getDuration().toString());
+        Solve solvetmpAvg = solveService.add(solveAvg);
+        roundDetail.setAvg(solvetmpAvg);
+        Solve solveAo5 = findAo5(solves);
+        solveAo5.setDurationString(solveAo5.getDuration().toString());
+        Solve solvetmpAo5 = solveService.add(solveAo5);
+        roundDetail.setAo5(solvetmpAo5);
+        roundDetailService.update(roundDetail);
+    }
+
+    private void processValue(@ModelAttribute @Valid RequestCreateSolve requestCreateSolve, RoundDetail roundDetail, List<Solve> solves) {
+        Duration duration;
+        Solve solve;
+        for (int i = 1; i <= 5; i++) {
+            if (requestCreateSolve.getSolve(i).equals("dnf")) {
+                duration = Solve.DNF_DURATION;
+                solve = new Solve();
+                solve.setDNF(true);
+                solve.setDuration(duration);
+                solve.setDurationString(duration.toString());
+            } else {
+                String formatted = ConvertToDuration.convertToFormat(requestCreateSolve.getSolve(i));
+                duration = ConvertToDuration.parseDuration(formatted);
+                solve = new Solve();
+                solve.setDuration(duration);
+                solve.setDurationString(duration.toString());
+            }
+            Solve solvetmp = solveService.add(solve);
+            solves.add(solvetmp);
+        }
+        saveRoundDetail(roundDetail, solves);
+    }
+
 
     @GetMapping("/byRound/{roundId}")
     public String byRound(Model model,
@@ -123,8 +228,8 @@ public class RoundDetailController {
         Page<RoundDetail> roundDetailPage = roundDetailService.findByRoundId(roundId, pageable);
         List<RoundDetail> sortedCandidates = roundDetailPage.getContent().stream()
                 .sorted(Comparator
-                        .comparing((RoundDetail rd) -> rd.getAvg() != null && rd.getBest() != null ? 0 : 1)
-                        .thenComparing((RoundDetail rd) -> rd.getAvg() != null ? rd.getAvg().getDuration() : Duration.ZERO, Comparator.naturalOrder())
+                        .comparing((RoundDetail rd) -> rd.getAo5() != null && rd.getBest() != null ? 0 : 1)
+                        .thenComparing((RoundDetail rd) -> rd.getAo5() != null ? rd.getAo5().getDuration() : Duration.ZERO, Comparator.naturalOrder())
                         .thenComparing((RoundDetail rd) -> rd.getBest() != null ? rd.getBest().getDuration() : Duration.ZERO, Comparator.naturalOrder())
                         .thenComparing(rd -> rd.getCandidate().getFirstName(), Comparator.naturalOrder()))
                 .toList();

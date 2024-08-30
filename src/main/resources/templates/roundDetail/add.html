@@ -31,8 +31,8 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div class="card p-6">
-                        <h3>Sửa điểm cho thí sinh</h3>
-                        <form action="#" th:action="@{/roundDetails/updateAddCandidate}"
+                        <h3>Nhập điểm cho thí sinh</h3>
+                        <form action="#" th:action="@{/roundDetails/updateCandidate}"
                               method="post" th:object="${requestCreateSolve}">
                             <input type="hidden" name="id1" th:field="${requestCreateSolve.roundId}" />
                             <input  type="hidden" name="id2" th:field="${requestCreateSolve.candidateId}" />
