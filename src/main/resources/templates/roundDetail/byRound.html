@@ -51,7 +51,7 @@
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="card">
                                 <h5 class="card-header" th:with="firstRound=${roundDetails[0]}"
-                                    th:text="'Bảng xếp hạng ' + ${firstRound.getRound().getName()} + ' giải đấu ' + ${firstRound.getRound().getCompetition().getName()} ">
+                                    th:text="'Bảng xếp hạng ' + ${firstRound.getRound().getName()} + ' giải đấu ' + ${firstRound.getRound().getCompetition().getName()} + ' bộ môn ' + ${firstRound.getRound().getEvent().getName()}">
                                 </h5>
                                 <a th:with="firstRound=${roundDetails[0]}"
                                     th:href="@{/rounds/addFromPreviousRound/{roundId}(roundId=${firstRound.getRound().getId()})}"
@@ -89,20 +89,19 @@
                                                     th:text="${roundDetail.worst != null ? (roundDetail.worst.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.worst.durationString)) : ''}">
                                                 </td>
                                                 <td>
-                                                    <ul>
-                                                        <li h:each="solve, iterStat : ${ roundDetail.getSolvesOrder()}"
-                                                            th:text="${solve != null ? (solve.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString)) : ''}">
+                                                    <ul style="list-style-type: none; padding-left: 0; margin: 0">
+                                                        <li th:each="solve, iterStat : ${ roundDetail.getSolvesOrder()}"
+                                                            th:text="${solve != null ? (solve.isDNF ? '(DNF)' : ((solve.durationString == roundDetail.best.durationString || solve.durationString == roundDetail.worst.durationString) ?'(' + T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString) + ')' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString))) : ''}"
+                                                            style="display: inline; margin-right: 10px;">
                                                         </li>
                                                     </ul>
-
                                                 </td>
 
                                                 <td>
-                                                    <!--                                                <a th:href="@{/roundDetails/detail(id=${roundDetail.id})}" class="btn btn-secondary">Chi tiết</a>-->
                                                     <a th:href="@{/roundDetails/addCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
                                                         class="btn btn-primary">Nhập điểm</a>
                                                     <a th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
-                                                        class="btn btn-secondary">Chỉnh Sửa</a>
+                                                        class="btn btn-secondary">Chỉnh sửa</a>
                                                 </td>
                                             </tr>
                                         </tbody>

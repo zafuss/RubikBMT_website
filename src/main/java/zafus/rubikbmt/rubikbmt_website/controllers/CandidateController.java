@@ -20,6 +20,7 @@ import zafus.rubikbmt.rubikbmt_website.entities.Event;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
+import zafus.rubikbmt.rubikbmt_website.services.EventService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,8 +31,13 @@ import java.util.stream.Collectors;
 public class CandidateController {
     @Autowired
     private CandidateService candidateService;
+
     @Autowired
     private CompetitionService competitionService;
+
+    @Autowired
+    private EventService eventService;
+
     private boolean isConfirmed;
     private List<Event> events;
     private Competition competitionTMP;
@@ -146,12 +152,15 @@ public class CandidateController {
                 .collect(Collectors.toList());;
         httpSession.setAttribute("candidates", candidates);
         Page<Candidate> candidatePage = candidateService.findCandidateByCompetitionAndEvent(competitionId, eventId, pageable);
+        Event event = eventService.findById(eventId);
+        Competition competition = competitionService.getById(competitionId);
+
         model.addAttribute("candidates", candidatePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", candidatePage.getTotalPages());
         model.addAttribute("keyword", keyword);
-        model.addAttribute("eventId", eventId);
-        model.addAttribute("competitionId", competitionId);
+        model.addAttribute("event", event);
+        model.addAttribute("competition", competition);
         model.addAttribute("size", size);
         return "candidate/byEventAndCompetition";
     }

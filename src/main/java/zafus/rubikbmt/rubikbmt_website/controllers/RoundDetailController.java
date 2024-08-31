@@ -60,7 +60,8 @@ public class RoundDetailController {
         RequestCreateSolve requestCreateSolve = new RequestCreateSolve();
         requestCreateSolve.setRoundId(roundID);
         requestCreateSolve.setCandidateId(candidateID);
-//        model.addAttribute("candidate",candidate);
+        Candidate candidate = candidateService.findById(candidateID);
+        model.addAttribute("candidate",candidate);
         model.addAttribute("requestCreateSolve", requestCreateSolve);
         return "roundDetail/add";
     }
@@ -86,6 +87,7 @@ public class RoundDetailController {
         try {
             RequestCreateSolve requestCreateSolve = new RequestCreateSolve();
             RoundDetail roundDetail = roundDetailService.findRoundDetailByCandidateAndRound(roundID, candidateID);
+            Candidate candidate = candidateService.findById(candidateID);
             requestCreateSolve.setRoundId(roundID);
             requestCreateSolve.setCandidateId(candidateID);
             if (roundDetail == null) {
@@ -123,6 +125,7 @@ public class RoundDetailController {
                     }
                 }
                 model.addAttribute("requestCreateSolve", requestCreateSolve);
+                model.addAttribute("candidate",candidate);
                 round = roundDetail;
             }
 

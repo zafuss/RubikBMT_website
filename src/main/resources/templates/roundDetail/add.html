@@ -31,7 +31,7 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div class="card p-6">
-                        <h3>Nhập điểm cho thí sinh</h3>
+                        <h3 th:text="'Nhập điểm cho thí sinh ' + ${candidate.getFullName()}"></h3>
                         <form action="#" th:action="@{/roundDetails/updateCandidate}"
                               method="post" th:object="${requestCreateSolve}">
                             <input type="hidden" name="id1" th:field="${requestCreateSolve.roundId}" />
@@ -79,8 +79,9 @@
                                 <span class="text-danger" th:if="${#fields.hasErrors('solve5')}"
                                       th:errors="*{solve1}"></span>
                             </div>
+                            <br>
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="/rounds" class="btn btn-secondary">Huỷ</a>
+                            <a href="javascript:history.back()" class="btn btn-secondary">Huỷ</a>
                         </form>
 
                     </div>

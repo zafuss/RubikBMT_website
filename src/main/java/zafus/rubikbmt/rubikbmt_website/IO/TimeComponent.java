@@ -26,19 +26,25 @@ public class TimeComponent {
         return seconds;
     }
 
-    public static String printDuration(String duration){
+    public static String printDuration(String duration) {
         TimeComponent timeComponent = parseISO8601Duration(duration);
 
         if (timeComponent != null) {
             String formattedMinutes = timeComponent.getMinutes() < 10 ? "0" + timeComponent.getMinutes() : String.valueOf(timeComponent.getMinutes());
             String formattedSeconds = timeComponent.getSeconds() < 10 ? "0" + timeComponent.getSeconds() : String.valueOf(timeComponent.getSeconds());
-           if(timeComponent.getHours() > 0){
-               return timeComponent.getHours() + ":" + formattedMinutes + ":" + formattedSeconds;
-           }
-           if (formattedMinutes.equals("00")) {
-               return formattedSeconds;
-           }
-           return formattedMinutes + ":" + formattedSeconds;
+
+            // Kiểm tra nếu formattedSeconds có dạng xx.x và thêm số 0
+            if (formattedSeconds.matches("\\d+\\.\\d")) {
+                formattedSeconds += "0";
+            }
+
+            if (timeComponent.getHours() > 0) {
+                return timeComponent.getHours() + ":" + formattedMinutes + ":" + formattedSeconds;
+            }
+            if (formattedMinutes.equals("00")) {
+                return formattedSeconds;
+            }
+            return formattedMinutes + ":" + formattedSeconds;
         } else {
             return "Invalid ISO 8601 duration format";
         }
