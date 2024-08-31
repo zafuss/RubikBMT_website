@@ -6,9 +6,10 @@ import java.util.regex.Pattern;
 
 public class ConvertToDuration {
 
-    public static String convertToFormat(String input){
+    public static String convertToFormat(String input) {
         return input.replaceAll("(?<=\\d)(?=(\\d{2})+$)", ".");
     }
+
     public static Duration parseDuration(String input) {
         // Tách các phần của chuỗi
         String[] parts = input.split("\\.");
@@ -16,11 +17,11 @@ public class ConvertToDuration {
         long seconds = 0;
         long minutes = 0;
         long totalMillis = 0;
-        if(parts.length == 2) {
+        if (parts.length == 2) {
             millis = Long.parseLong(parts[1]);
             seconds = Long.parseLong(parts[0]);
             totalMillis = (seconds * 1000) + (millis * 10);
-        } else if(parts.length == 3) {
+        } else if (parts.length == 3) {
             millis = Long.parseLong(parts[2]);
             seconds = Long.parseLong(parts[1]);
             minutes = Long.parseLong(parts[0]);
@@ -63,6 +64,12 @@ public class ConvertToDuration {
             }
 
             // Kết hợp thành số nguyên duy nhất
+            // Kiểm tra nếu phút bằng 0, chỉ hiển thị giây và mili giây
+            if ("0".equals(minutes)) {
+                return seconds + fraction;
+            }
+
+            // Kết hợp thành số nguyên duy nhất nếu có phút
             return minutes + seconds + fraction;
         }
 

@@ -1,12 +1,7 @@
 <!doctype html>
-<html
-        lang="en"
-        class="light-style layout-menu-fixed layout-compact"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="/admin/assets/"
-        data-template="vertical-menu-template-free"
-        data-style="light">
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+    data-assets-path="/admin/assets/" data-template="vertical-menu-template-free" data-style="light">
+
 <head th:replace="~{library/lib_admin.html::head('RUBIK BMT')}">
     <style>
         #autocomplete-results {
@@ -34,110 +29,124 @@
         }
     </style>
 </head>
+
 <body>
-<!-- Layout wrapper -->
-<div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-        <!-- Menu -->
-        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
-        <!-- / Menu -->
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+            <!-- / Menu -->
 
-        <!-- Layout container -->
-        <div class="layout-page">
-            <!-- Navbar -->
-            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
-            <!-- / Navbar -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+                <!-- / Navbar -->
 
-            <!-- Content wrapper -->
-            <div class="content-wrapper">
-                <!-- Content -->
-                <div th:fragment="content">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="card">
-                            <h5 class="card-header" th:with="firstRound=${roundDetails[0]}"
-                                th:text="'Bảng xếp hạng ' + ${firstRound.getRound().getName()} + ' giải đấu ' + ${firstRound.getRound().getCompetition().getName()} "></h5>
-                            <a th:with="firstRound=${roundDetails[0]}"
-                               th:href="@{/rounds/addFromPreviousRound/{roundId}(roundId=${firstRound.getRound().getId()})}"
-                               class="btn btn-primary" style="width: 130px; margin-left: 20px; margin-bottom: 20px">Thêm
-                                round</a>
-                            <div class="table-responsive text-nowrap">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Thí sinh</th>
-                                        <th>Best</th>
-                                        <th>Avg</th>
-                                        <th>Ao5</th>
-                                        <th>Worst</th>
-                                        <th>Solves</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-0">
-                                    <tr th:each="roundDetail, stat : ${roundDetails}">
-                                        <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                                        <td th:text="${roundDetail.candidate.fullName}"></td>
-                                        <td th:text="${roundDetail.best != null ?   T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.best.durationString) : ''}"></td>
-                                        <td th:text="${roundDetail.avg != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.avg.durationString) : ''}"></td>
-                                        <td th:text="${roundDetail.ao5 != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.ao5.durationString) : ''}"></td>
-                                        <td th:text="${roundDetail.worst != null ? T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.worst.durationString) : ''}"></td>
-                                        <td>
-                                            <ul>
-                                                <li th:each="solve, iterStat : ${ roundDetail.getSolvesOrder()}"
-                                                    th:text="${T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString)}"></li>
-                                            </ul>
-                                        </td>
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div th:fragment="content">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <div class="card">
+                                <h5 class="card-header" th:with="firstRound=${roundDetails[0]}"
+                                    th:text="'Bảng xếp hạng ' + ${firstRound.getRound().getName()} + ' giải đấu ' + ${firstRound.getRound().getCompetition().getName()} ">
+                                </h5>
+                                <a th:with="firstRound=${roundDetails[0]}"
+                                    th:href="@{/rounds/addFromPreviousRound/{roundId}(roundId=${firstRound.getRound().getId()})}"
+                                    class="btn btn-primary"
+                                    style="width: 130px; margin-left: 20px; margin-bottom: 20px">Thêm
+                                    round</a>
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Thí sinh</th>
+                                                <th>Best</th>
+                                                <th>Avg</th>
+                                                <th>Ao5</th>
+                                                <th>Worst</th>
+                                                <th>Solves</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-border-bottom-0">
+                                            <tr th:each="roundDetail, stat : ${roundDetails}">
+                                                <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                                <td th:text="${roundDetail.candidate.fullName}"></td>
+                                                <td
+                                                    th:text="${roundDetail.best != null ? (roundDetail.best.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.best.durationString)) : ''}">
+                                                </td>
+                                                <td
+                                                    th:text="${roundDetail.avg != null ? (roundDetail.avg.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.avg.durationString)) : ''}">
+                                                </td>
+                                                <td
+                                                    th:text="${roundDetail.ao5 != null ? (roundDetail.ao5.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.ao5.durationString)) : ''}">
+                                                </td>
+                                                <td
+                                                    th:text="${roundDetail.worst != null ? (roundDetail.worst.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.worst.durationString)) : ''}">
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li h:each="solve, iterStat : ${ roundDetail.getSolvesOrder()}"
+                                                            th:text="${solve != null ? (solve.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString)) : ''}">
+                                                        </li>
+                                                    </ul>
 
-                                        <td>
-                                            <!--                                                <a th:href="@{/roundDetails/detail(id=${roundDetail.id})}" class="btn btn-secondary">Chi tiết</a>-->
-                                            <a th:href="@{/roundDetails/addCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
-                                               class="btn btn-primary">Nhập điểm</a>
-                                            <a th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
-                                               class="btn btn-secondary">Chỉnh Sửa</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- Pagination -->
-                            <div id="pagination" class="mt-4 p-3">
-                                <ul class="pagination">
-                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
-                                        <a th:href="@{/roundDetails/byRound/{roundId}(roundId=${roundId},page=${i}, size=${size})}"
-                                           th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"
-                                           class="page-link"></a>
-                                    </li>
-                                </ul>
+                                                </td>
+
+                                                <td>
+                                                    <!--                                                <a th:href="@{/roundDetails/detail(id=${roundDetail.id})}" class="btn btn-secondary">Chi tiết</a>-->
+                                                    <a th:href="@{/roundDetails/addCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
+                                                        class="btn btn-primary">Nhập điểm</a>
+                                                    <a th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
+                                                        class="btn btn-secondary">Chỉnh Sửa</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Pagination -->
+                                <div id="pagination" class="mt-4 p-3">
+                                    <ul class="pagination">
+                                        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
+                                            <a th:href="@{/roundDetails/byRound/{roundId}(roundId=${roundId},page=${i}, size=${size})}"
+                                                th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"
+                                                class="page-link"></a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Content wrapper -->
                 </div>
-                <!-- Content wrapper -->
+                <!-- / Layout page -->
             </div>
-            <!-- / Layout page -->
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
         </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-</div>
-<!-- / Layout wrapper -->
+    <!-- / Layout wrapper -->
 
-<!-- Core JS -->
-<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
-<script src="/admin/assets/vendor/js/bootstrap.js"></script>
-<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="/admin/assets/vendor/js/menu.js"></script>
-<script src="/admin/js/autocomplete.js"></script>
+    <!-- Core JS -->
+    <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/admin/assets/vendor/js/menu.js"></script>
+    <script src="/admin/js/autocomplete.js"></script>
 
 
-<!-- Vendors JS -->
-<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-<!-- Main JS -->
-<script src="/admin/assets/js/main.js"></script>
-<!-- Page JS -->
-<script src="/admin/assets/js/dashboards-analytics.js"></script>
+    <!-- Vendors JS -->
+    <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <!-- Main JS -->
+    <script src="/admin/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/admin/assets/js/dashboards-analytics.js"></script>
 </body>
+
 </html>

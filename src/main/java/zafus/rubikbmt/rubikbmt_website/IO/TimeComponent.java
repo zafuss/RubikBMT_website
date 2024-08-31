@@ -35,6 +35,9 @@ public class TimeComponent {
            if(timeComponent.getHours() > 0){
                return timeComponent.getHours() + ":" + formattedMinutes + ":" + formattedSeconds;
            }
+           if (formattedMinutes.equals("00")) {
+               return formattedSeconds;
+           }
            return formattedMinutes + ":" + formattedSeconds;
         } else {
             return "Invalid ISO 8601 duration format";
