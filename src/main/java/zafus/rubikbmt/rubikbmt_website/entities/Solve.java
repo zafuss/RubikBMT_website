@@ -33,4 +33,6 @@ public class Solve {
     private String durationString;
 
     private boolean isDNF = false;
+
+    private int orderIndex = 0;
 }

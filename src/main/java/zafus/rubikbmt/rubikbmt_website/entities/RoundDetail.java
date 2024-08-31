@@ -104,4 +104,9 @@ public class RoundDetail {
         return new Solve(ao5Duration, false);
     }
 
+    public List<Solve> getSolvesOrder() {
+        List<Solve> solvers = solves;
+        solvers.sort(Comparator.comparing(Solve::getOrderIndex));
+        return solvers;
+    }
 }

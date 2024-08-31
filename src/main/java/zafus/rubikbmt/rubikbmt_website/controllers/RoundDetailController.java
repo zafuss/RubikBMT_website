@@ -198,19 +198,20 @@ public class RoundDetailController {
                 solve.setDNF(true);
                 solve.setDuration(duration);
                 solve.setDurationString(duration.toString());
+                solve.setOrderIndex(i);
             } else {
                 String formatted = ConvertToDuration.convertToFormat(requestCreateSolve.getSolve(i));
                 duration = ConvertToDuration.parseDuration(formatted);
                 solve = new Solve();
                 solve.setDuration(duration);
                 solve.setDurationString(duration.toString());
+                solve.setOrderIndex(i);
             }
             Solve solvetmp = solveService.add(solve);
             solves.add(solvetmp);
         }
         saveRoundDetail(roundDetail, solves);
     }
-
 
     @GetMapping("/byRound/{roundId}")
     public String byRound(Model model,

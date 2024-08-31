@@ -30,19 +30,31 @@ public class ConvertToDuration {
     }
 
     public static String convertToNumber(String input) {
-        // Regex để trích xuất số phút và số giây
-        Pattern pattern = Pattern.compile("PT(\\d+)M(\\d+)(\\.\\d{1,2})?S");
+        Pattern pattern = Pattern.compile("PT(?:([0-9]+)M)?([0-9]+)(?:\\.([0-9]{1,2}))?S");
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
-            // Lấy phần phút và giây
-            String minutes = matcher.group(1);
+            // Lấy phần phút, giây và thập phân
+            String minutes = matcher.group(1); // Có thể là null
             String seconds = matcher.group(2);
-            String fraction = matcher.group(3); // phần thập phân (có thể là null)
+            String fraction = matcher.group(3); // Phần thập phân (có thể là null)
+
+            // Xử lý phần phút
+            if (minutes == null) {
+                minutes = ""; // Không có phần phút
+            } else {
+                // Đảm bảo phần phút không có chữ số 0 thừa
+                minutes = String.format("%01d", Integer.parseInt(minutes));
+            }
+
+            // Xử lý phần giây
+            if (seconds.length() == 1) {
+                seconds = "0" + seconds; // Thêm số 0 nếu cần
+            }
 
             // Xử lý phần thập phân
             if (fraction != null) {
-                fraction = fraction.substring(1); // Bỏ dấu chấm
+                // Bỏ dấu chấm và đảm bảo có hai chữ số
                 if (fraction.length() == 1) {
                     fraction += "0"; // Thêm số 0 nếu cần
                 }
@@ -54,6 +66,7 @@ public class ConvertToDuration {
             return minutes + seconds + fraction;
         }
 
-        return "";
+        // Trả về null hoặc một giá trị mặc định nếu không khớp với định dạng
+        return null;
     }
 }
