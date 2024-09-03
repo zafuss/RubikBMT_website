@@ -15,6 +15,8 @@ import zafus.rubikbmt.rubikbmt_website.services.EventService;
 import zafus.rubikbmt.rubikbmt_website.services.RoundDetailService;
 import zafus.rubikbmt.rubikbmt_website.services.RoundService;
 
+import java.time.Duration;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -81,9 +83,12 @@ public class RoundController {
 
         List<RoundDetail> roundDetails = roundDetailService.findListByRoundId(roundId);
         List<RoundDetail> sortedCandidates = roundDetails.stream()
-                .sorted((c1, c2) -> RoundDetail.collator.compare(c1.getCandidate().getFirstName(), c2.getCandidate().getFirstName()))
+                .sorted(Comparator
+                        .comparing((RoundDetail rd) -> rd.getAo5() != null && rd.getBest() != null ? 0 : 1)
+                        .thenComparing((RoundDetail rd) -> rd.getAo5() != null ? rd.getAo5().getDuration() : Duration.ZERO, Comparator.naturalOrder())
+                        .thenComparing((RoundDetail rd) -> rd.getBest() != null ? rd.getBest().getDuration() : Duration.ZERO, Comparator.naturalOrder())
+                        .thenComparing(rd -> rd.getCandidate().getFirstName(), RoundDetail.collator))
                 .toList();
-
         for (int i = 0; i < newRound.getNumOfCandidate(); i++) {
             RoundDetail newRoundDetail = new RoundDetail();
             newRoundDetail.setRound(newRound);

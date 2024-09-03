@@ -235,7 +235,7 @@ public class RoundDetailController {
                         .comparing((RoundDetail rd) -> rd.getAo5() != null && rd.getBest() != null ? 0 : 1)
                         .thenComparing((RoundDetail rd) -> rd.getAo5() != null ? rd.getAo5().getDuration() : Duration.ZERO, Comparator.naturalOrder())
                         .thenComparing((RoundDetail rd) -> rd.getBest() != null ? rd.getBest().getDuration() : Duration.ZERO, Comparator.naturalOrder())
-                        .thenComparing(rd -> rd.getCandidate().getFirstName(), Comparator.naturalOrder()))
+                        .thenComparing(rd -> rd.getCandidate().getFirstName(), collator))
                 .toList();
 
         model.addAttribute("roundDetails", sortedCandidates);

@@ -2,6 +2,7 @@ package zafus.rubikbmt.rubikbmt_website.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import java.time.Duration;
 import java.util.Comparator;
@@ -28,4 +29,7 @@ public class Round {
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
+
+    @Nullable
+    private int nextRoundCandidate = 0;
 }

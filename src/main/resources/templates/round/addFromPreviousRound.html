@@ -62,8 +62,14 @@
                                 <div class="mb-3">
                                     <label for="numOfCandidate" class="form-label">Số lượng thí sinh</label>
                                     <input type="number" id="numOfCandidate" th:field="*{numOfCandidate}"
-                                           th:value="${currentRound.numOfCandidate}"
+                                           th:value="${currentRound.nextRoundCandidate}"
                                            class="form-control" placeholder="Nhập số lượng thí sinh" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nextRoundCandidate" class="form-label">Số lượng thí sinh vòng tiếp theo</label>
+                                    <input type="number" id="nextRoundCandidate" th:field="*{nextRoundCandidate}"
+                                           th:value="${currentRound.nextRoundCandidate}"
+                                           class="form-control" placeholder="Nhập số lượng thí sinh vòng tiếp theo" required/>
                                 </div>
 
                                 <div class="mb-3">
