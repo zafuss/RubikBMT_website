@@ -50,4 +50,11 @@ public class RoundDetailService {
     public RoundDetail findRoundDetailByCandidateAndRound(String roundId ,String candidateId){
         return roundDetailRepository.findRoundDetailByCandidateAndRound(roundId,candidateId);
     }
+    public void saveAll(List<RoundDetail> roundDetails) {
+        roundDetailRepository.saveAll(roundDetails);
+    }
+
+    public Page<RoundDetail> findAllByRoundIdAndLimit(String roundId, int limit, Pageable pageable) {
+        return roundDetailRepository.findByRoundIdAndLimit(roundId, limit, pageable);
+    }
 }

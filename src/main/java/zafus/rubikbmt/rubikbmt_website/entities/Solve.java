@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zafus.rubikbmt.rubikbmt_website.IO.TimeComponent;
 
 import java.time.Duration;
 
@@ -35,4 +36,8 @@ public class Solve {
     private boolean isDNF = false;
 
     private int orderIndex = 0;
+
+    public String getTimeDurationString(){
+        return TimeComponent.printDuration(durationString);
+    }
 }

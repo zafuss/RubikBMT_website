@@ -165,12 +165,14 @@ public class RoundDetailController {
                 solve.setDNF(true);
                 solve.setDuration(duration);
                 solve.setDurationString(duration.toString());
+                solve.setOrderIndex(i);
             } else {
                 String formatted = ConvertToDuration.convertToFormat(requestCreateSolve.getSolve(i));
                 duration = ConvertToDuration.parseDuration(formatted);
                 solve = solves.get(i - 1);
                 solve.setDuration(duration);
                 solve.setDurationString(duration.toString());
+                solve.setOrderIndex(i);
             }
         }
         saveRoundDetail(roundDetail, solves);
@@ -224,6 +226,7 @@ public class RoundDetailController {
                           @RequestParam(defaultValue = "") String keyword,
                           @RequestParam(defaultValue = "") String searchType) {
 
+        final int[] index = {1};
 //        Pageable pageable = PageRequest.of(page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 Sort.Order.asc("candidate.firstName")
@@ -236,8 +239,15 @@ public class RoundDetailController {
                         .thenComparing((RoundDetail rd) -> rd.getAo5() != null ? rd.getAo5().getDuration() : Duration.ZERO, Comparator.naturalOrder())
                         .thenComparing((RoundDetail rd) -> rd.getBest() != null ? rd.getBest().getDuration() : Duration.ZERO, Comparator.naturalOrder())
                         .thenComparing(rd -> rd.getCandidate().getFirstName(), collator))
+                .map(rd -> {
+                    if (rd.getAo5() != null) {
+                        rd.setRankRound(index[0]);
+                        index[0] +=1 ;
+                    }
+                    return rd;
+                })
                 .toList();
-
+        roundDetailService.saveAll(sortedCandidates);
         model.addAttribute("roundDetails", sortedCandidates);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", roundDetailPage.getTotalPages());

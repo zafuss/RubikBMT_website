@@ -42,4 +42,7 @@ public class RoundService {
         return roundRepository.findByCompetitionIdAndEventsId(competitionId, eventsId, pageable);
     }
 
+    public List<Round> findRoundByCompetitionAndEventsId(String competitionId, String eventsId) {
+        return roundRepository.findByCompetitionIdAndEventsId(competitionId, eventsId);
+    }
 }

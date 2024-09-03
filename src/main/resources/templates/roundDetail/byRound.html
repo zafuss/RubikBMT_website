@@ -77,21 +77,25 @@
                                                 <td th:text="${(currentPage * size) + stat.index + 1}"></td>
                                                 <td th:text="${roundDetail.candidate.fullName}"></td>
                                                 <td
-                                                    th:text="${roundDetail.best != null ? (roundDetail.best.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.best.durationString)) : ''}">
+                                                    th:text="${roundDetail.best != null ? roundDetail.getDurationString('best'): ''}">
                                                 </td>
                                                 <td
-                                                    th:text="${roundDetail.avg != null ? (roundDetail.avg.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.avg.durationString)) : ''}">
+                                                    th:text="${roundDetail.avg != null ? roundDetail.getDurationString('avg') : ''}">
                                                 </td>
                                                 <td
-                                                    th:text="${roundDetail.ao5 != null ? (roundDetail.ao5.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.ao5.durationString)) : ''}">
+                                                    th:text="${roundDetail.ao5 != null ? roundDetail.getDurationString('ao5') : ''}">
                                                 </td>
                                                 <td
-                                                    th:text="${roundDetail.worst != null ? (roundDetail.worst.isDNF ? 'DNF' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(roundDetail.worst.durationString)) : ''}">
+                                                    th:text="${roundDetail.worst != null ? roundDetail.getDurationString('worst') : ''}">
                                                 </td>
                                                 <td>
                                                     <ul style="list-style-type: none; padding-left: 0; margin: 0">
                                                         <li th:each="solve, iterStat : ${ roundDetail.getSolvesOrder()}"
-                                                            th:text="${solve != null ? (solve.isDNF ? '(DNF)' : ((solve.durationString == roundDetail.best.durationString || solve.durationString == roundDetail.worst.durationString) ?'(' + T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString) + ')' : T(zafus.rubikbmt.rubikbmt_website.IO.TimeComponent).printDuration(solve.durationString))) : ''}"
+                                                            th:text="${solve != null ? (solve.isDNF ? '(DNF)' :
+                                                            ((solve.durationString == roundDetail.best.durationString ||
+                                                            solve.durationString == roundDetail.worst.durationString) ?
+                                                            '(' + solve.getTimeDurationString() + ')' :
+                                                             solve.getTimeDurationString())) : ''}"
                                                             style="display: inline; margin-right: 10px;">
                                                         </li>
                                                     </ul>

@@ -102,6 +102,15 @@ public class BackToSchoolController {
         }
     }
 
+    @GetMapping("/clientRound")
+    public String clientRound(Model model) {
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/clientRound";
+        }
+    }
+
     @GetMapping("location")
     public String location(Model model) {
         if (currentTime.isBefore(openTime)) {

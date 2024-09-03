@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zafus.rubikbmt.rubikbmt_website.IO.TimeComponent;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -49,6 +50,8 @@ public class RoundDetail {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+
+    private int rankRound;
 
     private static final int SCALE = 2; // Làm tròn đến 2 chữ số thập phân
 
@@ -140,4 +143,27 @@ public class RoundDetail {
         solvers.sort(Comparator.comparing(Solve::getOrderIndex));
         return solvers;
     }
+
+    public String getDurationString(String text) {
+        switch (text) {
+            case "best":
+                if(best.isDNF())
+                    return "DNF";
+                return TimeComponent.printDuration(best.getDurationString());
+            case "worst":
+                if(worst.isDNF())
+                    return "DNF";
+                return TimeComponent.printDuration(worst.getDurationString());
+            case "ao5":
+                if(ao5.isDNF())
+                    return "DNF";
+                return TimeComponent.printDuration(ao5.getDurationString());
+            default:
+                if(avg.isDNF())
+                    return "DNF";
+                return TimeComponent.printDuration(avg.getDurationString());
+        }
+    }
+
+
 }
