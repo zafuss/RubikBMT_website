@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static zafus.rubikbmt.rubikbmt_website.entities.RoundDetail.collator;
+
 @RestController
 @RequestMapping("/apiRoundBy")
 public class APIRound {
@@ -32,13 +34,11 @@ public class APIRound {
     @Autowired
     private RoundService roundService;
 
-
     @PostMapping("/Event")
     public ResponseEntity<?> getCandidatesByRoundAndEvent(@RequestBody Map<String, Object> data) {
         Integer page = (Integer) data.get("page");
         String roundDetailId = (String) data.get("roundDetailId");
-        int size = 1;
-
+        int size = 100;
 
         if (page < 0 || size <= 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -49,6 +49,7 @@ public class APIRound {
 
         Page<RoundDetail> roundDetailsPages = roundDetailService.findAllByRoundIdAndLimit(round.getId(),
                 round.getNumOfCandidate(), pageable);
+
         List<RoundDetailDTO> roundDetailDTOS = roundDetailsPages.getContent().stream()
                 .map(roundDetail -> new RoundDetailDTO(
                         roundDetail.getDurationString("best"),
@@ -64,8 +65,23 @@ public class APIRound {
                                 ))
                                 .collect(Collectors.toList()),
                         roundDetail.getCandidate().getFullName(),
-                        roundDetail.getRankRound()))
+                        roundDetail.getRankRound(),
+                        roundDetail.getCandidate().getFirstName()))
                 .collect(Collectors.toList());
+
+        // Sắp xếp danh sách theo rankRound, đưa các phần tử có rankRound = 0 xuống dưới
+        roundDetailDTOS.sort((dto1, dto2) -> {
+            if (dto1.getRankRound() == 0 && dto2.getRankRound() == 0) {
+                // Nếu cả hai đều có rankRound = 0, sắp xếp theo firstName
+                return collator.compare(dto1.getFirstName(), dto2.getFirstName());
+            } else if (dto1.getRankRound() == 0) {
+                return 1;  // Đưa dto1 xuống dưới
+            } else if (dto2.getRankRound() == 0) {
+                return -1;  // Đưa dto2 xuống dưới
+            } else {
+                return Integer.compare(dto1.getRankRound(), dto2.getRankRound());
+            }
+        });
 
         Map<String, Object> response = new HashMap<>();
         response.put("roundDetail", roundDetailDTOS);

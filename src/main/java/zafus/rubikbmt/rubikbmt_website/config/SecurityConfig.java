@@ -46,7 +46,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/admin/**", "/back-to-school/**", "/css/**", "/images/**", "/scripts/**",
-                                "/favicon.ico", "/students/register", "/candidates/register","/apiCheck/**", "/cube")
+                                "/favicon.ico", "/students/register", "/candidates/register","/apiCheck/**", "/cube", "/apiRoundBy/**")
                         .permitAll()
                         .requestMatchers("/students/**", "/candidates/**", "/api/**",
                                 "/dashboard/**","/user/**","/form/**","/api/export/**", "/roundDetails/**", "/rounds/**").hasAnyAuthority("Admin","Modifier", "SuperAdmin")

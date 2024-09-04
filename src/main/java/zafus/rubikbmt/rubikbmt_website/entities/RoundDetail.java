@@ -147,23 +147,41 @@ public class RoundDetail {
     public String getDurationString(String text) {
         switch (text) {
             case "best":
-                if(best.isDNF())
-                    return "DNF";
-                return TimeComponent.printDuration(best.getDurationString());
+                if (best != null) {
+                    if(best.isDNF()) {
+                        return "DNF";
+                    }
+                    return TimeComponent.printDuration(best.getDurationString());
+                } else {
+                    return "";
+                }
             case "worst":
-                if(worst.isDNF())
-                    return "DNF";
-                return TimeComponent.printDuration(worst.getDurationString());
+                if (worst != null) {
+                    if(worst.isDNF()) {
+                        return "DNF";
+                    }
+                    return TimeComponent.printDuration(worst.getDurationString());
+                } else {
+                    return "";
+                }
             case "ao5":
-                if(ao5.isDNF())
-                    return "DNF";
-                return TimeComponent.printDuration(ao5.getDurationString());
+                if (ao5 != null) {
+                    if(ao5.isDNF()) {
+                        return "DNF";
+                    }
+                    return TimeComponent.printDuration(ao5.getDurationString());
+                } else {
+                    return "";
+                }
             default:
-                if(avg.isDNF())
-                    return "DNF";
-                return TimeComponent.printDuration(avg.getDurationString());
+                if (avg != null) {
+                    if(avg.isDNF()) {
+                        return "DNF";
+                    }
+                    return TimeComponent.printDuration(avg.getDurationString());
+                } else {
+                    return "";
+                }
         }
     }
-
-
 }

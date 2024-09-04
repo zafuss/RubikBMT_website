@@ -36,6 +36,8 @@ public class RoundDetailDTO {
 
     private int rankRound;
 
+    private String firstName;
+
     public String getTimeDurationString(String durationString){
         return TimeComponent.printDuration(durationString);
     }

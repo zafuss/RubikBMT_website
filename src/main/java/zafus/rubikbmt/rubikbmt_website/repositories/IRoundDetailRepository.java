@@ -16,7 +16,7 @@ public interface IRoundDetailRepository extends JpaRepository<RoundDetail, Strin
     Page<RoundDetail> findByRoundId(@Param("roundId") String roundId, Pageable pageable);
 
     @Query("SELECT c FROM RoundDetail c WHERE c.round.id = :roundId " +
-            "AND c.rankRound BETWEEN 1 AND :limitCandidate " +
+            "AND c.rankRound BETWEEN 0 AND :limitCandidate " +
             "ORDER BY c.rankRound ASC ")
     Page<RoundDetail> findByRoundIdAndLimit(@Param("roundId") String roundId,
                                             @Param("limitCandidate") int limitCandidate,

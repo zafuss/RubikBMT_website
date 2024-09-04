@@ -46,25 +46,38 @@ function displayJson(jsonArray) {
         const button = document.createElement('button');
         button.textContent = item.name;
         button.dataset.roundId = item.roundDetailId;
+        button.className = 'outline-button'; // Thêm lớp btn và btn-outline-primary của Bootstrap
 
         // Thêm sự kiện click cho nút
         button.addEventListener('click', () => {
-            loadPage(0,button.dataset.roundId);
-        });
+            // Xóa lớp active của tất cả các nút
+            document.querySelectorAll('.event-item button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('outline-button');
+            });
 
-        // Tạo liên kết
-        const link = document.createElement('a');
-        link.href = '#'; // Thay đổi liên kết nếu cần
+            // Thêm lớp active cho nút đã chọn
+            button.classList.remove('outline-button');
+            button.classList.add('active');
+
+            // Gọi hàm loadPage
+            loadPage(0, button.dataset.roundId);
+        });
 
         // Tạo phần tử chứa nút và liên kết
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event-item';
         eventDiv.appendChild(button);
-        eventDiv.appendChild(link);
 
         // Thêm phần tử vào kết quả
         resultDiv.appendChild(eventDiv);
     });
+
+    // Tự động chọn nút đầu tiên sau khi hiển thị
+    const firstButton = resultDiv.querySelector('.event-item button');
+    if (firstButton) {
+        firstButton.click(); // Giả lập click vào nút đầu tiên
+    }
 }
 
 
@@ -104,7 +117,7 @@ function loadPage(page, roundDetailId) {
 
             console.log(data);
             if (data.roundDetail.length === 0) {
-                roundDetailTableBody.innerHTML = '<tr><td colspan="7">No candidates found.</td></tr>';
+                roundDetailTableBody.innerHTML = '<tr><td colspan="7">Chưa có dữ liệu.</td></tr>';
                 document.getElementById('page-numbers').innerHTML = '';
                 document.getElementById('prev-page').disabled = true;
                 document.getElementById('next-page').disabled = true;
@@ -131,7 +144,7 @@ function loadPage(page, roundDetailId) {
 
                     // Apply your conditions to format the solve text
                     let solveText = '';
-                    if (solve.dnf == 'false') {
+                    if (solve.timeDurationString === '10:00:00.00') {
                         solveText = '(DNF)';
                     } else if (solve.timeDurationString === detail.best || solve.timeDurationString === detail.worst) {
                         solveText = `(${solve.timeDurationString})`;
@@ -148,12 +161,12 @@ function loadPage(page, roundDetailId) {
 
                 // Set the other td elements
                 row.innerHTML = `
+                <td>${detail.rankRound}</td>
                 <td>${detail.fullName}</td>
+                <td>${detail.ao5}</td>
                 <td>${detail.best}</td>
                 <td>${detail.avg}</td>
-                <td>${detail.ao5}</td>
                 <td>${detail.worst}</td>
-                <td>${detail.rankRound}</td>
             `;
 
                 // Append the solves td to the row

@@ -35,7 +35,7 @@ public class Solve {
 
     private boolean isDNF = false;
 
-    private int orderIndex = 0;
+    private int orderIndex = 1;
 
     public String getTimeDurationString(){
         return TimeComponent.printDuration(durationString);
