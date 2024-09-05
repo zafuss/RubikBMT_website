@@ -38,6 +38,8 @@ public class RoundDetailDTO {
 
     private String firstName;
 
+    private int nextRoundCandidate;
+
     public String getTimeDurationString(String durationString){
         return TimeComponent.printDuration(durationString);
     }

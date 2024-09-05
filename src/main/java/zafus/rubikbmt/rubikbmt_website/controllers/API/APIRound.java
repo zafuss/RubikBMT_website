@@ -66,7 +66,8 @@ public class APIRound {
                                 .collect(Collectors.toList()),
                         roundDetail.getCandidate().getFullName(),
                         roundDetail.getRankRound(),
-                        roundDetail.getCandidate().getFirstName()))
+                        roundDetail.getCandidate().getFirstName(),
+                        roundDetail.getRound().getNextRoundCandidate()))
                 .collect(Collectors.toList());
 
         // Sắp xếp danh sách theo rankRound, đưa các phần tử có rankRound = 0 xuống dưới

@@ -127,6 +127,16 @@ function loadPage(page, roundDetailId) {
             data.roundDetail.forEach((detail, index) => {
                 const row = document.createElement('tr');
 
+                // Apply CSS class based on rankRound
+                if (detail.rankRound === 1) {
+                    row.classList.add('rank-1');
+                } else if (detail.rankRound === 2) {
+                    row.classList.add('rank-2');
+                } else if (detail.rankRound === 3) {
+                    row.classList.add('rank-3');
+                } else if (detail.rankRound != 0 && detail.nextRoundCandidate !== 0 && detail.rankRound <= detail.nextRoundCandidate) {
+                    row.classList.add('nextRound')
+                }
                 // Create a td for the solves
                 const solvesTd = document.createElement('td');
 
@@ -175,7 +185,6 @@ function loadPage(page, roundDetailId) {
                 // Append the row to the table body
                 roundDetailTableBody.appendChild(row);
             });
-
 
             currentPage = data.currentPage;
             totalPages = data.totalPages;
