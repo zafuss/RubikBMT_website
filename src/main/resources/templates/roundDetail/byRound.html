@@ -63,6 +63,7 @@
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
+                                                <th>Số báo danh</th>
                                                 <th>Thí sinh</th>
                                                 <th>Best</th>
                                                 <th>Avg</th>
@@ -75,6 +76,7 @@
                                         <tbody class="table-border-bottom-0">
                                             <tr th:each="roundDetail, stat : ${roundDetails}">
                                                 <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                                <td th:text="${roundDetail.candidate.getCheckinID()}"></td>
                                                 <td th:text="${roundDetail.candidate.fullName}"></td>
                                                 <td
                                                     th:text="${roundDetail.best != null ? roundDetail.getDurationString('best'): ''}">
@@ -104,7 +106,7 @@
                                                 <td>
                                                     <a th:href="@{/roundDetails/addCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
                                                         class="btn btn-primary">Nhập điểm</a>
-                                                    <a th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
+                                                    <a th:if="${roundDetail.best != null}" th:href="@{/roundDetails/editCandidate(id1=${roundDetail.round.id}, id2=${roundDetail.candidate.id})}"
                                                         class="btn btn-secondary">Chỉnh sửa</a>
                                                 </td>
                                             </tr>

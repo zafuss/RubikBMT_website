@@ -39,6 +39,7 @@ public class CandidateController {
     private EventService eventService;
 
     private boolean isConfirmed;
+    private boolean isCheckedin;
     private List<Event> events;
     private Competition competitionTMP;
     @GetMapping("/register")
@@ -62,6 +63,39 @@ public class CandidateController {
         candidate.setFullName();
         candidateService.add(candidate);
         return "redirect:/back-to-school/register?success";
+    }
+
+    @GetMapping("/add")
+    public String add(Model model) {
+        Candidate candidate = new Candidate();
+
+        Competition competition = competitionService.getByName("BackToSchool");
+        candidate.setCompetition(competition);
+
+        model.addAttribute("events", competition.getEvents());
+        model.addAttribute("candidate", candidate);
+        return "candidate/add";
+    }
+
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute Candidate candidate, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            var errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(String[]::new);
+            Competition competition = competitionService.getByName("BackToSchool");
+            candidate.setCompetition(competition);
+            model.addAttribute("errors", errors);
+            model.addAttribute("events", competition.getEvents());
+            model.addAttribute("candidate",candidate);
+            return "candidate/add";
+        }
+        candidate.setConfirmed(true);
+        candidate.setTimeConfirmed(LocalDateTime.now());
+        candidate.setRegistrationTime(LocalDateTime.now());
+        candidate.setCheckinID(candidateService.generateCheckinID());
+        candidate.setFullName();
+        Candidate newCandidate = candidateService.add(candidate);
+        model.addAttribute("candidate", newCandidate);
+        return "candidate/detail";
     }
 
     @GetMapping("")
@@ -99,9 +133,11 @@ public class CandidateController {
         Competition competition = competitionService.getByName("BackToSchool");
         events =  competition.getEvents();
         isConfirmed = candidate.getTimeConfirmed() != null;
+        isCheckedin = candidate.isCheckedIn();
         model.addAttribute("candidate", candidate);
         model.addAttribute("events", events);
         model.addAttribute("isConfirmed",isConfirmed);
+        model.addAttribute("isCheckedIn",isCheckedin);
         competitionTMP = candidate.getCompetition();
         return "candidate/edit";
     }
@@ -149,6 +185,7 @@ public class CandidateController {
         ));
         List<Candidate> candidates = candidateService.findCandidateByCompetitionIdAndEventId(competitionId, eventId).stream()
                 .filter(Candidate::isConfirmed)
+                .filter((e) -> e.getCheckinID() != null)
                 .collect(Collectors.toList());;
         httpSession.setAttribute("candidates", candidates);
         Page<Candidate> candidatePage = candidateService.findCandidateByCompetitionAndEvent(competitionId, eventId, pageable);

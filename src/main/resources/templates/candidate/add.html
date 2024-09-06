@@ -1,0 +1,128 @@
+<!doctype html>
+
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('RUBIK BMT')}"></head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+    <!-- Menu -->
+
+    <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+    <!-- / Menu -->
+
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+
+      <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y ">
+          <div class="card p-6">
+            <h3>Thêm thí sinh</h3>
+            <form th:action="@{/candidates/add}" th:object="${candidate}" method="post">
+              <div class="row">
+                <div class="form-group col-lg-6 mb-0">
+                  <label for="lastName">Họ và tên đệm:</label>
+                  <input class="form-control" type="text" id="lastName" th:field="*{lastName}"
+                         oninput="clearError(this.id+'Error')">
+                  <span class="text-danger" id="lastNameError"
+                        th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                </div>
+                <div class="form-group col-lg-6 mb-0">
+                  <label for="firstName">Tên:</label>
+                  <input class="form-control" type="text" id="firstName" th:field="*{firstName}"
+                         oninput="clearError(this.id+'Error')">
+                  <span class="text-danger" id="firstNameError"
+                        th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dateOfBirth">Ngày tháng năm sinh:</label>
+                <input class="form-control" type="date" id="dateOfBirth" th:field="*{dateOfBirth}"
+                       oninput="clearError(this.id+'Error')">
+                <span class="text-danger" id="dateOfBirthError"
+                      th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Số điện thoại:</label>
+                <input class="form-control" type="text" id="phoneNumber" th:field="*{phoneNumber}"
+                       oninput="clearError(this.id+'Error')">
+                <span class="text-danger" id="phoneNumberError"
+                      th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input class="form-control" type="email" id="email" th:field="*{email}"
+                       oninput="clearError(this.id+'Error')">
+                <span class="text-danger" id="emailError" th:if="${#fields.hasErrors('email')}"
+                      th:errors="*{email}"></span>
+              </div>
+              <div class="" style="display: none">
+                <label for="competition">Competition:</label>
+                <input type="text" id="competition" th:field="*{competition}" readonly>
+              </div>
+              <div class="form-group">
+                <label for="note">Ghi chú:</label>
+                <input class="form-control" type="text" id="note" th:field="*{note}"
+                       >
+              </div>
+              <div class="form-group">
+                <label for="events">Môn thi (có thể chọn nhiều môn):</label><br>
+                <div th:each="event : ${events}">
+                  <input type="checkbox" th:field="*{events}" th:value="${event.id}"
+                         th:id="${event.id}" />
+                  <label th:for="${event.id}" th:text="${event.name}"></label><br>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" onclick="validateSelection()">Đăng ký
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

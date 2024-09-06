@@ -55,6 +55,7 @@ public class RequestUpdateCandidate {
         dto.setPhoneNumber(candidate.getPhoneNumber());
         dto.setEmail(candidate.getEmail());
         dto.setConfirmed(candidate.isConfirmed());
+        dto.setCheckedIn(candidate.getCheckinID() != null);
         // Assuming you want to use IDs for competition and events
         if (candidate.getCompetition() != null) {
             dto.setCompetition(candidate.getCompetition());
@@ -68,5 +69,7 @@ public class RequestUpdateCandidate {
     private boolean isConfirmed;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime timeConfirmed;
+
+    private boolean isCheckedIn;
 
 }

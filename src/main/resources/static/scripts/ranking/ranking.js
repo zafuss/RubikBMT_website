@@ -171,7 +171,8 @@ function loadPage(page, roundDetailId) {
 
                 // Set the other td elements
                 row.innerHTML = `
-                <td>${detail.rankRound}</td>
+                <td>${detail.rankRound === 0 ? '-' : detail.rankRound}</td>
+                <td>${detail.checkinID === 0 ? '-' : detail.checkinID}</td>
                 <td>${detail.fullName}</td>
                 <td>${detail.ao5}</td>
                 <td>${detail.best}</td>

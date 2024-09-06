@@ -40,6 +40,8 @@ public class RoundDetailDTO {
 
     private int nextRoundCandidate;
 
+    private int checkinID;
+
     public String getTimeDurationString(String durationString){
         return TimeComponent.printDuration(durationString);
     }

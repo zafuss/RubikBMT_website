@@ -15,6 +15,8 @@ import java.util.List;
 public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
     Page<Candidate> findByEmailContaining(String email, Pageable pageable);
+    @Query("SELECT c FROM Candidate c WHERE c.checkinID = :id")
+    Page<Candidate> findByCheckinId(int id, Pageable pageable);
 
     Page<Candidate> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
 
@@ -56,6 +58,9 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
     List<Candidate> findByCompetitionIdAndEventsId(String competitionId, String eventId);
 
-    @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.id = :eventId AND c.competition.id = :competitionId AND c.isConfirmed = true")
+    @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.id = :eventId AND c.competition.id = :competitionId AND c.isConfirmed = true AND c.checkinID IS NOT NULL")
     Page<Candidate> findByCompetitionIdAndEventsId(@Param("competitionId") String competitionId, @Param("eventId") String eventId, Pageable pageable);
+
+    @Query("SELECT MAX(c.checkinID) FROM Candidate c")
+    Integer findMaxCheckinID();
 }

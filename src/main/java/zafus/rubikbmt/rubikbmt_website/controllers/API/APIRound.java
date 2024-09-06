@@ -67,7 +67,8 @@ public class APIRound {
                         roundDetail.getCandidate().getFullName(),
                         roundDetail.getRankRound(),
                         roundDetail.getCandidate().getFirstName(),
-                        roundDetail.getRound().getNextRoundCandidate()))
+                        roundDetail.getRound().getNextRoundCandidate(),
+                        roundDetail.getCandidate().getCheckinID() == null ? 0 : roundDetail.getCandidate().getCheckinID()))
                 .collect(Collectors.toList());
 
         // Sắp xếp danh sách theo rankRound, đưa các phần tử có rankRound = 0 xuống dưới

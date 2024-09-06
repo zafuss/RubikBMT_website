@@ -83,6 +83,7 @@
                                         <option value="name">Tên</option>
                                         <option value="phone">Số điện thoại</option>
                                         <option value="email">Email</option>
+                                        <option value="checkinID">Số báo danh</option>
                                         <!--                    <option value="event">Tên Sự Kiện</option>-->
                                     </select>
                                 </div>
@@ -100,6 +101,7 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>Số báo danh</th>
                                         <th>Họ và tên đệm</th>
                                         <th>Tên</th>
                                         <th>Ngày tháng năm sinh </th>
@@ -115,6 +117,7 @@
                                     <tbody class="table-border-bottom-0">
                                     <tr th:each="candidate, stat : ${candidates}">
                                         <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                        <td th:text="${candidate.getCheckinID()}"></td>
                                         <td th:text="${candidate.lastName}"></td>
                                         <td th:text="${candidate.firstName}"></td>
                                         <td th:text="${candidate.dateOfBirth}"></td>
