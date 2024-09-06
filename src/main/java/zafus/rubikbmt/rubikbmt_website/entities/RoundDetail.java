@@ -115,24 +115,24 @@ public class RoundDetail {
         if (validSolves.size() < 3) {
             return new Solve(Duration.ZERO, false);
         }
-
-        Duration sum = validSolves.subList(1, validSolves.size() - 1).stream()
+        long subListPrefix = 1 - dnfCount;
+        Duration sum = validSolves.subList(1, validSolves.size() - Integer.parseInt(String.valueOf(subListPrefix))).stream()
                 .map(Solve::getDuration)
                 .reduce(Duration.ZERO, Duration::plus);
 
         // Số lượng giá trị để tính trung bình
-        int divisor = validSolves.size() - 2;
+        int divisor = 3;
 
         // Chia sum và làm tròn kết quả đến 2 chữ số thập phân
         BigDecimal sumMillis = BigDecimal.valueOf(sum.toMillis());
         BigDecimal ao5Millis = sumMillis.divide(BigDecimal.valueOf(divisor), SCALE, RoundingMode.HALF_UP);
 
-        // Làm tròn ao5Millis đến bội số gần nhất
-        BigDecimal roundingFactorBD = BigDecimal.valueOf(100);
+// Làm tròn ao5Millis đến bội số gần nhất của 10 (thay vì 100)
+        BigDecimal roundingFactorBD = BigDecimal.valueOf(10);
         BigDecimal roundedAo5Millis = ao5Millis.divide(roundingFactorBD, 0, RoundingMode.HALF_UP)
                 .multiply(roundingFactorBD);
 
-        // Chuyển đổi lại về Duration
+// Chuyển đổi lại về Duration
         Duration roundedDuration = Duration.ofMillis(roundedAo5Millis.longValue());
 
         return new Solve(roundedDuration, false);

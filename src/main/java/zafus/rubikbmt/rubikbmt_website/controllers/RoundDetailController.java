@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -87,6 +89,7 @@ public class RoundDetailController {
         try {
             RequestCreateSolve requestCreateSolve = new RequestCreateSolve();
             RoundDetail roundDetail = roundDetailService.findRoundDetailByCandidateAndRound(roundID, candidateID);
+
             Candidate candidate = candidateService.findById(candidateID);
             requestCreateSolve.setRoundId(roundID);
             requestCreateSolve.setCandidateId(candidateID);
@@ -95,11 +98,12 @@ public class RoundDetailController {
             } else if (roundDetail.getSolves().isEmpty()) {
                 model.addAttribute("requestCreateSolve", requestCreateSolve);
             } else {
-                List<Solve> solves = roundDetail.getSolves();
+                List<Solve> solves = roundDetail.getSolves().stream()
+                        .sorted(Comparator.comparingInt(Solve::getOrderIndex)).toList();
                 for (int i = 0; i < solves.size(); i++) {
                     String durationString = solves.get(i).getDurationString();
                     if (durationString.equals("PT10H")) {
-                        durationString = "dnf";
+                        durationString = "DNF";
                     } else {
                         System.out.println(durationString);
                         durationString = ConvertToDuration.convertToNumber(durationString);
@@ -159,7 +163,7 @@ public class RoundDetailController {
         Duration duration;
         Solve solve;
         for (int i = 1; i <= 5; i++) {
-            if (requestCreateSolve.getSolve(i).equals("dnf")) {
+            if (requestCreateSolve.getSolve(i).equalsIgnoreCase("dnf")) {
                 duration = Solve.DNF_DURATION;
                 solve = solves.get(i - 1);
                 solve.setDNF(true);
@@ -171,6 +175,7 @@ public class RoundDetailController {
                 duration = ConvertToDuration.parseDuration(formatted);
                 solve = solves.get(i - 1);
                 solve.setDuration(duration);
+                solve.setDNF(false);
                 solve.setDurationString(duration.toString());
                 solve.setOrderIndex(i);
             }
@@ -197,7 +202,7 @@ public class RoundDetailController {
         Duration duration;
         Solve solve;
         for (int i = 1; i <= 5; i++) {
-            if (requestCreateSolve.getSolve(i).equals("dnf")) {
+            if (requestCreateSolve.getSolve(i).equalsIgnoreCase("dnf")) {
                 duration = Solve.DNF_DURATION;
                 solve = new Solve();
                 solve.setDNF(true);
@@ -209,6 +214,7 @@ public class RoundDetailController {
                 duration = ConvertToDuration.parseDuration(formatted);
                 solve = new Solve();
                 solve.setDuration(duration);
+                solve.setDNF(false);
                 solve.setDurationString(duration.toString());
                 solve.setOrderIndex(i);
             }
@@ -233,6 +239,10 @@ public class RoundDetailController {
                 // Sắp xếp theo avg.duration tăng dần
         ));
         Page<RoundDetail> roundDetailPage = roundDetailService.findByRoundId(roundId, pageable);
+        AtomicReference<Duration> previousAo5 = new AtomicReference<>(null);
+        AtomicReference<Duration> previousBest = new AtomicReference<>(null);
+        AtomicInteger previousRankRound = new AtomicInteger(-1);
+
         List<RoundDetail> sortedCandidates = roundDetailPage.getContent().stream()
                 .sorted(Comparator
                         .comparing((RoundDetail rd) -> rd.getAo5() != null && rd.getBest() != null ? 0 : 1)
@@ -241,8 +251,20 @@ public class RoundDetailController {
                         .thenComparing(rd -> rd.getCandidate().getFirstName(), collator))
                 .map(rd -> {
                     if (rd.getAo5() != null) {
-                        rd.setRankRound(index[0]);
-                        index[0] +=1 ;
+                        Duration currentAo5 = rd.getAo5().getDuration();
+                        Duration currentBest = rd.getBest().getDuration();
+
+                        if (previousAo5.get() != null && previousAo5.get().equals(currentAo5) && previousBest.get().equals(currentBest)) {
+                            rd.setRankRound(previousRankRound.get());
+                            index[0] += 1;
+                        } else {
+                            rd.setRankRound(index[0]);
+                            previousRankRound.set(index[0]);
+                            index[0] += 1;
+                        }
+
+                        previousAo5.set(currentAo5);
+                        previousBest.set(currentBest);
                     }
                     return rd;
                 })
