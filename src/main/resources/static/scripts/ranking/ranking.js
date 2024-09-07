@@ -116,7 +116,7 @@ function loadPage(page, roundDetailId) {
             const roundDetailTableBody = document.getElementById('round-details-table-body');
             roundDetailTableBody.innerHTML = ''; // Clear existing table rows
 
-            console.log(data);
+            // console.log(data);
             if (data.roundDetail.length === 0) {
                 roundDetailTableBody.innerHTML = '<tr><td colspan="7">Chưa có dữ liệu.</td></tr>';
                 document.getElementById('page-numbers').innerHTML = '';

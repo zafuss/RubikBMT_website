@@ -269,6 +269,7 @@ public class RoundDetailController {
                     return rd;
                 })
                 .toList();
+
         roundDetailService.saveAll(sortedCandidates);
         model.addAttribute("roundDetails", sortedCandidates);
         model.addAttribute("currentPage", page);
