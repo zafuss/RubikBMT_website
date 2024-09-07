@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,5 +35,7 @@ public class Round {
     private int nextRoundCandidate = 0;
 
     private boolean isDeleted = false;
+
+    private LocalDateTime createTime;
 
 }

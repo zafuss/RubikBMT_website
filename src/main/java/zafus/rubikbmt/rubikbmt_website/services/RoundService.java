@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.Round;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRoundRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class RoundService {
     }
 
     public Round add(Round round) {
+        round.setCreateTime(LocalDateTime.now());
         return roundRepository.save(round);
     }
 

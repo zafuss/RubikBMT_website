@@ -103,8 +103,10 @@ public class APIRound {
                         roundDTO.getCompetition().getId(),
                         roundDTO.getEvent().getId(),
                         roundDTO.getId(),
-                        roundDTO.getName()
-                )).collect(Collectors.toList());
+                        roundDTO.getName(),
+                        roundDTO.getCreateTime()
+                )).sorted(Comparator.comparing(RoundDTO::getCreateTime).reversed()
+                ).collect(Collectors.toList());
         return new ResponseEntity<>(roundList, HttpStatus.OK);
     }
 }
