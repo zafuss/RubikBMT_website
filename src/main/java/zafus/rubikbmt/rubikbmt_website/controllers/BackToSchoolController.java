@@ -106,6 +106,15 @@ public class BackToSchoolController {
         }
     }
 
+    @GetMapping("/rankingDark")
+    public String rankingDark(Model model) {
+        if (currentTime.isBefore(openTime)) {
+            return "home/coming-soon";
+        } else {
+            return "backToSchool/rankingDark";
+        }
+    }
+
     @GetMapping("location")
     public String location(Model model) {
         if (currentTime.isBefore(openTime)) {
