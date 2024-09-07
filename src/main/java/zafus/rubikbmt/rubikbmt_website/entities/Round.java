@@ -32,4 +32,7 @@ public class Round {
 
     @Nullable
     private int nextRoundCandidate = 0;
+
+    private boolean isDeleted = false;
+
 }

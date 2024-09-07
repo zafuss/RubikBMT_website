@@ -42,6 +42,18 @@
                   </div>
                 </div>
               </div>
+              <div class="container-xxl flex-grow-1 container-y">
+                <!-- Basic Bootstrap Table -->
+                <div class="card">
+                  <h5 class="card-header">Thống kê thí sinh Back To School</h5>
+                  <div class="p-6">
+                    <h6  th:text="'Tổng số thí sinh: ' + ${candidates.size()}"></h6>
+                    <h6 th:text="'Đã xác nhận: ' + ${confirmed}"></h6>
+                    <h6 th:text="'Đã checkin: ' + ${checkedIn}"></h6>
+                  </div>
+                </div>
+              </div>
+              <div th:replace="~{library/lib_admin.html::btsTable}"></div>
             </div>
             <!-- Footer -->
             <footer th:replace="~{library/lib_admin.html::footer}"></footer>

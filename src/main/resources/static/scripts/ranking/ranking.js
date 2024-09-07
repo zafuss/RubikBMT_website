@@ -84,7 +84,8 @@ function displayJson(jsonArray) {
 function showJson(boxNumber, btn) {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = ''; // Xóa nội dung cũ
-
+    const table = document.getElementById('round-details-table-body');
+    table.innerHTML = '';
     loadEvent('1', boxNumber);
     // Tạo và hiển thị các vòng tròn
 

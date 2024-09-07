@@ -76,6 +76,7 @@
                                         <th>Số lượng thí sinh</th>
                                         <th>Sự kiện</th>
                                         <th>Cuộc thi</th>
+                                        <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -89,9 +90,10 @@
                                         <td th:text="${round.numOfCandidate}">Số lượng thí sinh</td>
                                         <td th:text="${round.event.name}">Môn thi</td>
                                         <td th:text="${round.competition.name}">Cuộc thi</td>
+                                        <td th:text="${round.isDeleted()} == true ? 'Đã xoá' : 'Đang hoạt động'">Trạng thái</td>
                                         <td>
                                             <a th:href="@{/roundDetails/byRound/{roundId}(roundId=${round.getId()})}" class="btn btn-secondary" type="button">Bảng xếp hạng</a>
-                                            <a th:href="@{round/edit(id=${round.id})}" class="btn btn-primary" type="button">Sửa</a>
+                                            <a th:href="@{/rounds/edit(roundId=${round.id})}" class="btn btn-primary" type="button">Sửa</a>
                                         </td>
                                     </tr>
                                     </tbody>

@@ -50,6 +50,7 @@
 
             <!-- Content wrapper -->
             <div class="content-wrapper">
+                <div th:replace="~{library/lib_admin.html::btsTable}"></div>
                 <!-- Content -->
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
@@ -91,6 +92,7 @@
                                     <input type="text" id="keyword" name="keyword" placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                 </div>
+                                <h5 style="font-weight: bold">Lưu ý: Chỉ những thí sinh đã checkin mới nằm trong danh sách này</h5>
                                 <div id="autocomplete-results" class="autocomplete-results"></div>
                                 <!--                <h4 th:text="'Tổng số thí sinh tìm được: ' + ${candidates.size()}"></h4>-->
                             </form>
@@ -111,7 +113,6 @@
                                         <th>Xác nhận</th>
                                         <th>Ghi chú</th>
                                         <th>Nội dung thi</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
@@ -130,10 +131,6 @@
                                             <ul>
                                                 <li th:each="event : ${candidate.events}" th:text="${event.name}"></li>
                                             </ul>
-                                        </td>
-                                        <td>
-                                            <a th:href="@{candidates/detail(id=${candidate.id})}" class="btn btn-secondary" type="button">Chi tiết</a>
-                                            <a th:href="@{candidates/edit(id=${candidate.id})}" class="btn btn-primary" type="button">Sửa</a>
                                         </td>
                                     </tr>
                                     </tbody>

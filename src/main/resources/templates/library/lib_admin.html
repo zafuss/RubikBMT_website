@@ -94,39 +94,25 @@
 
       <ul class="menu-inner py-1">
         <!-- Dashboards -->
-        <li class="" >
-
-
         <!-- Layouts -->
+        <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">Danh sách đăng ký</span>
+        </li>
 
         <li class="menu-item">
-          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-joystick"></i>
-            <div class="text-truncate" data-i18n="Layouts">Back To School</div>
+          <a href="/candidates" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-table"></i>
+            <div class="text-truncate" data-i18n="Tables">Danh sách thí sinh BTS</div>
           </a>
-          <ul class="menu-sub">
-
-            <li class="menu-item">
-              <a href="/candidates" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div class="text-truncate" data-i18n="Tables">Danh sách thí sinh</div>
-              </a>
-            <li class="menu-item">
-              <a href="/candidates/stat" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-stats"></i>
-                <div class="text-truncate" data-i18n="Tables">Thống kê môn thi</div>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="menu-item">
           <a href="/students" class="menu-link">
             <i class="menu-icon tf-icons bx bx-table"></i>
-            <div class="text-truncate" data-i18n="Tables">Danh sách học viên đăng ký</div>
+            <div class="text-truncate" data-i18n="Tables">Danh sách học viên</div>
           </a>
         </li>
         <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">SuperAdmin only</span>
+          <span class="menu-header-text">Quản lý điểm và vòng đấu</span>
         </li>
         <li th:each="competition : ${competitions}" class="menu-item">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -143,6 +129,9 @@
           </ul>
         </li>
 
+        <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">SuperAdmin only</span>
+        </li>
         <li class="menu-item">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-group"></i>
@@ -271,8 +260,34 @@
       </nav>
 
       <!-- / Navbar -->
-
-      <!-- Content wrapper -->
+      <div th:fragment="btsTable" class="container-xxl flex-grow-1 container-y mt-6">
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+          <div class="table-responsive text-nowrap">
+            <h5 class="card-header">Thống kê thí sinh Back To School theo từng bộ môn</h5>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Môn thi</th>
+                <th>Tổng số thí sinh</th>
+                <th>Đã xác nhận</th>
+                <th>Đã checkin</th>
+              </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+              <tr th:each="stat : ${statistics}">
+                <td th:text="${stat[0]}"></td> <!-- Tên sự kiện -->
+                <td th:text="${stat[1]}"></td> <!-- Số lượng thí sinh -->
+                <td th:text="${stat[2]}"></td> <!-- Số lượng thí sinh -->
+                <td th:text="${stat[3]}"></td> <!-- Số lượng thí sinh -->
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <!-- Content wrapper -->
+      </div>      <!-- Content wrapper -->
       <div class="content-wrapper" >
         <div th:replace="::content">
 

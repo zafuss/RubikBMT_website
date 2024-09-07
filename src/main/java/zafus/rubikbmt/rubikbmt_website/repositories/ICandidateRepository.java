@@ -50,7 +50,11 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
     Candidate findByPhoneNumber(String phoneNumber);
 
-    @Query("SELECT e.name, COUNT(c) FROM Candidate c JOIN c.events e GROUP BY e.name")
+    @Query("SELECT e.name, COUNT(c), " +
+            "SUM(CASE WHEN c.isConfirmed = true THEN 1 ELSE 0 END), " +
+            "SUM(CASE WHEN c.checkinID IS NOT NULL THEN 1 ELSE 0 END) " +
+            "FROM Candidate c JOIN c.events e " +
+            "GROUP BY e.name")
     List<Object[]> countCandidatesByEvent();
 
     @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.name = :eventName")

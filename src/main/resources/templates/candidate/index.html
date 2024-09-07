@@ -45,11 +45,12 @@
     <!-- Layout container -->
     <div class="layout-page">
       <!-- Navbar -->
-      <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+<!--      <nav th:replace="~{library/lib_admin.html::navbar}"></nav>-->
       <!-- / Navbar -->
 
       <!-- Content wrapper -->
       <div class="content-wrapper">
+        <div th:replace="~{library/lib_admin.html::btsTable}"></div>
         <!-- Content -->
         <div th:fragment="content">
           <div class="container-xxl flex-grow-1 container-p-y">

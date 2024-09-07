@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import zafus.rubikbmt.rubikbmt_website.entities.*;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateRound;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateUser;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 import zafus.rubikbmt.rubikbmt_website.services.EventService;
 import zafus.rubikbmt.rubikbmt_website.services.RoundDetailService;
@@ -17,7 +19,9 @@ import zafus.rubikbmt.rubikbmt_website.services.RoundService;
 
 import java.time.Duration;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/rounds")
@@ -45,6 +49,23 @@ public class RoundController {
         model.addAttribute("competitions", competitionService.getAll());
         return "round/add";
     }
+
+    @GetMapping("/edit")
+    public String edit(@RequestParam("roundId") String roundId,
+                       Model model) {
+        model.addAttribute("round", roundService.findById(roundId));
+        return "round/edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute RequestUpdateRound round) {
+        Round existingRound = roundService.findById(round.getId());
+        existingRound.setName(round.getName());
+        existingRound.setDeleted(round.isDeleted());
+        roundService.update(existingRound);
+        return "redirect:byEventAndCompetition/" + existingRound.getCompetition().getId() + "/" + existingRound.getEvent().getId();
+    }
+
     @GetMapping("/addFromPreviousRound/{roundId}")
     public String addFromPreviousRound(Model model,
                                    @PathVariable("roundId") String roundId, HttpSession session) {

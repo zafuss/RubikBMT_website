@@ -15,7 +15,7 @@ public interface IRoundRepository extends JpaRepository<Round, String> {
     Page<Round> findByCompetitionIdAndEventsId(@Param("competitionId") String competitionId,
                                                @Param("eventId") String eventId, Pageable pageable);
 
-    @Query("SELECT c FROM Round c  WHERE c.competition.id = :competitionId AND c.event.id = :eventId")
+    @Query("SELECT c FROM Round c  WHERE c.competition.id = :competitionId AND c.event.id = :eventId AND c.isDeleted = FALSE")
     List<Round> findByCompetitionIdAndEventsId(@Param("competitionId") String competitionId,
                                                @Param("eventId") String eventId);
 
