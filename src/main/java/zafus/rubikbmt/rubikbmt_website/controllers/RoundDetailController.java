@@ -228,7 +228,7 @@ public class RoundDetailController {
     public String byRound(Model model,
                           @PathVariable("roundId") String roundId,
                           @RequestParam(defaultValue = "0") int page,
-                          @RequestParam(defaultValue = "100") int size,
+                          @RequestParam(defaultValue = "200") int size,
                           @RequestParam(defaultValue = "") String keyword,
                           @RequestParam(defaultValue = "") String searchType) {
 

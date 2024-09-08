@@ -38,7 +38,7 @@ public class APIRound {
     public ResponseEntity<?> getCandidatesByRoundAndEvent(@RequestBody Map<String, Object> data) {
         Integer page = (Integer) data.get("page");
         String roundDetailId = (String) data.get("roundDetailId");
-        int size = 100;
+        int size = 200;
 
         if (page < 0 || size <= 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
