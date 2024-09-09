@@ -33,6 +33,10 @@ body {
     margin-right: 5px;
     margin-bottom: 5px;
 }
+#introBack button.active {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
 
 #introBack button:hover {
     background-color: #61836d;

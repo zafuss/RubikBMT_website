@@ -306,11 +306,11 @@ a {
 }
 
 .mentor-image {
-    /*width: 300px;*/
-    /*width: 40vh;*/
-    max-width: 80%;
+    max-width: 90%;  /* Đảm bảo hình ảnh không vượt quá chiều rộng của phần tử chứa */
+    max-height: 100%; /* Đảm bảo hình ảnh không vượt quá chiều cao của phần tử chứa */
+    height: auto;     /* Để giữ tỷ lệ hình ảnh */
+    width: auto;      /* Để giữ tỷ lệ hình ảnh */
 }
-
 .home-logo {
     width: 55vh;
 }
@@ -370,4 +370,94 @@ dialog::backdrop {
 }
 .btn-primary:hover {
     background-color: #e6d8a5;
+}
+
+#ranking {
+    background: #235234;
+    color: #2d676f;
+    height: auto;
+}
+
+#ranking h1 {
+    font-weight: bold;
+
+}
+
+#ranking p {
+    color: white;
+}
+
+#ranking button {
+    background-color: #235234;
+    color: white;
+    border: #235234 solid;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+#ranking button.outline-button {
+    background-color: #f5f8f6;
+    color: #235234;
+    border: #235234 solid;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+#ranking button.active {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#ranking button:hover {
+    background-color: #61836d;
+}
+
+#result {
+    display: flex;
+    flex-wrap: nowrap; /* Để button tự xuống dòng nếu không đủ không gian */
+    gap: 5px; /* Khoảng cách giữa các button */
+}
+
+.event-item {
+    display: inline-block;
+}
+
+/* Style cho các hình ảnh */
+/* Sắp xếp các hình ảnh thành một hàng và sát nhau */
+.d-flex {
+    display: flex;
+    gap: 0; /* Loại bỏ khoảng cách giữa các hình ảnh */
+}
+
+.img-button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin: 5px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    opacity: 0.5;
+}
+
+/* Khi được chọn (active) */
+.img-button.active {
+    transform: scale(1.1);
+    filter: hue-rotate(90deg); /* Thay đổi màu sắc của ảnh bằng cách xoay màu */
+    opacity: 1;
+}
+.table > :not(caption) > .rank-1 > * {
+    background-color: #e5d08f; /* Màu cho rank 1 */
+}
+
+.table > :not(caption) > .rank-2 > * {
+    background-color: #cacbce; /* Màu cho rank 2 */
+}
+
+.table > :not(caption) > .rank-3 > * {
+    background-color: #cec2ae; /* Màu đồng cho rank 3 */
+}
+
+.table > :not(caption) > .nextRound > * {
+    background-color: rgba(242, 218, 195, 0.34); /* Màu đồng cho rank 3 */
 }

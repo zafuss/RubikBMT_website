@@ -59,6 +59,10 @@
                                 <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed.plusHours(7) : 'Chưa xác nhận'}"></td>
                             </tr>
                             <tr>
+                                <th>Số báo danh</th>
+                                <td th:text="${candidate.getCheckinID()}"></td>
+                            </tr>
+                            <tr>
                                 <th>Cuộc thi</th>
                                 <td>
                                     <span th:text="${candidate.competition != null ? candidate.competition.name : 'null'}"></span>

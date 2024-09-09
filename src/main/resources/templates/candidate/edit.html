@@ -78,6 +78,13 @@
                                 </select>
                             </div>
                             <div class="mb-4">
+                                <label class="form-label" for="checkedIn">Checkin:</label>
+                                <select class="form-control" id="checkedIn" name="status" th:field="*{checkedIn}">
+                                    <option value="true" th:selected="${isCheckedIn}">Đã Xác Nhận</option>
+                                    <option value="false" th:selected="${!isCheckedIn}">Chưa Xác Nhận</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
                                 <label class="form-label" for="note">Ghi chú:</label>
                                 <input type="text" id="note" name="note" class="form-control" th:field="*{note}">
                                 <span class="text-danger" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>

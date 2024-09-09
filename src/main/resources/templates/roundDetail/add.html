@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('RUBIK BMT')}"></head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div class="container-xxl flex-grow-1 container-p-y ">
+                    <div class="card p-6">
+                        <h3 th:text="'Nhập điểm cho thí sinh ' + ${candidate.getFullName()}"></h3>
+                        <form action="#" th:action="@{/roundDetails/updateCandidate}"
+                              method="post" th:object="${requestCreateSolve}">
+                            <input type="hidden" name="id1" th:field="${requestCreateSolve.roundId}" />
+                            <input  type="hidden" name="id2" th:field="${requestCreateSolve.candidateId}" />
+                            <!--                            <div th:if="${errors}" class="alert alert-danger justify-content-center" role="alert">-->
+                            <!--                                <ul>-->
+                            <!--                                    <li th:each="error : ${errors}"-->
+                            <!--                                        th:if="${error.objectName == 'candidate'}"-->
+                            <!--                                        th:text="${error.defaultMessage}" class="text-danger text-start">-->
+                            <!--                                    </li>-->
+                            <!--                                </ul>-->
+                            <!--                            </div>-->
+                            <div class="form-group">
+                                <label for="solve1">Điểm lần 1</label>
+                                <input type="text" id="solve1" name="solve1" class="form-control" th:field="*{solve1}"
+                                       required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('solve1')}"
+                                      th:errors="*{solve1}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="solve1">Điểm lần 2</label>
+                                <input type="text" id="solve2" name="solve2" class="form-control" th:field="*{solve2}"
+                                       required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('solve2')}"
+                                      th:errors="*{solve1}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="solve1">Điểm lần 3</label>
+                                <input type="text" id="solve3" name="solve3" class="form-control" th:field="*{solve3}"
+                                       required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('solve3')}"
+                                      th:errors="*{solve1}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="solve1">Điểm lần 4</label>
+                                <input type="text" id="solve4" name="solve4" class="form-control" th:field="*{solve4}"
+                                       required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('solve4')}"
+                                      th:errors="*{solve1}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="solve1">Điểm lần 5</label>
+                                <input type="text" id="solve5" name="solve1" class="form-control" th:field="*{solve5}"
+                                       required>
+                                <span class="text-danger" th:if="${#fields.hasErrors('solve5')}"
+                                      th:errors="*{solve1}"></span>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <a href="javascript:history.back()" class="btn btn-secondary">Huỷ</a>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

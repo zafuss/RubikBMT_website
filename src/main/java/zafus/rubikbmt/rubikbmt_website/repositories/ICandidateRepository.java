@@ -15,6 +15,8 @@ import java.util.List;
 public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
     Page<Candidate> findByEmailContaining(String email, Pageable pageable);
+    @Query("SELECT c FROM Candidate c WHERE c.checkinID = :id")
+    Page<Candidate> findByCheckinId(int id, Pageable pageable);
 
     Page<Candidate> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
 
@@ -48,11 +50,21 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
 
     Candidate findByPhoneNumber(String phoneNumber);
 
-    @Query("SELECT e.name, COUNT(c) FROM Candidate c JOIN c.events e GROUP BY e.name")
+    @Query("SELECT e.name, COUNT(c), " +
+            "SUM(CASE WHEN c.isConfirmed = true THEN 1 ELSE 0 END), " +
+            "SUM(CASE WHEN c.checkinID IS NOT NULL THEN 1 ELSE 0 END) " +
+            "FROM Candidate c JOIN c.events e " +
+            "GROUP BY e.name")
     List<Object[]> countCandidatesByEvent();
 
     @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.name = :eventName")
     List<Candidate> findCandidatesByEventName(@Param("eventName") String eventName);
 
+    List<Candidate> findByCompetitionIdAndEventsId(String competitionId, String eventId);
 
+    @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.id = :eventId AND c.competition.id = :competitionId AND c.isConfirmed = true AND c.checkinID IS NOT NULL")
+    Page<Candidate> findByCompetitionIdAndEventsId(@Param("competitionId") String competitionId, @Param("eventId") String eventId, Pageable pageable);
+
+    @Query("SELECT MAX(c.checkinID) FROM Candidate c")
+    Integer findMaxCheckinID();
 }

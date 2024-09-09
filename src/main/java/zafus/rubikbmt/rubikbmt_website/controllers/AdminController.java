@@ -12,6 +12,8 @@ import zafus.rubikbmt.rubikbmt_website.entities.Competition;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 
@@ -27,8 +29,13 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String index(HttpServletRequest request, Model model) {
+        List<Candidate> candidateList = candidateService.findAll();
         model.addAttribute("currentVisitors", sessionListener.getActiveSessions());
         model.addAttribute("dailyVisitors", sessionListener.getDailyVisitors());
+
+        model.addAttribute("candidates", candidateList);
+        model.addAttribute("confirmed",candidateList.stream().filter(Candidate::isConfirmed).toList().size());
+        model.addAttribute("checkedIn",candidateList.stream().filter(candidate -> candidate.getCheckinID() != null).toList().size());
         return "admin/index";
     }
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
+import zafus.rubikbmt.rubikbmt_website.entities.Competition;
+import zafus.rubikbmt.rubikbmt_website.entities.Event;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateCandidate;
@@ -100,7 +102,13 @@ public class CandidateService {
             if (request.getDateOfBirth() != null) {
                 existingCandidate.setDateOfBirth(request.getDateOfBirth());
             }
-
+            if (request.isCheckedIn() && existingCandidate.getCheckinID() == null) {
+                existingCandidate.setCheckinID(generateCheckinID());
+                if (existingCandidate.getTimeConfirmed() == null) {
+                    existingCandidate.setConfirmed(true);
+                    existingCandidate.setTimeConfirmed(LocalDateTime.now());
+                }
+            }
             if (request.getCompetition() != null){
                 existingCandidate.setCompetition(request.getCompetition());
             }
@@ -116,6 +124,11 @@ public class CandidateService {
         } catch (Exception ex) {
             throw new RuntimeException("Error updating candidate: " + ex.getMessage());
         }
+    }
+
+    public int generateCheckinID() {
+        int maxCheckInNumber = candidateRepository.findMaxCheckinID() == null ? 0 : candidateRepository.findMaxCheckinID();
+        return maxCheckInNumber + 1;
     }
 
     public void delete(Candidate candidate) {
@@ -138,6 +151,8 @@ public class CandidateService {
                 return candidateRepository.findByFullNameContaining(keyword, pageable);
             case "event":
                 return candidateRepository.findByEventNameContaining(keyword, pageable);
+            case "checkinID":
+                return candidateRepository.findByCheckinId(Integer.parseInt(keyword), pageable);
             default:
                 return candidateRepository.findAll(pageable);
         }
@@ -183,5 +198,14 @@ public class CandidateService {
 
     public Page<Candidate> findUnconfirmedCandidates(Pageable pageable, int size) {
         return candidateRepository.findUnconfirmedCandidates(pageable, size);
+    }
+
+    public List<Candidate> findCandidateByCompetitionIdAndEventId(String competitionId, String eventId) {
+        return candidateRepository.findByCompetitionIdAndEventsId(competitionId, eventId);
+    }
+    public Page<Candidate> findCandidateByCompetitionAndEvent(String competitionId, String eventId, Pageable pageable) {
+        return candidateRepository.findByCompetitionIdAndEventsId(
+                competitionId, eventId, pageable
+        );
     }
 }

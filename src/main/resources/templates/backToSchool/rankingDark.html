@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{library/lib_backtoschool.html::head()}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<style>
+    #result {
+        display: flex;
+        flex-wrap: wrap; /* Để button tự xuống dòng nếu không đủ không gian */
+        gap: 10px; /* Khoảng cách giữa các button */
+    }
+
+    .event-item {
+        display: inline-block;
+    }
+
+    /* Style cho các hình ảnh */
+    /* Sắp xếp các hình ảnh thành một hàng và sát nhau */
+    .d-flex {
+        display: flex;
+        gap: 0; /* Loại bỏ khoảng cách giữa các hình ảnh */
+    }
+
+    .img-button {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin: 5px;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        opacity: 0.5;
+    }
+
+    /* Khi được chọn (active) */
+    .img-button.active {
+        transform: scale(1.1);
+        filter: hue-rotate(90deg); /* Thay đổi màu sắc của ảnh bằng cách xoay màu */
+        opacity: 1;
+    }
+    .table > :not(caption) > .rank-1 > * {
+        background-color: #FCCF5B; /* Màu cho rank 1 */
+        color: black;
+    }
+
+    .table > :not(caption) > .rank-2 > * {
+        background-color: #DDE9EB; /* Màu cho rank 2 */
+        color: black;
+
+    }
+
+    .table > :not(caption) > .rank-3 > * {
+        background-color: #BE9639; /* Màu đồng cho rank 3 */
+        color: black;
+        
+    }
+
+    .table > :not(caption) > .nextRound > * {
+        background-color: rgba(242, 218, 195, 0.34); /* Màu đồng cho rank 3 */
+    }
+
+    #form-container h2{
+        font-weight: bold;
+        font-size: 28px;
+        color: #53966b;
+    }
+
+    #introBack button.outline-button {
+        background-color: #131a13 !important;
+        color: white !important;
+        border: #235234 solid;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    /* Bạn có thể tiếp tục thêm các quy tắc cho các rank khác */
+</style>
+
+<link rel="stylesheet" href="/css/style_backtoschool.css">
+<link rel="stylesheet" href="/css/navbar_backtoschool.css">
+
+<body>
+
+
+<section id="introBack" class="d-flex align-items-center p-3">
+    <div class="container mt-3">
+        <div id="form-container" class="p-4 shadow-sm rounded bg-dark">
+            <div class="text-center mb-4">
+                <h2 style="color:#53966b;">Bảng xếp hạng</h2>
+            </div>
+
+            <div class="d-flex justify-content-start">
+                <img src="/images/222_white.png" class="img-button" onclick="activateImage(this, '2')" alt="2X2">
+                <img src="/images/333oh_white.png" class="img-button" onclick="activateImage(this, '3')" alt="3X3OH">
+                <img src="/images/333_white.png" class="img-button" onclick="activateImage(this, '1')" alt="3X3">
+            </div>
+            <div id="result" class="mt-4"></div>
+            <div class="mt-4">
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Họ và tên</th>
+                            <th>Ao5</th>
+                            <th>Best</th>
+                            <th>Worst</th>
+                            <th>Solves</th>
+                        </tr>
+                        </thead>
+                        <tbody id="round-details-table-body" >
+                        <!-- Rows will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/scripts/ranking/ranking.js"></script> <!-- Removed async defer -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tự động chọn hình ảnh 3X3 khi trang được tải
+        const img2x2 = document.querySelector('.img-button[alt="2X2"]');
+        if (img2x2) {
+            activateImage(img2x2, '2');
+        }
+    });
+
+    function activateImage(element, roundId) {
+        // Xóa trạng thái active của tất cả các hình ảnh
+        document.querySelectorAll('.img-button').forEach(img => {
+            img.classList.remove('active');
+        });
+
+        // Thêm trạng thái active cho hình ảnh đã chọn
+        element.classList.add('active');
+
+        // Gọi hàm xử lý sự kiện
+        showJson(roundId, element); // Ensure showJson is defined before this is called
+    }
+</script>
+
+</body>
+</html>

@@ -19,4 +19,5 @@ public class Event {
     private String id;
     private String name;
     private String imageURL;
+    private int numOfSolves;
 }

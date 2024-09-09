@@ -1,0 +1,186 @@
+<!doctype html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('RUBIK BMT')}">
+    <style>
+        #autocomplete-results {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .autocomplete-suggestion {
+            padding: 8px ;
+            cursor: pointer;
+        }
+
+        .autocomplete-suggestion:hover {
+            background-color: #f0f0f0;
+        }
+
+        .autocomplete-suggestion.active {
+            background-color: #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <div th:replace="~{library/lib_admin.html::btsTable}"></div>
+                <!-- Content -->
+                <div th:fragment="content">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <!-- Basic Bootstrap Table -->
+                        <div class="card">
+                            <h5 class="card-header"
+                                th:text="'Danh sách các thí sinh tham gia bộ môn ' + ${event.getName()} + ' giải đấu ' + ${competition.getName()} "></h5>
+                            <a href="/candidates" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Làm Mới</a>
+                            <a th:href="@{/rounds/add/{competitionId}/{eventId}(competitionId=${competition.getId()}, eventId=${event.getId()})}" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Thêm round</a>
+
+                            <!-- Event Filter Buttons -->
+                            <div class="justify-content-md-start" style="display: flex; align-items: center;">
+
+                                <!-- Xuất Excel theo sự kiện -->
+<!--                                <div class="p-3">-->
+<!--                                    <h6>Xuất Excel theo sự kiện:</h6>-->
+<!--                                    <div class="btn-group">-->
+<!--                                        <a href="/api/export/downloadCandidatesExcelByEvent?eventName=2x2" class="btn btn-success">Xuất 2x2</a>-->
+<!--                                        <a href="/api/export/downloadCandidatesExcelByEvent?eventName=3x3" class="btn btn-success">Xuất 3x3</a>-->
+<!--                                        <a href="/api/export/downloadCandidatesExcelByEvent?eventName=3x3+One+Hand" class="btn btn-success">Xuất 3x3 One Hand</a>-->
+<!--                                        &lt;!&ndash; Thêm các nút khác tương ứng với các event &ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                            </div>
+                            <form id="searchForm" action="/candidates" method="get" class="mb-4 p-3">
+                                <div class="mb-3">
+                                    <label for="searchType" class="form-label">Tìm kiếm theo:</label>
+                                    <select id="searchType" name="searchType" class="form-select">
+                                        <option value="name">Tên</option>
+                                        <option value="date">Ngày tháng năm sinh</option>
+                                        <option value="checkinID">Số báo danh</option>
+                                        <option value="phone">Số điện thoại</option>
+                                        <option value="email">Email</option>
+                                        <!--                    <option value="event">Tên Sự Kiện</option>-->
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" id="keyword" name="keyword" placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                                <h5 style="font-weight: bold">Lưu ý: Chỉ những thí sinh đã checkin mới nằm trong danh sách này</h5>
+                                <div id="autocomplete-results" class="autocomplete-results"></div>
+                                <!--                <h4 th:text="'Tổng số thí sinh tìm được: ' + ${candidates.size()}"></h4>-->
+                            </form>
+
+                            <!-- Table -->
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Số báo danh</th>
+                                        <th>Họ và tên đệm</th>
+                                        <th>Tên</th>
+                                        <th>Ngày tháng năm sinh </th>
+                                        <th>Email</th>
+                                        <th>SDT</th>
+                                        <th>Thời điểm đăng ký</th>
+                                        <th>Xác nhận</th>
+                                        <th>Ghi chú</th>
+                                        <th>Nội dung thi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                    <tr th:each="candidate, stat : ${candidates}">
+                                        <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                                        <td th:text="${candidate.getCheckinID()}"></td>
+                                        <td th:text="${candidate.lastName}"></td>
+                                        <td th:text="${candidate.firstName}"></td>
+                                        <td th:text="${candidate.dateOfBirth}"></td>
+                                        <td th:text="${candidate.email}"></td>
+                                        <td th:text="${candidate.phoneNumber}"></td>
+                                        <td th:text="${candidate.registrationTime.plusHours(7)}"></td>
+                                        <td th:text="${candidate.timeConfirmed != null ? 'Đã xác nhận vào ' + candidate.timeConfirmed.plusHours(7) : 'Chưa xác nhận'}"></td>
+                                        <td th:text="${candidate.note}"></td>
+                                        <td>
+                                            <ul>
+                                                <li th:each="event : ${candidate.events}" th:text="${event.name}"></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div id="pagination" class="mt-4 p-3">
+                                <ul class="pagination">
+                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
+                                        <a th:href="@{/candidates/byEventAndCompetition/{competitionId}/{eventId}(page=${i}, size=${size}, keyword=${keyword}, competitionId=${competition.getId()}, eventId=${event.getId()})}"
+                                           th:text="${i + 1}"
+                                           th:classappend="${i == currentPage} ? 'active' : ''"
+                                           class="page-link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Autocomplete Script -->
+
+
+                    </div>
+                    <!-- / Content -->
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+<script src="/admin/js/autocomplete.js"></script>
+
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

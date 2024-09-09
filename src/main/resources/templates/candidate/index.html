@@ -45,11 +45,12 @@
     <!-- Layout container -->
     <div class="layout-page">
       <!-- Navbar -->
-      <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+<!--      <nav th:replace="~{library/lib_admin.html::navbar}"></nav>-->
       <!-- / Navbar -->
 
       <!-- Content wrapper -->
       <div class="content-wrapper">
+        <div th:replace="~{library/lib_admin.html::btsTable}"></div>
         <!-- Content -->
         <div th:fragment="content">
           <div class="container-xxl flex-grow-1 container-p-y">
@@ -82,6 +83,7 @@
                     <a href="/api/export/downloadCandidatesExcelByEvent?eventName=3x3+One+Hand" class="btn btn-success">Xuất 3x3 One Hand</a>
                     <!-- Thêm các nút khác tương ứng với các event -->
                   </div>
+
                 </div>
 
               </div>
@@ -89,8 +91,9 @@
                 <div class="mb-3">
                   <label for="searchType" class="form-label">Tìm kiếm theo:</label>
                   <select id="searchType" name="searchType" class="form-select">
-                    <option value="date">Ngày tháng năm sinh</option>
                     <option value="name">Tên</option>
+                    <option value="date">Ngày tháng năm sinh</option>
+                    <option value="checkinID">Số báo danh</option>
                     <option value="phone">Số điện thoại</option>
                     <option value="email">Email</option>
 <!--                    <option value="event">Tên Sự Kiện</option>-->
@@ -101,15 +104,17 @@
                   <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </div>
                 <div id="autocomplete-results" class="autocomplete-results"></div>
-<!--                <h4 th:text="'Tổng số thí sinh tìm được: ' + ${candidates.size()}"></h4>-->
+                <!--                <h4 th:text="'Tổng số thí sinh tìm được: ' + ${candidates.size()}"></h4>-->
               </form>
 
               <!-- Table -->
               <div class="table-responsive text-nowrap">
+                <a href="/candidates/add" class="btn btn-primary m-3">Thêm thí sinh</a>
                 <table class="table">
                   <thead>
                   <tr>
                     <th>STT</th>
+                    <th>Số báo danh</th>
                     <th>Họ và tên đệm</th>
                     <th>Tên</th>
                     <th>Ngày tháng năm sinh </th>
@@ -125,6 +130,7 @@
                   <tbody class="table-border-bottom-0">
                   <tr th:each="candidate, stat : ${candidates}">
                     <td th:text="${(currentPage * size) + stat.index + 1}"></td>
+                    <td th:text="${candidate.checkinID}"></td>
                     <td th:text="${candidate.lastName}"></td>
                     <td th:text="${candidate.firstName}"></td>
                     <td th:text="${candidate.dateOfBirth}"></td>
