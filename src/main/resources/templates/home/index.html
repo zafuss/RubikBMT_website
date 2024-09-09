@@ -17,9 +17,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#backToSchool">Giải đấu Back To School</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#intro">Giới thiệu</a>
                     </li>
@@ -31,6 +29,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#shopee">Mua hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ranking">Bảng xếp hạng giải đấu Back To School</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#footer">Liên hệ</a>
@@ -62,18 +63,6 @@
 
 
 
-    <section id="backToSchool" class="d-flex align-items-center">
-        <div class="container mt-3">
-            <a href="/back-to-school">
-
-                <div class="row align-items-center">
-                    <img style="scale: 0.7 " src="/images/backtoschool_gif.gif">
-                </div>
-            </a>
-
-        </div>
-    </section>
-
     <section id="intro" class="d-flex align-items-center">
         <div class="container mt-3">
             <div class="row align-items-center">
@@ -97,40 +86,33 @@
     </section>
 
     <section id="mentors" class="d-flex align-items-center text-center">
-        <div class=" ">
-            <div style="width: 100%; margin-bottom: 30px; background: linear-gradient(90deg, #fed44c, #30ade3,#b855fe);">
-                <h1 style="padding: 35px; color: white;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">CHỌN 1 HUẤN LUYỆN VIÊN ĐỂ BẮT ĐẦU</h1>
+        <div class="" style="width: 100vw;">
+            <div style=" margin-bottom: 30px; background: linear-gradient(90deg, #fed44c, #30ade3,#b855fe);">
+                <h1 style="padding: 35px; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">CHỌN 1 HUẤN LUYỆN VIÊN ĐỂ BẮT ĐẦU</h1>
             </div>
-            <div class="row" style="padding: 0 40px;">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a onclick="openDialog('lhp', 'Lê Hà Phong')" target="_blank">
-                        <div class="info">
-                            <div class="">
-                                <img src="/images/mentor_haphong.png" alt="Ha Phong image"
-                                class="mentor-image">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <a onclick="openDialog('lhp', 'Lê Hà Phong')" target="_blank">
+                            <div class="info">
+                                <img src="/images/mentor_haphong.png" alt="Ha Phong image" class="mentor-image">
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a onclick="openDialog('hhtt', 'Hoàng Hà Thuỷ Tiên')" target="_blank">
-                        <div class="info">
-                            <div class="">
-                                <img src="/images/mentor_thuytien.png" alt="Thuy Tien image"
-                                class="mentor-image">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <a onclick="openDialog('hhtt', 'Hoàng Hà Thuỷ Tiên')" target="_blank">
+                            <div class="info">
+                                <img src="/images/mentor_thuytien.png" alt="Thuy Tien image" class="mentor-image">
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a onclick="openDialog('nhtp', 'Nguyễn Hoàng Thiên Phú')" target="_blank">
-                        <div class="info">
-                            <div class="">
-                                <img src="/images/mentor_thienphu.png" alt="thien phu image"
-                                class="mentor-image">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <a onclick="openDialog('nhtp', 'Nguyễn Hoàng Thiên Phú')" target="_blank">
+                            <div class="info">
+                                <img src="/images/mentor_thienphu.png" alt="Thien Phu image" class="mentor-image">
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,7 +124,7 @@
             <div class="text-center mb-5">
                 <h1 class="fw-bold">Mạng xã hội</h1>
             </div>
-            <div class="row text-center mb-4">
+            <div class="row text-center">
                 <div class="col-lg-4 col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <a href="https://www.facebook.com/rubikbmtstore" target="_blank">
@@ -286,6 +268,73 @@
             </div>
         </div>
     </section>
+    <section id="ranking" class="d-flex align-items-center text-center">
+        <div class="container my-5 " >
+                <h1 class="mb-5 text-white">Bảng xếp hạng giải đấu Back To School</h1>
+            <div id="form-container"  class="p-4 shadow-sm rounded bg-white">
+
+
+                <div class="d-flex flex-wrap justify-content-between">
+                    <!-- Div bên trái -->
+                    <div class="justify-content-start mb-2 flex-nowrap">
+                        <img src="/images/222.png" class="img-button" onclick="activateImage(this, '2')" alt="2X2">
+                        <img src="/images/333oh.png" class="img-button" onclick="activateImage(this, '3')" alt="3X3OH">
+                        <img src="/images/333.png" class="img-button" onclick="activateImage(this, '1')" alt="3X3">
+                    </div>
+
+                    <!-- Div bên phải -->
+                    <div id="result"  style="max-width: 500px; overflow-x: auto;">
+                        <!-- Nội dung của div result -->
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="table-responsive" style="height: 67vh; overflow-y: auto;">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Hạng</th>
+                                <th>Họ và tên</th>
+                                <th>Ao5</th>
+                                <th>Best</th>
+                                <th>Worst</th>
+                                <th>Solves</th>
+                            </tr>
+                            </thead>
+                            <tbody id="round-details-table-body">
+                            <!-- Rows will be added here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/scripts/ranking/ranking.js"></script> <!-- Removed async defer -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tự động chọn hình ảnh 3X3 khi trang được tải
+            const img2x2 = document.querySelector('.img-button[alt="2X2"]');
+            if (img2x2) {
+                activateImage(img2x2, '2');
+            }
+        });
+
+        function activateImage(element, roundId) {
+            // Xóa trạng thái active của tất cả các hình ảnh
+            document.querySelectorAll('.img-button').forEach(img => {
+                img.classList.remove('active');
+            });
+
+            // Thêm trạng thái active cho hình ảnh đã chọn
+            element.classList.add('active');
+
+            // Gọi hàm xử lý sự kiện
+            showJson(roundId, element); // Ensure showJson is defined before this is called
+        }
+    </script>
+
     <footer id="footer" class="text-white py-4">
         <div class="container">
             <div class="row">

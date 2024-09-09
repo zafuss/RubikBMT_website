@@ -42,85 +42,74 @@ public class BackToSchoolController {
     LocalDateTime openTime = LocalDateTime.of(2024, 8, 22, 0, 0);
     @GetMapping()
     public String index(Model model) {
-        Candidate candidate = new Candidate();
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            Competition competition = competitionService.getByName("BackToSchool");
-            candidate.setCompetition(competition);
-
-            model.addAttribute("events", competition.getEvents());
-            model.addAttribute("candidate",candidate);
-            return "backToSchool/index";
-        }
+//        Candidate candidate = new Candidate();
+//        if (currentTime.isBefore(openTime)) {
+//            return "home/coming-soon";
+//        } else {
+//            Competition competition = competitionService.getByName("BackToSchool");
+//            candidate.setCompetition(competition);
+//
+//            model.addAttribute("events", competition.getEvents());
+//            model.addAttribute("candidate",candidate);
+//            return "backToSchool/index";
+//        }
+        return "backToSchool/end";
     }
 
     @GetMapping("/register")
     public String register(Model model) {
-        Candidate candidate = new Candidate();
-
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            Competition competition = competitionService.getByName("BackToSchool");
-            candidate.setCompetition(competition);
-
-            model.addAttribute("events", competition.getEvents());
-            model.addAttribute("candidate",candidate);
-            return "backToSchool/register";
-        }
+//        Candidate candidate = new Candidate();
+//
+//        if (currentTime.isBefore(openTime)) {
+//            return "home/coming-soon";
+//        } else {
+//            Competition competition = competitionService.getByName("BackToSchool");
+//            candidate.setCompetition(competition);
+//
+//            model.addAttribute("events", competition.getEvents());
+//            model.addAttribute("candidate",candidate);
+//            return "backToSchool/register";
+//        }
+        return "backToSchool/end";
     }
     @GetMapping("/general")
     public String general(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/general";
-        }
+        return "backToSchool/end";
     }
 
     @GetMapping("/cost")
     public String cost(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/cost";
-        }
+        return "backToSchool/end";
     }
 
     @GetMapping("/schedule")
     public String schedule(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/schedule";
-        }
+        return "backToSchool/end";
+
     }
 
     @GetMapping("/ranking")
     public String ranking(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/ranking";
-        }
+//        if (currentTime.isBefore(openTime)) {
+//            return "home/coming-soon";
+//        } else {
+//            return "backToSchool/ranking";
+//        }
+        return "backToSchool/end";
     }
 
     @GetMapping("/rankingDark")
     public String rankingDark(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/rankingDark";
-        }
+        return "backToSchool/end";
     }
 
     @GetMapping("location")
     public String location(Model model) {
-        if (currentTime.isBefore(openTime)) {
-            return "home/coming-soon";
-        } else {
-            return "backToSchool/location";
-        }
+//        if (currentTime.isBefore(openTime)) {
+//            return "home/coming-soon";
+//        } else {
+//            return "backToSchool/location";
+//        }
+        return "backToSchool/end";
     }
 }

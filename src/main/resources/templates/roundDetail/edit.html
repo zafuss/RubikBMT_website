@@ -80,8 +80,13 @@
                                       th:errors="*{solve1}"></span>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="javascript:history.back()" class="btn btn-secondary">Huỷ</a>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                    <a href="javascript:history.back()" class="btn btn-secondary">Huỷ</a>
+                                </div>
+                                <a th:href="@{/roundDetails/deleteResult(roundDetailId=${requestCreateSolve.getRoundDetailId()})}" class="btn text-white btn-danger">Xoá</a>
+                            </div>
                         </form>
 
                     </div>

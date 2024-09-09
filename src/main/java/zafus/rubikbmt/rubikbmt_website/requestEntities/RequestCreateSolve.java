@@ -13,7 +13,8 @@ import lombok.Setter;
 public class RequestCreateSolve {
     private String roundId;
     private String candidateId;
-
+    private String roundDetailId;
+    private int rank;
     private String solve1;
     private String solve2;
     private String solve3;

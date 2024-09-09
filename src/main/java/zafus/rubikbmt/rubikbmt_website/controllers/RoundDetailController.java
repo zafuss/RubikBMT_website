@@ -98,6 +98,8 @@ public class RoundDetailController {
             } else if (roundDetail.getSolves().isEmpty()) {
                 model.addAttribute("requestCreateSolve", requestCreateSolve);
             } else {
+                requestCreateSolve.setRoundDetailId(roundDetail.getId());
+                requestCreateSolve.setRank(roundDetail.getRankRound());
                 List<Solve> solves = roundDetail.getSolves().stream()
                         .sorted(Comparator.comparingInt(Solve::getOrderIndex)).toList();
                 for (int i = 0; i < solves.size(); i++) {
@@ -279,5 +281,19 @@ public class RoundDetailController {
         model.addAttribute("size", size);
 
         return "roundDetail/byRound";
+    }
+
+    @GetMapping("/deleteResult")
+    public String deleteResult(@RequestParam String roundDetailId) {
+        RoundDetail currentRoundDetail = roundDetailService.findById(roundDetailId);
+        currentRoundDetail.setBest(null);
+        currentRoundDetail.setAvg(null);
+        currentRoundDetail.setSolves(null);
+        currentRoundDetail.setAo5(null);
+        currentRoundDetail.setWorst(null);
+        currentRoundDetail.setRankRound(0);
+
+        roundDetailService.update(currentRoundDetail);
+        return "redirect:/roundDetails/byRound/" + currentRoundDetail.getRound().getId();
     }
 }
