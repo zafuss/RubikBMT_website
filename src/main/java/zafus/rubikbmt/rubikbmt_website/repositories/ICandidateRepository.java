@@ -35,7 +35,6 @@ public interface ICandidateRepository extends JpaRepository<Candidate, String> {
             "STR(c.dateOfBirth) LIKE %:input%")
     List<Candidate> findByDateOfBirth(@Param("input") String input);
 
-
     List<Candidate> findByLastNameContainingOrFirstNameContaining(String lastName, String firstName);
 
     @Query("SELECT c FROM Candidate c JOIN c.events e WHERE e.name = :eventName")

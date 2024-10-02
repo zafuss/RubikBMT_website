@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import zafus.rubikbmt.rubikbmt_website.entities.*;
+import zafus.rubikbmt.rubikbmt_website.services.ArticleService;
 import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
@@ -23,6 +24,8 @@ public class HomeController {
     private LearningTypeService learningTypeService;
     @Autowired
     private MentorService mentorService;
+    @Autowired
+    private ArticleService articleService;
     @GetMapping("/cube")
     public String cube(){
         return "home/cube";
@@ -57,6 +60,7 @@ public class HomeController {
         model.addAttribute("learningTypes", learningTypes);
         model.addAttribute("mentors", mentors);
         model.addAttribute("student", new Student());
+        model.addAttribute("latestArticles", articleService.findTop6LatestArticles(""));
         return "home/index";
     }
 

@@ -1,0 +1,168 @@
+<!doctype html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('Sửa bài viết')}">
+
+    <style>
+        #autocomplete-results {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .autocomplete-suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .autocomplete-suggestion:hover {
+            background-color: #f0f0f0;
+        }
+
+        .autocomplete-suggestion.active {
+            background-color: #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div th:fragment="content">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <!-- Basic Bootstrap Table -->
+                        <div class="card">
+                            <h5 class="card-header" th:text="'Sửa bài viết'"></h5>
+                            <form action="#" th:action="@{/articles/edit/{id}(id=${article.id})}" th:object="${article}" method="post" enctype="multipart/form-data">
+                                <div class="p-6">
+
+                                    <!-- Tác giả -->
+                                    <div class="form-group mt-3 mb-3">
+                                        <input type="text" id="author" name="author" th:field="*{author.id}" class="form-control" required hidden="true">
+                                    </div>
+
+                                    <!-- Tiêu đề -->
+                                    <div class="form-group">
+                                        <label for="title">Tiêu đề:</label>
+                                        <input type="text" id="title" name="title" th:field="*{title}" class="form-control" required>
+                                    </div>
+
+                                    <!-- Danh mục -->
+                                    <div class="form-group">
+                                        <label for="category">Danh mục:</label>
+                                        <select id="category" name="categoryId" class="form-control">
+                                            <option th:each="category : ${categories}"
+                                                    th:value="${category.id}"
+                                                    th:text="${category.name}"
+                                                    th:selected="${category.id == article.category.id}"></option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Mô tả -->
+                                    <div class="form-group">
+                                        <label for="description">Mô tả sơ lược:</label>
+                                        <textarea id="articleDescription" name="description" th:field="*{description}" class="form-control"></textarea>
+                                    </div>
+
+                                    <!-- Thumbnail -->
+                                    <div class="form-group">
+                                        <label for="thumbnail">Chọn ảnh thumbnail:</label>
+                                        <input type="file" id="thumbnailFile" name="thumbnailFile" class="form-control" accept="image/*">
+                                        <label for="thumbnailUrl">Hoặc nhập link ảnh thumbnail:</label>
+                                        <input type="text" id="thumbnailUrl" name="thumbnail" th:field="*{thumbnail}" class="form-control" placeholder="Nhập URL ảnh">
+                                    </div>
+
+                                    <!-- Preview Thumbnail -->
+                                    <div class="form-group mt-3">
+                                        <label for="preview">Preview thumbnail:</label>
+                                        <img id="thumbnailPreview" th:src="${article.thumbnail}" alt="Preview" class="img-fluid" style="display: block; max-width: 200px;">
+                                    </div>
+
+                                    <!-- Nội dung -->
+                                    <div class="form-group">
+                                        <label for="content">Nội dung:</label>
+                                        <textarea id="articleContent" name="content" th:field="*{content}" class="form-control"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </form>
+
+                            <script>
+                                // Preview khi chọn file
+                                document.getElementById('thumbnailFile').addEventListener('change', function(event) {
+                                    const file = event.target.files[0];
+                                    const reader = new FileReader();
+
+                                    reader.onload = function(e) {
+                                        const preview = document.getElementById('thumbnailPreview');
+                                        preview.src = e.target.result;
+                                        preview.style.display = 'block';
+                                    }
+
+                                    reader.readAsDataURL(file);
+                                });
+
+                                // Preview khi nhập URL
+                                document.getElementById('thumbnailUrl').addEventListener('input', function(event) {
+                                    const url = event.target.value;
+                                    const preview = document.getElementById('thumbnailPreview');
+                                    preview.src = url;
+                                    preview.style.display = url ? 'block' : 'none';
+                                });
+                            </script>
+
+                        </div>
+                        <!-- / Content -->
+                    </div>
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+        </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/admin/assets/vendor/js/menu.js"></script>
+    <script src="/admin/js/autocomplete.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <!-- Main JS -->
+    <script src="/admin/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

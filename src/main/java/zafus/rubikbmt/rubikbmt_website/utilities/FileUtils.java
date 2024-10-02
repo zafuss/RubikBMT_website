@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 
 public class FileUtils {
-    public static final String FOlDER_MEDIA = "src/main/resources/static/images/user/";
+    public static final String FOlDER_MEDIA = "src/main/resources/static/images/thumbnail/";
 
     public static String saveFile(MultipartFile multipartFile) throws IOException {
         File folder = new File(FOlDER_MEDIA);

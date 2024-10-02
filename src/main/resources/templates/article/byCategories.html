@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{library/lib.html::head('Tổng hợp bài viết')}"></head>
+<title>Article Detail</title>
+<link rel="stylesheet" href="/css/articles/detail.css">
+
+<nav th:replace="~{library/lib.html::navbar}"></nav>
+<body>
+
+<div class="article-container">
+    <h1 class="border-bottom pb-2 mb-2">Tổng hợp bài viết</h1> <!-- Tên danh mục -->
+    <br>
+    <div class="">
+    <div class="container p-0 ">
+        <div class="row">
+            <div class="col-md-8 mb-3 mt-3 ">
+                <div th:if="${latestArticles.size() > 0}">
+                    <a th:href="@{/articles/detail/{id}(id=${latestArticles[0].id})}" class="">
+                        <div class="thumbnail-container mb-3">
+                            <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 15px;">
+                                <img th:if="${latestArticles[0].thumbnail != null}"
+                                     th:src="${latestArticles[0].thumbnail.startsWith('http') ? latestArticles[0].thumbnail : '/getimage/' + latestArticles[0].thumbnail}"
+                                     alt="Thumbnail" class="img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <h6 th:text="${latestArticles[0].title}" style="font-weight: bold; font-size: xx-large"></h6>
+                        <div class="row">
+                            <!-- Hàng thứ hai: Description -->
+                            <div class="col-12">
+                                <p th:utext="${latestArticles[0].description}" class="text-muted mb-0"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mt-3" >
+                <div>
+                    <div th:each="article, stat : ${latestArticles}" th:if="${stat.index > 0}">
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="">
+                            <div class="row border-bottom mb-2">
+                                <div class="col-3 d-flex align-items-center mb-3">
+                                    <div class="small-thumbnail-container">
+                                          <img th:if="${article.thumbnail != null}"
+                                               th:src="${article.thumbnail.startsWith('http') ? article.thumbnail : '/getimage/' + article.thumbnail}" alt="Thumbnail" class="">
+                                    </div>
+                                </div>
+                                <div th:classappend="'col-9'">
+                                    <div class="row">
+                                        <!-- Hàng đầu: Title -->
+                                        <div class="col-12">
+                                            <span th:text="${article.title}" ></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                    <a class="more" th:href="@{/articles/latest}" >
+                        Xem theo trình tự thời gian <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br>
+    <div class="container p-0">
+        <div class="row">
+            <div class="col-md-6  mb-3" th:each="entry : ${articlesByCategory}">
+                <h4 th:text="${entry.key.name}"></h4> <!-- Tên danh mục -->
+                <ul class="list-unstyled">
+                    <li th:each="article : ${entry.value}" class="border-bottom pb-2 mb-2">
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" th:text="${article.title}"></a>
+                    </li>
+                </ul>
+                <a class="more" th:href="@{/articles/category/{id}(id=${entry.key.id})}" >
+                    Xem thêm các bài về <span th:text="${entry.key.name} "></span> <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

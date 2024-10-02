@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
         rollbackFor = {Exception.class, Throwable.class})
 public class CandidateService {
     private final ICandidateRepository candidateRepository;
-    private  String outputDate;
+    private String outputDate;
 
     public static String formatDate(String inputDate) {
         SimpleDateFormat inputFormat;

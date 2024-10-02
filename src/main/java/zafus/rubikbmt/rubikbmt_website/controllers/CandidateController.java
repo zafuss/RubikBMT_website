@@ -144,8 +144,7 @@ public class CandidateController {
 
     @PostMapping("/updateCandidate")
     public String updateCandidate(@ModelAttribute("candidate") @Valid RequestUpdateCandidate candidate,
-                                  BindingResult bindingResult
-            , Model model) {
+                                  BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)

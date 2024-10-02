@@ -1,0 +1,212 @@
+body {
+    font-family: "Be Vietnam Pro", sans-serif;
+    background-color: rgba(240, 230, 140, 0.71);
+    color: #333;
+    line-height: 1.8;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.article-container {
+    max-width: 1100px;
+    margin: 0 auto 0;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+h6 {
+    line-height: 1.5;
+}
+
+h1 {
+    line-height: 1.5;
+}
+.text-muted {
+    font-size: 1rem;
+    color: #6c757d;
+}
+.content {
+
+    margin-top: 30px;
+    font-size: 1.1rem;
+    color: #444;
+}
+.content p {
+    margin-bottom: 1.5rem;
+    text-align: justify !important;
+    font-size: 17px !important;
+}
+
+.description {
+
+    margin-top: 30px;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.description p {
+    margin-bottom: 1.5rem;
+    text-align: justify !important;
+    font-weight: bold !important;
+    font-size: 17px !important;
+
+}
+
+figure {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.image-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+.fixed-top {
+    position: relative;
+}
+
+.list-group-item {
+    transition: background-color 0.3s ease, transform 0.3s ease, filter 0.3s ease !important;
+}
+
+.list-group-item:hover {
+    background-color: rgba(245, 240, 185, 0.71);
+    transform: scale(1.01); /* Example: slight scaling on hover */
+    filter: brightness(1.1); /* Example: slight brightness increase on hover */
+}
+
+.grid-item {
+    transition: background-color 0.3s ease, transform 0.3s ease, filter 0.3s ease !important;
+}
+
+.grid-item:hover {
+    background-color: rgba(245, 240, 185, 0.71);
+
+    transform: scale(1.01);
+}
+
+figcaption {
+    font-size: 14px;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+a {
+    color: black;
+    transition: color 0.1s ease, transform 0.3s ease, filter 0.3s ease !important;
+}
+
+a:hover {
+    color: #f7d31d;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+.more {
+    color: gray;
+    font-size: small;
+    text-transform: uppercase;
+    align-items: center;
+    text-align: right;
+    display: block;
+}
+.thumbnail-img {
+    width: 200px;
+    height: auto;
+    margin-right: 15px;
+    border-radius: 15px;
+}
+.category-block {
+    border-radius: 15px;
+    background-color: rgba(245, 240, 185, 0.71);
+    width: 100%; /* Đảm bảo khối chiếm toàn bộ chiều rộng của cột */
+}
+
+.category-block h4 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.category-block a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.category-block a:hover {
+    color: #f7d31d;
+}
+
+.title p{
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0;
+}
+
+.description-small p{
+    margin: 0;
+    font-weight: normal !important;
+    text-decoration: none;
+    font-size: small !important;
+}
+
+:root {
+    --bs-border-radius: 15px;
+}
+
+figure img {
+    border-radius: 0;
+}
+
+.thumbnail-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Ẩn các phần thừa của ảnh */
+    border-radius: 15px; /* Thay đổi giá trị này theo nhu cầu */
+}
+
+.thumbnail-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh không bị bóp méo */
+}
+
+.small-thumbnail-container {
+    position: relative;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của col-4 */
+    height: 60px; /* Chiều cao cố định */
+    overflow: hidden; /* Ẩn các phần thừa của ảnh */
+    border-radius: 15px; /* Bo tròn các góc */
+}
+
+.small-thumbnail-container img {
+    position: absolute;
+    top: 50%; /* Đặt ảnh ở giữa theo chiều dọc */
+    left: 50%; /* Đặt ảnh ở giữa theo chiều ngang */
+    width: 100%; /* Chiều rộng chiếm 100% của container */
+    height: auto; /* Chiều cao tự động */
+    min-height: 100%; /* Đảm bảo chiều cao tối thiểu là 100% */
+    transform: translate(-50%, -50%); /* Đẩy ảnh về giữa */
+    object-fit: cover; /* Đảm bảo ảnh không bị bóp méo */
+}

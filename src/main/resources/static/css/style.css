@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Be Vietnam Pro", sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -370,6 +370,19 @@ dialog::backdrop {
 }
 .btn-primary:hover {
     background-color: #e6d8a5;
+    color: #2d676f;
+}
+
+.btn-reply {
+    background-color: #2d9ed9;
+    color: white;
+    border-radius: 10px;
+    border: transparent;
+    padding: 5px 10px;
+}
+.btn-reply:hover {
+    background-color: #3480a8;
+    color: white;
 }
 
 #ranking {
@@ -460,4 +473,151 @@ dialog::backdrop {
 
 .table > :not(caption) > .nextRound > * {
     background-color: rgba(242, 218, 195, 0.34); /* Màu đồng cho rank 3 */
+}
+
+.nav-logo {
+    border-radius: 0 !important;
+}
+.thumbnail-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Ẩn các phần thừa của ảnh */
+    border-radius: 15px; /* Thay đổi giá trị này theo nhu cầu */
+}
+
+.thumbnail-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh không bị bóp méo */
+}
+
+.small-thumbnail-container {
+    position: relative;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của col-4 */
+    height: 60px; /* Chiều cao cố định */
+    overflow: hidden; /* Ẩn các phần thừa của ảnh */
+    border-radius: 15px; /* Bo tròn các góc */
+}
+
+.small-thumbnail-container img {
+    position: absolute;
+    top: 50%; /* Đặt ảnh ở giữa theo chiều dọc */
+    left: 50%; /* Đặt ảnh ở giữa theo chiều ngang */
+    width: 100%; /* Chiều rộng chiếm 100% của container */
+    height: auto; /* Chiều cao tự động */
+    min-height: 100%; /* Đảm bảo chiều cao tối thiểu là 100% */
+    transform: translate(-50%, -50%); /* Đẩy ảnh về giữa */
+    object-fit: cover; /* Đảm bảo ảnh không bị bóp méo */
+}
+#blog {
+    background: rgba(240, 230, 140, 0.71);
+    color: #2d676f;
+    line-height: 1.8;
+    text-align: start;
+}
+
+#blog * {
+    color: #2d676f;
+    text-align: start;
+}
+
+#blog h1, #blog h3, #blog h6 {
+    font-weight: bold;
+}
+
+#blog p {
+    font-size: 16px;
+}
+
+#blog a {
+    color: #2d676f;
+    transition: color 0.1s ease, transform 0.3s ease, filter 0.3s ease !important;
+}
+
+#blog .first-article:hover {
+    color: #f7d31d;
+}
+
+#blog .article-container {
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#blog .more {
+    color: gray;
+    font-size: small;
+    text-transform: uppercase;
+    align-items: center;
+    text-align: right;
+    display: block;
+}
+
+#blog .more i {
+    color: gray;
+}
+#blog .more:hover i {
+    color: #f7d31d;
+}
+
+#blog .first-article a h6,
+#blog .first-article a p,
+#blog .first-article a span {
+    transition: color 0.2s ease; /* Chuyển màu nền mượt mà */
+}
+
+
+#blog .first-article a:hover h6,
+#blog .first-article a:hover p,
+#blog .first-article a:hover span {
+    color: #f7d31d;
+}
+
+#blog .first-article a img {
+    transition: background-color 0.3s ease; /* Chuyển màu nền mượt mà */
+}
+#blog .first-article a:hover img {
+    background-color: rgba(0, 0, 0, 0.2); /* Làm tối ảnh khi hover */;
+}
+
+
+#blog .row a:hover span {
+    color: #f7d31d; /* Đổi màu cho title các bài viết khác */
+}
+
+#blog .more:hover {
+    color: #f7d31d;
+}
+
+
+
+#blog .small-thumbnail-container {
+    position: relative;
+    overflow: hidden;
+}
+
+#blog .small-thumbnail-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Không tối khi không hover */
+    transition: background-color 0.3s ease; /* Chuyển màu nền mượt mà */
+    z-index: 1;
+}
+
+#blog .small-thumbnail-container:hover::before {
+    background-color: rgba(0, 0, 0, 0.2); /* Làm tối ảnh khi hover */
+}
+
+#blog .small-thumbnail-container img {
+    position: relative;
+    z-index: 0; /* Đảm bảo ảnh ở phía dưới lớp tối */
 }

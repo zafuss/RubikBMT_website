@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Category Detail</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Category Detail</h1>
+    <p><strong>ID:</strong> <span th:text="${category.id}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${category.name}"></span></p>
+    <a href="/categories" class="btn btn-secondary">Back to List</a>
+</div>
+</body>
+</html>
