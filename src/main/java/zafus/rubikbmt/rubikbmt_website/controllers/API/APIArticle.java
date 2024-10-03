@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import zafus.rubikbmt.rubikbmt_website.DTO.CommentDTO;
 import zafus.rubikbmt.rubikbmt_website.entities.Article;
 import zafus.rubikbmt.rubikbmt_website.entities.Comment;
+import zafus.rubikbmt.rubikbmt_website.entities.Category;
 import zafus.rubikbmt.rubikbmt_website.services.ArticleService;
+import zafus.rubikbmt.rubikbmt_website.services.CategoryService;
 import zafus.rubikbmt.rubikbmt_website.services.CommentService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/articles")
@@ -21,6 +24,9 @@ public class APIArticle {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @PostMapping("/{id}/addComment")
     public ResponseEntity<CommentDTO> addComment(@PathVariable String id,
@@ -76,4 +82,9 @@ public class APIArticle {
         return ResponseEntity.ok(newDtoReply);
     }
 
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        // Assume you have a CategoryService that fetches categories from your database
+        return categoryService.findAll();
+    }
 }

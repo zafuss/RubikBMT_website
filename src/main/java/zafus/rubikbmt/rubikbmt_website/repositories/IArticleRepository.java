@@ -36,6 +36,12 @@ public interface IArticleRepository extends JpaRepository<Article, String> {
 
     Page<Article> findByTitleContaining(String title, Pageable pageable);
 
+    @Query("SELECT a from Article a where a.author.userName like %:username%")
+    Page<Article> findByAuthor(String username, Pageable pageable);;
+
+    @Query("SELECT a from Article  a where a.category.id = :category")
+    Page<Article> findByCategory(String category, Pageable pageable);
+
     @Query("SELECT c FROM Article c WHERE " +
             "STR(c.createdAt) LIKE %:input%")
     List<Article> findByCreateAt(@Param("input") String input);

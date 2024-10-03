@@ -54,6 +54,23 @@
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <!-- Basic Bootstrap Table -->
+                        <!-- Search Form -->
+                        <form id="searchForm" action="/articles/search" method="get" class="mb-4 p-3">
+                            <div class="mb-3">
+                                <label for="searchType" class="form-label">Tìm kiếm theo:</label>
+                                <select id="searchType" name="searchType" class="form-select">
+                                    <option value="title">Tiêu đề</option>
+                                    <option value="author">Tác giả</option>
+                                    <option value="category">Thể loại</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3" id="searchInput">
+                                <input type="text" id="keyword" name="keyword"
+                                       placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+
                         <div class="card">
                             <h5 class="card-header" th:text="'Danh sách bài viết'"></h5>
                             <a href="/articles/add" style="width: 200px" class="btn btn-primary m-lg-6">Tạo bài viết mới</a>
@@ -99,7 +116,7 @@
     <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/admin/assets/vendor/js/menu.js"></script>
     <script src="/admin/js/autocomplete.js"></script>
-
+    <script src="/admin/js/searchBlog.js"></script>
 
     <!-- Vendors JS -->
     <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>

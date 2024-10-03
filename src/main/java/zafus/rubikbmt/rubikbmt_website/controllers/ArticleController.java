@@ -1,6 +1,9 @@
 package zafus.rubikbmt.rubikbmt_website.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -50,6 +53,27 @@ public class ArticleController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("articles", articleService.findLatestArticle());
 
+        return "article/index";
+    }
+
+    @GetMapping("/search")
+    public String listArticles(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size,
+                               @RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(defaultValue = "") String searchType) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Article> articlesPage = articleService.searchArticles(keyword, searchType, pageable);
+
+
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("articles", articlesPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", articlesPage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("size", size);
         return "article/index";
     }
 

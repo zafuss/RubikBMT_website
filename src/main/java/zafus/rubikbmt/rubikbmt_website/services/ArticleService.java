@@ -40,14 +40,16 @@ public class ArticleService {
         return articleRepository.findTop6LatestArticles(articleId, pageable);
     }
 
-//    public Page<Article> searchArticles(String keyword, String searchType, Pageable pageable) {
-//        switch (searchType) {
-//            case "title":
-//                return articleRepository.findByTitleContaining(keyword, pageable);
-//            case "date":
-//                return articleRepository.findByCreateAt(date)
-//        }
-//    }
+    public Page<Article> searchArticles(String keyword, String searchType, Pageable pageable) {
+        switch (searchType) {
+            case "title":
+                return articleRepository.findByTitleContaining(keyword, pageable);
+            case "author":
+                return articleRepository.findByAuthor( keyword, pageable);
+            default:
+                return articleRepository.findByCategory(keyword, pageable);
+        }
+    }
 
     public Article getArticleById(String id) {
         return articleRepository.findById(id).orElse(null);
