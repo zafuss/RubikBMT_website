@@ -55,24 +55,25 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <!-- Basic Bootstrap Table -->
                         <!-- Search Form -->
-                        <form id="searchForm" action="/articles/search" method="get" class="mb-4 p-3">
-                            <div class="mb-3">
-                                <label for="searchType" class="form-label">Tìm kiếm theo:</label>
-                                <select id="searchType" name="searchType" class="form-select">
-                                    <option value="title">Tiêu đề</option>
-                                    <option value="author">Tác giả</option>
-                                    <option value="category">Thể loại</option>
-                                </select>
-                            </div>
-                            <div class="input-group mb-3" id="searchInput">
-                                <input type="text" id="keyword" name="keyword"
-                                       placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
-                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                            </div>
-                        </form>
 
                         <div class="card">
                             <h5 class="card-header" th:text="'Danh sách bài viết'"></h5>
+                            <form id="searchForm" action="/articles/search" method="get" class="mb-4 p-3">
+                                <div class="mb-3">
+                                    <label for="searchType" class="form-label">Tìm kiếm theo:</label>
+                                    <select id="searchType" name="searchType" class="form-select">
+                                        <option value="title">Tiêu đề</option>
+                                        <option value="author">Tác giả</option>
+                                        <option value="category">Thể loại</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3" id="searchInput">
+                                    <input type="text" id="keyword" name="keyword"
+                                           placeholder="Nhập nội dung tìm kiếm" class="form-control"/>
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+
                             <a href="/articles/add" style="width: 200px" class="btn btn-primary m-lg-6">Tạo bài viết mới</a>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center"

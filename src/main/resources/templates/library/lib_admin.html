@@ -69,60 +69,86 @@
   <!-- Place this tag before closing body tag for github widget button. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- TinyMCE -->
-  <script src="https://cdn.tiny.cloud/1/ltvvymd7d8th6cyb4bd7vg4fr8laxxrlewe4aloyj63dahrw/tinymce/6/tinymce.min.js"></script>
   <script>
-    tinymce.init({
-      selector: '#articleContent',
-      plugins: 'image media link',
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
-      height: 400,
-      image_caption: true,
-      content_style:
-        `figure {
-            text-align: center;
-        }
-        figcaption {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-top: 8px;
-            text-align: center;
-        }
-        figure img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            border-radius: 5px;
-        }
-    `
-    });
-  </script>
-  <script>
-    tinymce.init({
-      selector: '#articleDescription',
-      plugins: 'image media link',
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
-      height: 200,
-      image_caption: true,
-      content_style:
-        `figure {
-            text-align: center;
-        }
-        figcaption {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-top: 8px;
-            text-align: center;
-        }
-        figure img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            border-radius: 5px;
-        }
-    `
-    });
+    // Gọi API để lấy API key
+    fetch('/api/tinymce-key')
+            .then(response => response.text())
+            .then(apiKey => {
+              // Động nạp script TinyMCE với API key từ backend
+              var script = document.createElement('script');
+              script.src = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/6/tinymce.min.js`;
+              document.head.appendChild(script);
+
+              // Sau khi tải script, cấu hình TinyMCE
+              script.onload = function() {
+                tinymce.init({
+                  selector: '#articleContent',
+                  plugins: 'image media link',
+                  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
+                  height: 400,
+                  image_caption: true,
+                  content_style:
+                  `figure {
+                      text-align: center;
+                  }
+                  figcaption {
+                      font-size: 0.9rem;
+                      color: #6c757d;
+                      margin-top: 8px;
+                      text-align: center;
+                  }
+                  figure img {
+                      max-width: 100%;
+                      height: auto;
+                      display: block;
+                      margin: 20px auto;
+                      border-radius: 5px;
+                  }
+              `
+                });
+              };
+            })
+            .catch(error => console.error('Error loading TinyMCE API key:', error));
+  </script>  <script>
+    // Gọi API để lấy API key
+          fetch('/api/tinymce-key')
+            .then(response => response.text())
+            .then(apiKey => {
+              // Động nạp script TinyMCE với API key từ backend
+              var script = document.createElement('script');
+              script.src = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/6/tinymce.min.js`;
+              document.head.appendChild(script);
+
+              // Sau khi tải script, cấu hình TinyMCE
+              script.onload = function() {
+                tinymce.init({
+                  selector: '#articleDescription',
+                  plugins: 'image media link',
+                  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
+                  height: 200,
+                  image_caption: true,
+                  content_style:
+                  `figure {
+                      text-align: center;
+                  }
+                  figcaption {
+                      font-size: 0.9rem;
+                      color: #6c757d;
+                      margin-top: 8px;
+                      text-align: center;
+                  }
+                  figure img {
+                      max-width: 100%;
+                      height: auto;
+                      display: block;
+                      margin: 20px auto;
+                      border-radius: 5px;
+                  }
+              `
+                });
+              };
+            })
+            .catch(error => console.error('Error loading TinyMCE API key:', error));
   </script>
 </head>
 
