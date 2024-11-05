@@ -2,9 +2,7 @@
 <html lang="vi"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{library/lib.html::head('RUBIK BMT')}">
-
-</head>
+<head th:replace="~{library/lib.html::head(${article.title} + ' - RUBIK BMT')}"></head>
 <link rel="stylesheet" href="/css/articles/detail.css">
 
 <title>Article Detail</title>
@@ -16,7 +14,7 @@
 <div class="article-container">
     <a th:href="@{/articles/category/{id}(id=${article.category.id})}" class="mb-1 text-muted" th:text="${article.category.name}"></a>
     <h1 class="mb-3" th:text="${article.title}"></h1>
-    <p class="text-muted">Được đăng bởi: <span th:text="${article.author.username}"></span> - <span th:data-created-at="${article.createdAt}"></span></p>
+    <p class="text-muted">Được đăng bởi: <span th:text="${article.author.lastName} + ' ' + ${article.author.firstName}"></span> - <span th:data-created-at="${article.createdAt}"></span></p>
     <div class="description mt-4" th:utext="${article.description}"></div> <!-- Hiển thị nội dung bài viết -->
     <div class="content mt-4" th:utext="${article.content}"></div> <!-- Hiển thị nội dung bài viết -->
 

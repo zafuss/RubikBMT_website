@@ -106,8 +106,11 @@
                                         <label for="content">Nội dung:</label>
                                         <textarea id="articleContent" name="content" th:field="*{content}" class="form-control"></textarea>
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <div class="form-check mb-3 mt-3">
+                                        <input type="checkbox" id="hot" th:field="*{hot}" class="form-check-input" />
+                                        <label for="hot" class="form-check-label">Bài viết nổi bật?</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </div>
                             </form>
 

@@ -70,85 +70,81 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- TinyMCE -->
   <script>
-    // Gọi API để lấy API key
-    fetch('/api/tinymce-key')
-            .then(response => response.text())
-            .then(apiKey => {
-              // Động nạp script TinyMCE với API key từ backend
-              var script = document.createElement('script');
-              script.src = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/6/tinymce.min.js`;
-              document.head.appendChild(script);
+    // Hàm dùng để nạp và khởi tạo TinyMCE cho các phần tử được chỉ định
+    function loadTinyMce(selector, height) {
+      fetch('/api/tinymce-key')
+              .then(response => response.text())
+              .then(apiKey => {
+                // Tạo URL cho script TinyMCE
+                var scriptUrl = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/6/tinymce.min.js`;
 
-              // Sau khi tải script, cấu hình TinyMCE
-              script.onload = function() {
-                tinymce.init({
-                  selector: '#articleContent',
-                  plugins: 'image media link',
-                  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
-                  height: 400,
-                  image_caption: true,
-                  content_style:
-                  `figure {
-                      text-align: center;
-                  }
-                  figcaption {
-                      font-size: 0.9rem;
-                      color: #6c757d;
-                      margin-top: 8px;
-                      text-align: center;
-                  }
-                  figure img {
-                      max-width: 100%;
-                      height: auto;
-                      display: block;
-                      margin: 20px auto;
-                      border-radius: 5px;
-                  }
-              `
-                });
-              };
-            })
-            .catch(error => console.error('Error loading TinyMCE API key:', error));
-  </script>  <script>
-    // Gọi API để lấy API key
-          fetch('/api/tinymce-key')
-            .then(response => response.text())
-            .then(apiKey => {
-              // Động nạp script TinyMCE với API key từ backend
-              var script = document.createElement('script');
-              script.src = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/6/tinymce.min.js`;
-              document.head.appendChild(script);
+                // Kiểm tra xem script đã được thêm vào chưa
+                if (!document.querySelector(`script[src="${scriptUrl}"]`)) {
+                  var script = document.createElement('script');
+                  script.src = scriptUrl;
+                  document.head.appendChild(script);
 
-              // Sau khi tải script, cấu hình TinyMCE
-              script.onload = function() {
-                tinymce.init({
-                  selector: '#articleDescription',
-                  plugins: 'image media link',
-                  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
-                  height: 200,
-                  image_caption: true,
-                  content_style:
-                  `figure {
-                      text-align: center;
-                  }
-                  figcaption {
-                      font-size: 0.9rem;
-                      color: #6c757d;
-                      margin-top: 8px;
-                      text-align: center;
-                  }
-                  figure img {
-                      max-width: 100%;
-                      height: auto;
-                      display: block;
-                      margin: 20px auto;
-                      border-radius: 5px;
-                  }
-              `
-                });
-              };
-            })
-            .catch(error => console.error('Error loading TinyMCE API key:', error));
+                  // Sau khi tải script, cấu hình TinyMCE
+                  script.onload = function() {
+                    tinymce.init({
+                      selector: selector,
+                      plugins: 'image media link',
+                      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
+                      height: height,
+                      image_caption: true,
+                      content_style:
+                              `figure {
+                    text-align: center;
+                }
+                figcaption {
+                    font-size: 0.9rem;
+                    color: #6c757d;
+                    margin-top: 8px;
+                    text-align: center;
+                }
+                figure img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: 20px auto;
+                    border-radius: 5px;
+                }`
+                    });
+                  };
+                } else {
+                  // Nếu script đã tồn tại, chỉ cần khởi tạo TinyMCE
+                  tinymce.init({
+                    selector: selector,
+                    plugins: 'image media link',
+                    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link image media',
+                    height: height,
+                    image_caption: true,
+                    content_style:
+                            `figure {
+                  text-align: center;
+              }
+              figcaption {
+                  font-size: 0.9rem;
+                  color: #6c757d;
+                  margin-top: 8px;
+                  text-align: center;
+              }
+              figure img {
+                  max-width: 100%;
+                  height: auto;
+                  display: block;
+                  margin: 20px auto;
+                  border-radius: 5px;
+              }`
+                  });
+                }
+              })
+              .catch(error => console.error('Error loading TinyMCE API key:', error));
+    }
+
+    // Khởi tạo TinyMCE cho các phần tử với chiều cao khác nhau
+    loadTinyMce('#articleContent', 400);
+    loadTinyMce('#articleDescription', 200);
   </script>
 </head>
 
@@ -211,10 +207,55 @@
           </ul>
         </li>
 
+
+
         <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">SuperAdmin only</span>
+          <span class="menu-header-text">Quản lý nội dung</span>
         </li>
         <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-notepad"></i>
+            <div class="text-truncate" data-i18n="Layouts">Quản lý bài viết</div>
+          </a>
+          <ul class="menu-sub" >
+
+            <li class="menu-item">
+              <a href="/articles/add" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+                <div class="text-truncate" data-i18n="Tables">Thêm bài viết</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/articles" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div class="text-truncate" data-i18n="Tables">Danh sách bài viết</div>
+              </a>
+          </ul>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-folder"></i>
+            <div class="text-truncate" data-i18n="Layouts">Quản lý danh mục</div>
+          </a>
+          <ul class="menu-sub" >
+
+            <li class="menu-item">
+              <a href="/categories/add" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+                <div class="text-truncate" data-i18n="Tables">Thêm danh mục</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/categories" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div class="text-truncate" data-i18n="Tables">Danh sách danh mục</div>
+              </a>
+          </ul>
+        </li>
+        <li th:if="${roles.contains('SuperAdmin') || roles.contains('Admin')}" class="menu-header small text-uppercase">
+          <span class="menu-header-text">Quản lý chung</span>
+        </li>
+        <li th:if="${roles.contains('SuperAdmin') || roles.contains('Admin')}" class="menu-item">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-group"></i>
             <div class="text-truncate" data-i18n="Layouts">Quản lý tài khoản</div>
@@ -234,31 +275,6 @@
               </a>
           </ul>
         </li>
-
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Quản lý bài viết</span>
-        </li>
-        <li class="menu-item">
-          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-group"></i>
-            <div class="text-truncate" data-i18n="Layouts">Bài viết</div>
-          </a>
-          <ul class="menu-sub" >
-
-            <li class="menu-item">
-              <a href="/articles/add" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
-                <div class="text-truncate" data-i18n="Tables">Thêm bài viết</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/articles" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div class="text-truncate" data-i18n="Tables">Danh sách bài viết</div>
-              </a>
-          </ul>
-        </li>
-
       </ul>
     </aside>
     <!-- / Menu -->
@@ -277,91 +293,25 @@
         </div>
 
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-          <!-- Search -->
-          <div class="navbar-nav align-items-center">
-            <div class="nav-item d-flex align-items-center">
-              <i class="bx bx-search bx-md"></i>
-              <input
-                      type="text"
-                      class="form-control border-0 shadow-none ps-1 ps-sm-2"
-                      placeholder="Search..."
-                      aria-label="Search..." />
-            </div>
-          </div>
-          <!-- /Search -->
+          <h5 style="margin-bottom: 0 !important; font-weight: bold" th:text="'Xin chào, ' + ${user.lastName} + ' ' + ${user.firstName}"></h5>
+
+
 
           <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
-            <li class="nav-item lh-1 me-4">
-              <a
-                      class="github-button"
-                      href="https://github.com/themeselection/sneat-html-admin-template-free"
-                      data-icon="octicon-star"
-                      data-size="large"
-                      data-show-count="true"
-                      aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-              >Star</a
-              >
-            </li>
+
 
             <!-- User -->
-            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-              <a
-                      class="nav-link dropdown-toggle hide-arrow p-0"
-                      href="javascript:void(0);"
-                      data-bs-toggle="dropdown">
-                <div class="avatar avatar-online">
-                  <img src="/admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                </div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                  <a class="dropdown-item" href="#">
-                    <div class="d-flex">
-                      <div class="flex-shrink-0 me-3">
-                        <div class="avatar avatar-online">
-                          <img src="/admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                        </div>
-                      </div>
-                      <div class="flex-grow-1">
-                        <h6 class="mb-0">John Doe</h6>
-                        <small class="text-muted">Admin</small>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <div class="dropdown-divider my-1"></div>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#"> <i class="bx bx-cog bx-md me-3"></i><span>Settings</span> </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i
-                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-                        </span>
-                  </a>
-                </li>
-                <li>
-                  <div class="dropdown-divider my-1"></div>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);">
-                    <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="nav-item navbar-dropdown dropdown-user dropdown">-->
+<!--              <div class="avatar avatar-online">-->
+<!--                <img src="/admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />-->
+<!--              </div>-->
+<!--            </li>-->
             <!--/ User -->
           </ul>
+          <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">Đăng xuất</button>
+        </form>
         </div>
       </nav>
 

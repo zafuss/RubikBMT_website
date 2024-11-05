@@ -32,6 +32,11 @@
         .autocomplete-suggestion.active {
             background-color: #dcdcdc;
         }
+        .table-td-limited {
+            max-width: 300px;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -53,12 +58,9 @@
                 <!-- Content -->
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <!-- Basic Bootstrap Table -->
-                        <!-- Search Form -->
-
                         <div class="card">
                             <h5 class="card-header" th:text="'Danh sách bài viết'"></h5>
-                            <form id="searchForm" action="/articles/search" method="get" class="mb-4 p-3">
+                            <form id="searchForm" action="/articles/search" method="get" class="p-6">
                                 <div class="mb-3">
                                     <label for="searchType" class="form-label">Tìm kiếm theo:</label>
                                     <select id="searchType" name="searchType" class="form-select">
@@ -73,28 +75,48 @@
                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                 </div>
                             </form>
-
                             <a href="/articles/add" style="width: 200px" class="btn btn-primary m-lg-6">Tạo bài viết mới</a>
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex justify-content-between align-items-center"
-                                    th:each="article : ${articles}">
-                                    <div class="d-flex align-items-center">
-                                        <!-- Kiểm tra nếu thumbnail khác null thì hiển thị -->
-                                        <img th:if="${article.thumbnail != null}"
-                                             th:src="${article.thumbnail.startsWith('http') ? article.thumbnail : '/getimage/' + article.thumbnail}"
-                                             alt="Thumbnail"
-                                             style="width: 200px; height: auto; margin-right: 15px;">
-                                        <!-- Thông tin bài viết -->
-                                        <div>
-                                            <a th:href="@{/articles/detail/{id}(id=${article.id})}"
-                                               th:text="${article.title}"
-                                               class="font-weight-bold"></a>
-                                            <span class="text-muted ml-2" th:text="'by ' + ${article.author.username}"></span>
-                                        </div>
-                                    </div>
-                                    <span class="badge badge-secondary badge-pill" th:text="${article.getCategory().getName()}"></span>
-                                </li>
-                            </ul>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Thumbnail</th>
+                                        <th>Thông tin</th>
+                                        <th>Số lượt xem</th>
+                                        <th>Trạng thái</th>
+                                        <th>Tin hot</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                    <tr th:each="article, stat : ${articles}">
+                                        <td th:text="${stat.index + 1}"></td>
+                                        <td>
+                                            <img th:if="${article.thumbnail != null}"
+                                                 th:src="${article.thumbnail.startsWith('http') ? article.thumbnail : '/getimage/' + article.thumbnail}"
+                                                 alt="Thumbnail"
+                                                 style="width: 200px; height: auto; margin-right: 15px;">
+                                        </td>
+                                        <!-- Cột Thông tin gộp các dữ liệu khác -->
+                                        <td>
+                                            <strong th:text="${article.title}"></strong><br/>
+                                            <span>Thời điểm đăng: <span th:text="${article.createdAt}"></span></span><br/>
+                                            <span>Người đăng: <span th:text="${article.author.lastName} + ' ' + ${article.author.firstName} + ' (' + ${article.author.username} + ')'"></span></span><br/>
+                                        </td>
+                                        <td th:text="${article.view}"></td>
+                                        <td th:text="${article.isDeleted ? 'Đã xoá' : 'Đang hiển thị'}"
+                                            th:class="${article.isDeleted ? 'text-danger' : 'text-success'}"></td>
+                                        <td th:text="${article.isHot ? 'Có' : 'Không'}"
+                                            th:class="${article.isHot ? 'text-success' : ''}"></td>
+                                        <td>
+                                            <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-info" type="button">Xem bài viết</a>
+                                            <a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn btn-primary" type="button">Sửa</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!-- / Content -->
                     </div>

@@ -41,4 +41,17 @@ public class CategoryController {
         model.addAttribute("category", category);
         return "category/detail"; // Tạo file category/detail.html
     }
+
+    @GetMapping("/edit/{id}")
+    public String editCategoryForm(@PathVariable String id, Model model) {
+        Category category = categoryService.findById(id);
+        model.addAttribute("category", category);
+        return "category/edit"; // Trả về tên view
+    }
+
+    @PostMapping("/edit")
+    public String updateCategory(@ModelAttribute Category category) {
+        categoryService.save(category); // Lưu category đã chỉnh sửa
+        return "redirect:/categories"; // Chuyển hướng về danh sách category
+    }
 }

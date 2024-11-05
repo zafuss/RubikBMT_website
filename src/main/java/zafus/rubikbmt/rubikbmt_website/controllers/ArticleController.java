@@ -1,6 +1,7 @@
 package zafus.rubikbmt.rubikbmt_website.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,20 +12,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
+import zafus.rubikbmt.rubikbmt_website.DTO.imgur.ImgurResponse;
 import zafus.rubikbmt.rubikbmt_website.entities.Article;
 import zafus.rubikbmt.rubikbmt_website.entities.Category;
 import zafus.rubikbmt.rubikbmt_website.entities.Comment;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
-import zafus.rubikbmt.rubikbmt_website.services.ArticleService;
-import zafus.rubikbmt.rubikbmt_website.services.CategoryService;
-import zafus.rubikbmt.rubikbmt_website.services.CommentService;
-import zafus.rubikbmt.rubikbmt_website.services.UserService;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateArticle;
+import zafus.rubikbmt.rubikbmt_website.services.*;
 import zafus.rubikbmt.rubikbmt_website.utilities.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,7 @@ public class ArticleController {
     private final CategoryService categoryService;
     private final UserService userService;
     private final CommentService commentService;
+    private final ImgurService imgurService;
 
     public User getLoggedInUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -51,7 +54,7 @@ public class ArticleController {
     @GetMapping
     public String listArticles(Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("articles", articleService.findLatestArticle());
+        model.addAttribute("articles", articleService.findArticlesSortedByIsDeletedAndCreatedAtDesc());
 
         return "article/index";
     }
@@ -77,9 +80,9 @@ public class ArticleController {
         return "article/index";
     }
 
-    @GetMapping("/byCategories")
+    @GetMapping("/list")
     public String listArticlesByCategories(Model model) {
-        List<Category> categories = categoryService.findAll(); // Lấy danh sách các danh mục
+        List<Category> categories = categoryService.findAll().stream().filter((c) -> !c.isDeleted()).toList(); // Lấy danh sách các danh mục
 
         // Tạo map để chứa danh sách bài viết theo danh mục
         Map<Category, List<Article>> articlesByCategory = new HashMap<>();
@@ -89,17 +92,21 @@ public class ArticleController {
         }
         model.addAttribute("latestArticles", articleService.findTop6LatestArticles(""));
         model.addAttribute("articlesByCategory", articlesByCategory);
-        return "article/byCategories";
+        return "article/list";
     }
 
     @GetMapping("/latest")
     public String latestArticles(Model model) {
-        model.addAttribute("latestArticles", articleService.findLatestArticle());
+        model.addAttribute("latestArticles", articleService.findLatestArticle().stream().filter((a) -> !a.isDeleted()).collect(Collectors.toList()));
         return "article/latest";
     }
 
     @GetMapping("/category/{categoryId}")
     public String getArticlesByCategory(@PathVariable String categoryId, Model model) {
+
+        if (categoryService.findById(categoryId).isDeleted()) {
+            return "forward:/error/404.html";
+        }
         model.addAttribute("articles", articleService.getArticlesByCategory(categoryId));
         model.addAttribute("currentCategory", categoryService.findById(categoryId));
         model.addAttribute("categories", categoryService.findDifferentCategories(categoryId));
@@ -109,11 +116,16 @@ public class ArticleController {
 
     @GetMapping("/detail/{id}")
     public String viewArticle(@PathVariable String id, Model model) {
+        Article article = articleService.getArticleById(id);
+        if (article.isDeleted()) {
+            return "forward:/error/404.html";
+        }
         model.addAttribute("articles", articleService.findTop5ByCategoryAndOrderByCreatedAtDesc(id));
         model.addAttribute("latestArticles", articleService.findTop6LatestArticles(id));
 
-        Article article = articleService.getArticleById(id);
+        article.setView(article.getView() + 1);
 
+        articleService.updateArticle(article);
         // Sắp xếp bình luận theo createdAt
         List<Comment> sortedComments = article.getComments().stream()
                 .sorted(Comparator.comparing(Comment::getCreatedAt).reversed()) // Sắp xếp theo thời gian tăng dần
@@ -150,8 +162,10 @@ public class ArticleController {
 
         if (!thumbnailFile.isEmpty()) {
             // Gọi hàm lưu file và trả về URL
-            String thumbnailUrl = FileUtils.saveFile(thumbnailFile);
-            article.setThumbnail(thumbnailUrl);
+//            String thumbnailUrl = FileUtils.saveFile(thumbnailFile);
+            ImgurResponse response = imgurService.uploadImage(thumbnailFile);
+            String imageUrl = response.getData().getLink();
+            article.setThumbnail(imageUrl);
         }
 
         // Lưu bài viết vào cơ sở dữ liệu
@@ -206,13 +220,17 @@ public class ArticleController {
     // Phương thức để hiển thị trang chỉnh sửa bài viết
     @GetMapping("/edit/{id}")
     public String editArticle(@PathVariable String id, Model model) {
-        Article article = articleService.getArticleById(id);
-        if (article == null) {
-            // Xử lý khi không tìm thấy bài viết
-            return "redirect:/articles"; // Chuyển hướng đến trang danh sách bài viết hoặc trang khác
-        }
+        RequestUpdateArticle article = RequestUpdateArticle.fromEntity(articleService.getArticleById(id));
+
+        boolean isDeleted = article.isDeleted();
+        boolean isHot = article.isHot();
+        LocalDateTime currentCreatedAt = article.getCreatedAt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         model.addAttribute("article", article);
+        model.addAttribute("deleted", isDeleted);
+        model.addAttribute("hotArticle", isHot);
+        model.addAttribute("currentCreatedAt",  currentCreatedAt.format(formatter));
         model.addAttribute("categories", categoryService.findAll()); // Giả sử bạn có phương thức này để lấy danh sách các danh mục
 
         return "article/edit"; // Trả về trang chỉnh sửa bài viết
@@ -224,6 +242,9 @@ public class ArticleController {
                                 @RequestParam String title,
                                 @RequestParam String description,
                                 @RequestParam String content,
+                                @RequestParam boolean deleted,
+                                @RequestParam boolean hot,
+                                @RequestParam LocalDateTime currentCreatedAt,
                                 @RequestParam(required = false) String thumbnail,
                                 @RequestParam(required = false) MultipartFile thumbnailFile,
                                 @RequestParam String categoryId) throws IOException {
@@ -231,8 +252,9 @@ public class ArticleController {
         Article article = articleService.getArticleById(id);
         if (!thumbnailFile.isEmpty()) {
             // Gọi hàm lưu file và trả về URL
-            String thumbnailUrl = FileUtils.saveFile(thumbnailFile);
-            article.setThumbnail(thumbnailUrl);
+            ImgurResponse response = imgurService.uploadImage(thumbnailFile);
+            String imageUrl = response.getData().getLink();
+            article.setThumbnail(imageUrl);
         } else {
             article.setThumbnail(thumbnail);
         }
@@ -240,8 +262,10 @@ public class ArticleController {
         article.setDescription(description);
         article.setContent(content);
         article.setCategory(categoryService.findById(categoryId));
-
+        article.setDeleted(deleted);
+        article.setHot(hot);
+        article.setCreatedAt(currentCreatedAt);
         articleService.updateArticle(article);
-        return "redirect:/articles/detail/" + id; // Chuyển hướng đến trang chi tiết bài viết đã cập nhật
+        return "redirect:/articles"; // Chuyển hướng đến trang chi tiết bài viết đã cập nhật
     }
 }

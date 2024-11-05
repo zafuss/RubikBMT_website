@@ -39,6 +39,12 @@ public class Article {
     @Column(columnDefinition = "LONGTEXT")
     private String thumbnail;
 
+    private boolean isDeleted;
+
+    private boolean isHot;
+
+    private int view;
+
     // Danh sách các bình luận của bài viết
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "article_id")

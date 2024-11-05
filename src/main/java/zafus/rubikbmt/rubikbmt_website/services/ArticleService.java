@@ -58,8 +58,13 @@ public class ArticleService {
     public List<Article> findTop4ByCategory(Category category) {
         return articleRepository.findTop4ByCategory(category);
     }
+
     public List<Article> findLatestArticle() {
         return articleRepository.findLatestArticles();
+    }
+
+    public List<Article> findArticlesSortedByIsDeletedAndCreatedAtDesc() {
+        return articleRepository.findArticlesSortedByIsDeletedAndCreatedAtDesc();
     }
 
     public void saveArticle(Article article, String categoryId, String userId) {

@@ -19,50 +19,59 @@ document.getElementById('commentForm').addEventListener('submit', function (even
         .then(response => response.json()) // Parse the JSON from the response
         .then(data => {
             // Check if the comment list exists
-            let commentList = document.querySelector('.comments-list ul');
+// Ensure we select a single element for commentList, not a NodeList
+            let commentList = document.querySelector('.comments-list ');
 
-            // If it doesn't exist, create a new list
+// If it doesn't exist, create a new comment list container
             if (!commentList) {
                 const commentsContainer = document.querySelector('.comments-list');
-                commentsContainer.innerHTML = '<ul class="list-group"></ul>';
-                commentList = commentsContainer.querySelector('ul');
+                commentList = document.createElement('div');
+                commentList.classList.add('card-body');
+                commentsContainer.appendChild(commentList); // Append the new comment list
             }
 
-            // Create and insert the new comment along with the reply button and form
+// Now insert the new comment
             const newComment = `
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <strong>${data.name}</strong>
-                            <p class="text-muted mb-1">${data.createdAt}</p>
-                        </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong>${data.name}</strong>
+                    <p class="text-muted mb-1">Vừa xong</p>
+                </div>
+            </div>
+            <p>${data.content}</p>
+
+            <!-- Reply List (hidden initially) -->
+            <div class="card mt-3" style="display: none;" id="replyList${data.id}">
+                <div class="card-body"></div>
+            </div>
+
+            <!-- Reply Button -->
+            <button class="btn btn-reply btn-sm mt-2 reply-button" type="button" data-toggle="collapse" data-target="#replyForm${data.id}">
+                Trả lời
+            </button>
+
+            <!-- Reply Form (hidden initially) -->
+            <div id="replyForm${data.id}" class="collapse mt-3">
+                <form class="reply-form" data-comment-id="${data.id}">
+                    <input type="hidden" name="parentCommentId" value="${data.id}">
+                    <div class="form-group">
+                        <label for="replyName${data.id}">Tên</label>
+                        <input type="text" id="replyName${data.id}" name="name" class="form-control" placeholder="Nhập tên của bạn" required>
                     </div>
-                    <p>${data.content}</p>
-
-                    <!-- Reply List (hidden initially) -->
-                    <ul class="list-group mt-2 collapse" id="replyList${data.id}"></ul>
-
-                    <!-- Reply Button -->
-                    <button class="btn btn-sm btn-link mt-2 reply-button" type="button" data-toggle="collapse" data-target="#replyForm${data.id}">
-                        Trả lời
-                    </button>
-
-                    <!-- Reply Form (hidden initially) -->
-                    <div id="replyForm${data.id}" class="collapse mt-3">
-                        <form class="reply-form" data-comment-id="${data.id}">
-                            <div class="form-group">
-                                <label for="replyName${data.id}">Tên</label>
-                                <input type="text" id="replyName${data.id}" name="name" class="form-control" placeholder="Nhập tên của bạn" required>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="replyContent${data.id}">Bình luận</label>
-                                <textarea id="replyContent${data.id}" name="content" class="form-control" rows="2" placeholder="Nhập bình luận của bạn" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-2">Gửi trả lời</button>
-                        </form>
+                    <div class="form-group mt-3">
+                        <label for="replyContent${data.id}">Bình luận</label>
+                        <textarea id="replyContent${data.id}" name="content" class="form-control" rows="2" placeholder="Nhập bình luận của bạn" required></textarea>
                     </div>
-                </li>
-            `;
+                    <button type="submit" class="btn btn-primary mt-2">Gửi trả lời</button>
+                </form>
+            </div>
+        </div>
+    </div>
+`;
+
+// Insert the new comment
             commentList.insertAdjacentHTML('afterbegin', newComment);
 
             // Reset the comment form
@@ -98,41 +107,34 @@ function attachReplyFormListener() {
                 .then(response => response.json())
                 .then(data => {
                     // Find the reply list for the parent comment
-                    let commentList = form.closest('.list-group-item').querySelector(`#replyList${parentCommentId}`);
-
+                    // let commentList = form.closest('.card-body').querySelector(`#replyList${parentCommentId}`);
+                    let commentList = document.querySelector('.reply ');
                     // If no replies exist yet, create a new reply list
                     if (!commentList) {
                         commentList = document.createElement('ul');
                         commentList.classList.add('list-group', 'mt-2');
 
                         // Insert reply list before the "Reply" button
-                        const replyButton = form.closest('.list-group-item').querySelector('.reply-button');
-                        form.closest('.list-group-item').insertBefore(commentList, replyButton);
+                        const replyButton = form.closest('.card-body').querySelector('.reply-button');
+                        form.closest('.card-body').insertBefore(commentList, replyButton);
                     }
 
                     // Add the new reply to the reply list
                     const newReply = `
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <strong>${data.name}</strong>
-                                    <p class="text-muted mb-1">Vừa xong</p>
-                                </div>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <strong>${data.name}</strong>
+                                <p class="text-muted mb-1">Vừa xong</p>
                             </div>
-                            <p>${data.content}</p>
-                        </li>
+                        </div>
+                        <p>${data.content}</p>
+                        <div class="border-bottom mt-3 mb-3"></div>
                     `;
                     commentList.insertAdjacentHTML('afterbegin', newReply);
 
                     // Reset the reply form
                     form.reset();
 
-                    // Collapse the reply form after submitting
-                    const collapseElement = form.closest('.collapse');
-                    if (collapseElement) {
-                        const collapseInstance = bootstrap.Collapse.getInstance(collapseElement);
-                        collapseInstance.hide(); // Hide the collapse
-                    }
                 })
                 .catch(error => console.error('Error:', error));
         });
