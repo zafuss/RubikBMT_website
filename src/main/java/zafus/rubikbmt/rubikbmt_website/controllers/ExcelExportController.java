@@ -2,11 +2,8 @@ package zafus.rubikbmt.rubikbmt_website.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Student;
-import zafus.rubikbmt.rubikbmt_website.repositories.ICandidateRepository;
+import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.ExcelExportService;
 import zafus.rubikbmt.rubikbmt_website.services.StudentService;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -69,11 +62,11 @@ public class ExcelExportController {
     }
     @GetMapping("/downloadStudentsExcel")
     public ResponseEntity<Resource> downloadStudentsExcel() {
-        List<Student> students = studentService.findAll();
+        List<RegisterStudent> registerStudents = studentService.findAll();
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             // Generate Excel file in memory using ByteArrayOutputStream
-            excelExportService.exportStudentToExcel(students, out);
+            excelExportService.exportStudentToExcel(registerStudents, out);
 
             // Create a ByteArrayResource from the ByteArrayOutputStream
             ByteArrayResource resource = new ByteArrayResource(out.toByteArray());

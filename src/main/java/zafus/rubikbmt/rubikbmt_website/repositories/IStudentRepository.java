@@ -5,27 +5,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Role;
-import zafus.rubikbmt.rubikbmt_website.entities.Student;
+import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 
 import java.util.List;
 
-public interface IStudentRepository extends JpaRepository<Student, String> {
-    Page<Student> findByEmailContaining(String email, Pageable pageable);
+public interface IStudentRepository extends JpaRepository<RegisterStudent, String> {
+    Page<RegisterStudent> findByEmailContaining(String email, Pageable pageable);
 
-    Page<Student> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
+    Page<RegisterStudent> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
 
-    Page<Student> findByFullNameContaining(String fullName, Pageable pageable);
+    Page<RegisterStudent> findByFullNameContaining(String fullName, Pageable pageable);
 
-    List<Student> findByEmailContaining(String email);
+    List<RegisterStudent> findByEmailContaining(String email);
 
-    List<Student> findByPhoneNumberContaining(String phoneNumber);
+    List<RegisterStudent> findByPhoneNumberContaining(String phoneNumber);
 
-    List<Student> findByLastNameContainingOrFirstNameContaining(String lastName, String firstName);
+    List<RegisterStudent> findByLastNameContainingOrFirstNameContaining(String lastName, String firstName);
 
-    @Query("SELECT s FROM Student s WHERE s.email = :email")
-    Student findByEmail(@Param("email") String email);
-    Student findByPhoneNumber(String phoneNumber);
+    @Query("SELECT s FROM RegisterStudent s WHERE s.email = :email")
+    RegisterStudent findByEmail(@Param("email") String email);
+    RegisterStudent findByPhoneNumber(String phoneNumber);
 }
 

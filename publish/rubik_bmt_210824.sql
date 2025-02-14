@@ -186,10 +186,10 @@ INSERT INTO `role` (`id`, `role_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student`
+-- Table structure for table `registerStudent`
 --
 
-CREATE TABLE `student` (
+CREATE TABLE `registerStudent` (
   `id` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
   `email` varchar(50) DEFAULT NULL,
@@ -209,10 +209,10 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `student`
+-- Dumping data for table `registerStudent`
 --
 
-INSERT INTO `student` (`id`, `date_of_birth`, `email`, `first_name`, `image_url`, `is_confirmed`, `last_name`, `learning_type`, `parent_name`, `phone_number`, `mentor_id`, `full_name`, `learning_type_id`, `confirmation_date`, `note`, `registration_date`) VALUES
+INSERT INTO `registerStudent` (`id`, `date_of_birth`, `email`, `first_name`, `image_url`, `is_confirmed`, `last_name`, `learning_type`, `parent_name`, `phone_number`, `mentor_id`, `full_name`, `learning_type_id`, `confirmation_date`, `note`, `registration_date`) VALUES
 ('9cf5f773-047d-4545-87c8-b45a5f362370', '2011-08-25', 'suhoangnguyen368@gmail.com', 'Nguyễn Sư', NULL, b'0', 'Hoàng', NULL, 'Hoàng Nguyễn Sư', '0385286085', 'nhtp', 'Nguyễn Sư Hoàng', 'ONLINE', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -334,9 +334,9 @@ ALTER TABLE `role`
   ADD UNIQUE KEY `UKiubw515ff0ugtm28p8g3myt0h` (`role_name`);
 
 --
--- Indexes for table `student`
+-- Indexes for table `registerStudent`
 --
-ALTER TABLE `student`
+ALTER TABLE `registerStudent`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKfmk16k9whxemgkowg3mt24m3w` (`mentor_id`),
   ADD KEY `FK7ibptto9xf19k2xkpratmvb7e` (`learning_type_id`);
@@ -383,13 +383,13 @@ ALTER TABLE `competition_events`
 -- Constraints for table `mentor_students`
 --
 ALTER TABLE `mentor_students`
-  ADD CONSTRAINT `FKmax7g1xkr4osp6wk6ati4ihs4` FOREIGN KEY (`students_id`) REFERENCES `student` (`id`),
+  ADD CONSTRAINT `FKmax7g1xkr4osp6wk6ati4ihs4` FOREIGN KEY (`students_id`) REFERENCES `registerStudent` (`id`),
   ADD CONSTRAINT `FKslof18mc1j4o1d17fv9olj9x9` FOREIGN KEY (`mentor_id`) REFERENCES `mentor` (`id`);
 
 --
--- Constraints for table `student`
+-- Constraints for table `registerStudent`
 --
-ALTER TABLE `student`
+ALTER TABLE `registerStudent`
   ADD CONSTRAINT `FK7ibptto9xf19k2xkpratmvb7e` FOREIGN KEY (`learning_type_id`) REFERENCES `learning_type` (`id`),
   ADD CONSTRAINT `FKfmk16k9whxemgkowg3mt24m3w` FOREIGN KEY (`mentor_id`) REFERENCES `mentor` (`id`);
 

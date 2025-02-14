@@ -6,8 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Student;
+import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 import zafus.rubikbmt.rubikbmt_website.repositories.IStudentRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 
@@ -21,57 +20,57 @@ import java.util.stream.Collectors;
         rollbackFor = {Exception.class, Throwable.class})
 public class StudentService {
     private final IStudentRepository studentRepository;
-    public List<Student> findAll() {
+    public List<RegisterStudent> findAll() {
         return studentRepository.findAll();
     }
 
-    public Student findById(String id) {
+    public RegisterStudent findById(String id) {
         return studentRepository.findById(id).orElse(null);
     }
 
-    public Student add(Student student) {
-        student.setFullName();
-        return studentRepository.save(student);
+    public RegisterStudent add(RegisterStudent registerStudent) {
+        registerStudent.setFullName();
+        return studentRepository.save(registerStudent);
     }
 
-    public Student update(Student student) {
-        return studentRepository.save(student);
+    public RegisterStudent update(RegisterStudent registerStudent) {
+        return studentRepository.save(registerStudent);
     }
-    public Student updateStudent(RequestUpdateStudent request) {
+    public RegisterStudent updateStudent(RequestUpdateStudent request) {
         try {
-            Student existingStudent = studentRepository.findById(request.getId())
+            RegisterStudent existingRegisterStudent = studentRepository.findById(request.getId())
                     .orElseThrow(() -> new RuntimeException("Student not found"));
 
             if (request.getLastName() != null && !request.getLastName().isEmpty()) {
-                existingStudent.setLastName(request.getLastName());
+                existingRegisterStudent.setLastName(request.getLastName());
             }
             if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
-                existingStudent.setFirstName(request.getFirstName());
+                existingRegisterStudent.setFirstName(request.getFirstName());
             }
             if (request.getEmail() != null && !request.getEmail().isEmpty()) {
-                existingStudent.setEmail(request.getEmail());
+                existingRegisterStudent.setEmail(request.getEmail());
             }
             if (request.getPhoneNumber() != null && !request.getPhoneNumber().isEmpty()) {
-                existingStudent.setPhoneNumber(request.getPhoneNumber());
+                existingRegisterStudent.setPhoneNumber(request.getPhoneNumber());
             }
             if (request.getDateOfBirth() != null) {
-                existingStudent.setDateOfBirth(request.getDateOfBirth());
+                existingRegisterStudent.setDateOfBirth(request.getDateOfBirth());
             }
-            existingStudent.setParentName(request.getParentName());
-            existingStudent.setNote(request.getNote());
-            existingStudent.setConfirmationDate(request.isConfirmed() ?
-                    (existingStudent.getConfirmationDate() != null ? existingStudent.getConfirmationDate() : LocalDateTime.now()) : null);
-            return studentRepository.save(existingStudent);
+            existingRegisterStudent.setParentName(request.getParentName());
+            existingRegisterStudent.setNote(request.getNote());
+            existingRegisterStudent.setConfirmationDate(request.isConfirmed() ?
+                    (existingRegisterStudent.getConfirmationDate() != null ? existingRegisterStudent.getConfirmationDate() : LocalDateTime.now()) : null);
+            return studentRepository.save(existingRegisterStudent);
         } catch (Exception ex) {
             throw new RuntimeException("Error updating student: " + ex.getMessage());
         }
     }
 
-    public void delete(Student student) {
-        studentRepository.delete(student);
+    public void delete(RegisterStudent registerStudent) {
+        studentRepository.delete(registerStudent);
     }
 
-    public Page<Student> searchStudents(String keyword, String searchType, Pageable pageable) {
+    public Page<RegisterStudent> searchStudents(String keyword, String searchType, Pageable pageable) {
         switch (searchType) {
             case "email":
                 return studentRepository.findByEmailContaining(keyword, pageable);
@@ -85,14 +84,14 @@ public class StudentService {
     }
     public List<String> getEmailSuggestions(String email) {
         return studentRepository.findByEmailContaining(email).stream()
-                .map(Student::getEmail)
+                .map(RegisterStudent::getEmail)
                 .distinct()
                 .collect(Collectors.toList());
     }
 
     public List<String> getPhoneNumberSuggestions(String phoneNumber) {
         return studentRepository.findByPhoneNumberContaining(phoneNumber).stream()
-                .map(Student::getPhoneNumber)
+                .map(RegisterStudent::getPhoneNumber)
                 .distinct()
                 .collect(Collectors.toList());
     }
@@ -103,11 +102,11 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public Student findByPhone(String phone) {
+    public RegisterStudent findByPhone(String phone) {
         return studentRepository.findByPhoneNumber(phone);
     }
 
-    public Student findByEmail(String email) {
+    public RegisterStudent findByEmail(String email) {
         return studentRepository.findByEmail(email);
     }
 }

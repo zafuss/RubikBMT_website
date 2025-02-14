@@ -9,20 +9,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
 import zafus.rubikbmt.rubikbmt_website.services.StudentService;
-import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/registerStudents")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -33,12 +31,12 @@ public class StudentController {
     private List<Mentor> mentors;
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("student", new Student());
+        model.addAttribute("student", new RegisterStudent());
         return "home/index";
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute Student student, BindingResult bindingResult, Model model) {
+    public String register(@Valid @ModelAttribute RegisterStudent registerStudent, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -48,9 +46,9 @@ public class StudentController {
             model.addAttribute("learningTypes", learningTypes);
             return "home/index";
         }
-        student.setRegistrationDate(LocalDateTime.now());
-        student.setConfirmationDate(null);
-        studentService.add(student);
+        registerStudent.setRegistrationDate(LocalDateTime.now());
+        registerStudent.setConfirmationDate(null);
+        studentService.add(registerStudent);
         return "redirect:/?success";
     }
 
@@ -62,8 +60,8 @@ public class StudentController {
                         @RequestParam(defaultValue = "") String searchType) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Student> candidatePage = studentService.searchStudents(keyword, searchType, pageable);
-        model.addAttribute("students", candidatePage.getContent());
+        Page<RegisterStudent> candidatePage = studentService.searchStudents(keyword, searchType, pageable);
+        model.addAttribute("registerStudents", candidatePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", candidatePage.getTotalPages());
         model.addAttribute("keyword", keyword);
@@ -74,17 +72,17 @@ public class StudentController {
 
     @GetMapping("/detail")
     public String viewStudentDetails(@RequestParam("id") String id, Model model) {
-        Student student = studentService.findById(id);
-        model.addAttribute("student", student);
+        RegisterStudent registerStudent = studentService.findById(id);
+        model.addAttribute("student", registerStudent);
         return "student/detail";
     }
 
     @GetMapping("/edit")
     public String editStudent(@RequestParam("id") String id, Model model) {
-        Student student = studentService.findById(id);
+        RegisterStudent registerStudent = studentService.findById(id);
         mentors = mentorService.findAll();
-        boolean isConfirmed = student.getConfirmationDate() != null;
-        model.addAttribute("student", student);
+        boolean isConfirmed = registerStudent.getConfirmationDate() != null;
+        model.addAttribute("student", registerStudent);
         model.addAttribute("mentors", mentors);
         model.addAttribute("isConfirmed",isConfirmed);
         return "student/edit";

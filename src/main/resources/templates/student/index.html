@@ -37,8 +37,8 @@
                         <div class="card">
                             <h5 class="card-header">Danh sách học viên đã đăng ký</h5>
                             <a href="/api/export/downloadStudentsExcel" class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">Xuất Excel</a>
-                            <a href="/students" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Làm Mới</a>
-                            <form id="searchForm" action="/students" method="get" class="mb-4 p-3">
+                            <a href="/registerStudents" class="btn btn-primary position-absolute" style="top: 3.5rem; right: 1rem;">Làm Mới</a>
+                            <form id="searchForm" action="/registerStudents" method="get" class="mb-4 p-3">
                                 <div class="mb-3">
                                     <label for="searchType" class="form-label">Tìm kiếm theo:</label>
                                     <select id="searchType" name="searchType" class="form-select">
@@ -73,22 +73,22 @@
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                    <tr th:each="student, stat : ${students}">
+                                    <tr th:each="registerStudent, stat : ${registerStudents}">
                                         <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                                        <td th:text="${student.lastName}"></td>
-                                        <td th:text="${student.firstName}"></td>
-                                        <td th:text="${student.dateOfBirth}"></td>
-                                        <td th:text="${student.parentName}"></td>
-                                        <td th:text="${student.email}"></td>
-                                        <td th:text="${student.phoneNumber}"></td>
-                                        <td th:text="${student.getMentor().getLastName()} + ' ' + ${student.getMentor().getFirstName()}"></td>
-                                        <td th:text="${student.getLearningType().getLearningType()}"></td>
-                                        <td th:text="${student.getRegistrationDate() != null ? student.getRegistrationDate().plusHours(7) : '' }"></td>
-                                        <td th:text="${student.confirmationDate != null ? 'Đã xác nhận vào ' + student.confirmationDate.plusHours(7) : 'Chưa xác nhận'}"></td>
-                                        <td th:text="${student.getNote()}"></td>
+                                        <td th:text="${registerStudent.lastName}"></td>
+                                        <td th:text="${registerStudent.firstName}"></td>
+                                        <td th:text="${registerStudent.dateOfBirth}"></td>
+                                        <td th:text="${registerStudent.parentName}"></td>
+                                        <td th:text="${registerStudent.email}"></td>
+                                        <td th:text="${registerStudent.phoneNumber}"></td>
+                                        <td th:text="${registerStudent.getMentor().getLastName()} + ' ' + ${registerStudent.getMentor().getFirstName()}"></td>
+                                        <td th:text="${registerStudent.getLearningType().getLearningType()}"></td>
+                                        <td th:text="${registerStudent.getRegistrationDate() != null ? registerStudent.getRegistrationDate().plusHours(7) : '' }"></td>
+                                        <td th:text="${registerStudent.confirmationDate != null ? 'Đã xác nhận vào ' + registerStudent.confirmationDate.plusHours(7) : 'Chưa xác nhận'}"></td>
+                                        <td th:text="${registerStudent.getNote()}"></td>
                                         <td>
-                                            <a th:href="@{students/detail(id=${student.id})}" class="btn btn-secondary">Chi tiết</a>
-                                            <a th:href="@{students/edit(id=${student.id})}" class="btn btn-primary">Sửa</a>
+                                            <a th:href="@{registerStudents/detail(id=${registerStudent.id})}" class="btn btn-secondary">Chi tiết</a>
+                                            <a th:href="@{registerStudents/edit(id=${registerStudent.id})}" class="btn btn-primary">Sửa</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -97,7 +97,7 @@
                             <div id="pagination" class="mt-4 p-3">
                                 <ul class="pagination">
                                     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
-                                        <a th:href="@{/student(page=${i}, size=${size}, keyword=${keyword})}"
+                                        <a th:href="@{/registerStudent(page=${i}, size=${size}, keyword=${keyword})}"
                                            th:text="${i + 1}"
                                            th:classappend="${i == currentPage} ? 'active' : ''"
                                            class="page-link"></a>

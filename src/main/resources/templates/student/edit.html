@@ -32,7 +32,7 @@
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div class="card p-6">
                         <h3>Chỉnh sửa thông tin thí sinh</h3>
-                        <form action="#" th:action="@{/students/updateStudent(id=${student.id})}" method="post" th:object="${student}">
+                        <form action="#" th:action="@{/registerStudents/updateStudent(id=${registerStudent.id})}" method="post" th:object="${registerStudent}">
                             <!--                            <div th:if="${errors}" class="alert alert-danger justify-content-center" role="alert">-->
                             <!--                                <ul>-->
                             <!--                                    <li th:each="error : ${errors}"-->
@@ -68,11 +68,11 @@
                             <div class="form-group">
                                 <label for="mentor">Huấn luyện viên</label>
                                 <select id="mentor" name="mentor" class="form-control" th:field="*{mentor}">
-                                    <option value="" th:if="${student.mentor == null}">-- Chọn một Mentor --</option>
+                                    <option value="" th:if="${registerStudent.mentor == null}">-- Chọn một Mentor --</option>
                                     <option th:each="mentor : ${mentors}"
                                             th:value="${mentor.id}"
                                             th:text="${mentor.lastName} + ' ' + ${mentor.firstName}"
-                                            th:selected="${student.mentor != null && student.mentor.id == mentor.id}">
+                                            th:selected="${registerStudent.mentor != null && registerStudent.mentor.id == mentor.id}">
                                     </option>
                                 </select>
                             </div>
@@ -93,7 +93,7 @@
                                 <input type="text" id="note" name="note" class="form-control" th:field="*{note}" >
                             </div>
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="/students" class="btn btn-secondary">Huỷ</a>
+                            <a href="/registerStudents" class="btn btn-secondary">Huỷ</a>
                         </form>
 
                     </div>

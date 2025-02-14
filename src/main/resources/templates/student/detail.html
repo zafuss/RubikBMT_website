@@ -36,48 +36,48 @@
                             <tbody>
                             <tr>
                                 <th>Huấn luyện viên</th>
-                                <td th:text="${student.getMentor().getLastName()} + ' ' + ${student.getMentor().getFirstName()}"></td>
+                                <td th:text="${registerStudent.getMentor().getLastName()} + ' ' + ${registerStudent.getMentor().getFirstName()}"></td>
                             </tr>
                             <tr>
                                 <th>Họ và tên đệm</th>
-                                <td th:text="${student.lastName}"></td>
+                                <td th:text="${registerStudent.lastName}"></td>
                             </tr>
                             <tr>
                                 <th>Tên</th>
-                                <td th:text="${student.firstName}"></td>
+                                <td th:text="${registerStudent.firstName}"></td>
                             </tr>
                             <tr>
                                 <th>Tên phụ huynh</th>
-                                <td th:text="${student.parentName}"></td>
+                                <td th:text="${registerStudent.parentName}"></td>
                             </tr>
 
                             <tr>
                                 <th>Ngày tháng năm sinh</th>
-                                <td th:text="${student.dateOfBirth}"></td>
+                                <td th:text="${registerStudent.dateOfBirth}"></td>
                             </tr>
                             <tr>
                                 <th>Số điện thoại</th>
-                                <td th:text="${student.phoneNumber}"></td>
+                                <td th:text="${registerStudent.phoneNumber}"></td>
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <td th:text="${student.email}"></td>
+                                <td th:text="${registerStudent.email}"></td>
                             </tr>
                             <tr>
                                 <th>Xác nhận</th>
-                                <td th:text="${student.confirmationDate != null ? 'Đã xác nhận vào ' + student.confirmationDate : 'Chưa xác nhận'}"></td>
+                                <td th:text="${registerStudent.confirmationDate != null ? 'Đã xác nhận vào ' + registerStudent.confirmationDate : 'Chưa xác nhận'}"></td>
                             </tr>                            <tr>
                                 <th>Ghi chú</th>
-                                <td th:text="${student.note}"></td>
+                                <td th:text="${registerStudent.note}"></td>
                             </tr>
                             <tr>
                                 <th>Hình thức học</th>
-                                <td th:text="${student.getLearningType().getLearningType()}"></td>
+                                <td th:text="${registerStudent.getLearningType().getLearningType()}"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <a href="/students" class="btn btn-primary">Trở Về</a>
+                    <a href="/registerStudents" class="btn btn-primary">Trở Về</a>
 
                 </div>
             </div>
