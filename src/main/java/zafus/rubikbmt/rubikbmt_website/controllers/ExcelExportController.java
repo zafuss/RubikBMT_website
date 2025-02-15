@@ -14,7 +14,7 @@ import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
 import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
 import zafus.rubikbmt.rubikbmt_website.services.ExcelExportService;
-import zafus.rubikbmt.rubikbmt_website.services.StudentService;
+import zafus.rubikbmt.rubikbmt_website.services.RegisterStudentService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class ExcelExportController {
     private CandidateService candidateService;
 
     @Autowired
-    private StudentService studentService;
+    private RegisterStudentService registerStudentService;
     //    @GetMapping("/exportCandidates")
 //    public ResponseEntity<String> exportCandidates() {
 //        // Default file path to Downloads folder
@@ -62,7 +62,7 @@ public class ExcelExportController {
     }
     @GetMapping("/downloadStudentsExcel")
     public ResponseEntity<Resource> downloadStudentsExcel() {
-        List<RegisterStudent> registerStudents = studentService.findAll();
+        List<RegisterStudent> registerStudents = registerStudentService.findAll();
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             // Generate Excel file in memory using ByteArrayOutputStream

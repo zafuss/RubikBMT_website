@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zafus.rubikbmt.rubikbmt_website.services.CandidateService;
-import zafus.rubikbmt.rubikbmt_website.services.StudentService;
+import zafus.rubikbmt.rubikbmt_website.services.RegisterStudentService;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class AutoCompleteController {
     private CandidateService candidateService;
 
     @Autowired
-    private StudentService studentService;
+    private RegisterStudentService registerStudentService;
 
     @GetMapping("/candidates/autocomplete")
     public List<String> autocomplete(
@@ -41,11 +41,11 @@ public class AutoCompleteController {
             @RequestParam String type) {
         switch (type) {
             case "email":
-                return studentService.getEmailSuggestions(input);
+                return registerStudentService.getEmailSuggestions(input);
             case "phone":
-                return studentService.getPhoneNumberSuggestions(input);
+                return registerStudentService.getPhoneNumberSuggestions(input);
             default:
-                return  studentService.getLastnameFirstnameSuggestions(input);
+                return  registerStudentService.getLastnameFirstnameSuggestions(input);
         }
     }
 

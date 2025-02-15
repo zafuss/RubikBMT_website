@@ -14,16 +14,16 @@ import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
-import zafus.rubikbmt.rubikbmt_website.services.StudentService;
+import zafus.rubikbmt.rubikbmt_website.services.RegisterStudentService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 @RequestMapping("/registerStudents")
-public class StudentController {
+public class RegisterStudentController {
     @Autowired
-    private StudentService studentService;
+    private RegisterStudentService registerStudentService;
     @Autowired
     private MentorService mentorService;
     @Autowired
@@ -31,7 +31,7 @@ public class StudentController {
     private List<Mentor> mentors;
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("student", new RegisterStudent());
+        model.addAttribute("registerStudent", new RegisterStudent());
         return "home/index";
     }
 
@@ -48,7 +48,7 @@ public class StudentController {
         }
         registerStudent.setRegistrationDate(LocalDateTime.now());
         registerStudent.setConfirmationDate(null);
-        studentService.add(registerStudent);
+        registerStudentService.add(registerStudent);
         return "redirect:/?success";
     }
 
@@ -60,32 +60,32 @@ public class StudentController {
                         @RequestParam(defaultValue = "") String searchType) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<RegisterStudent> candidatePage = studentService.searchStudents(keyword, searchType, pageable);
+        Page<RegisterStudent> candidatePage = registerStudentService.searchStudents(keyword, searchType, pageable);
         model.addAttribute("registerStudents", candidatePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", candidatePage.getTotalPages());
         model.addAttribute("keyword", keyword);
         model.addAttribute("size", size);
-        return "student/index";
+        return "registerStudent/index";
     }
 
 
     @GetMapping("/detail")
     public String viewStudentDetails(@RequestParam("id") String id, Model model) {
-        RegisterStudent registerStudent = studentService.findById(id);
+        RegisterStudent registerStudent = registerStudentService.findById(id);
         model.addAttribute("student", registerStudent);
-        return "student/detail";
+        return "registerStudent/detail";
     }
 
     @GetMapping("/edit")
     public String editStudent(@RequestParam("id") String id, Model model) {
-        RegisterStudent registerStudent = studentService.findById(id);
+        RegisterStudent registerStudent = registerStudentService.findById(id);
         mentors = mentorService.findAll();
         boolean isConfirmed = registerStudent.getConfirmationDate() != null;
         model.addAttribute("student", registerStudent);
         model.addAttribute("mentors", mentors);
         model.addAttribute("isConfirmed",isConfirmed);
-        return "student/edit";
+        return "registerStudent/edit";
     }
 
     @PostMapping("/updateStudent")
@@ -99,15 +99,15 @@ public class StudentController {
             model.addAttribute("errors", errors);
             model.addAttribute("isConfirmed",isConfirmed);
             model.addAttribute("mentors", mentors);
-            return "student/edit";
+            return "registerStudent/edit";
         }
         if (isConfirmed) {
             student.setConfirmed(true);
         } else {
             student.setConfirmed(false);
         }
-        studentService.updateStudent(student);
-        return "redirect:/students/detail?id=" + student.getId();
+        registerStudentService.updateStudent(student);
+        return "redirect:/registerStudents/detail?id=" + student.getId();
     }
 
 }

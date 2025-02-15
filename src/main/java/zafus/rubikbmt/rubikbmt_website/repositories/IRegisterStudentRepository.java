@@ -9,7 +9,7 @@ import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 
 import java.util.List;
 
-public interface IStudentRepository extends JpaRepository<RegisterStudent, String> {
+public interface IRegisterStudentRepository extends JpaRepository<RegisterStudent, String> {
     Page<RegisterStudent> findByEmailContaining(String email, Pageable pageable);
 
     Page<RegisterStudent> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);

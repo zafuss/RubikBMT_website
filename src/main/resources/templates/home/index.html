@@ -383,7 +383,7 @@
                 <span class="dialog-close" onclick="closeDialog()">&times;</span>
             </div>
             <div class="dialog-content">
-                <form th:action="@{/registerStudents/register}" th:object="${student}" method="post">
+                <form th:action="@{/registerStudents/register}" th:object="${registerStudent}" method="post">
                     <div class="row">
                         <div class="form-group col-lg-6 mb-0">
                             <label for="lastName">Họ và tên đệm học viên:</label>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
-import zafus.rubikbmt.rubikbmt_website.repositories.IStudentRepository;
+import zafus.rubikbmt.rubikbmt_website.repositories.IRegisterStudentRepository;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 
 import java.time.LocalDateTime;
@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.SERIALIZABLE,
         rollbackFor = {Exception.class, Throwable.class})
-public class StudentService {
-    private final IStudentRepository studentRepository;
+public class RegisterStudentService {
+    private final IRegisterStudentRepository studentRepository;
     public List<RegisterStudent> findAll() {
         return studentRepository.findAll();
     }
