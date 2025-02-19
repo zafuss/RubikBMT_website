@@ -16,10 +16,13 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import zafus.rubikbmt.rubikbmt_website.entities.Role;
+import zafus.rubikbmt.rubikbmt_website.entities.Teacher;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRoleRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.IUserRepository;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateTeacher;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateUser;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateUser;
 import zafus.rubikbmt.rubikbmt_website.utilities.RandomUtils;
@@ -27,6 +30,7 @@ import zafus.rubikbmt.rubikbmt_website.utilities.RandomUtils;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,6 +83,8 @@ public class UserService  implements UserDetailsService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
     public void update(@NotNull RequestUpdateUser requestUser) {
         try {
@@ -223,6 +229,7 @@ public class UserService  implements UserDetailsService {
                 return userRepository.findAll(pageable);
         }
     }
+
     public List<String> getEmailSuggestions(String email) {
         return userRepository.findByEmailContaining(email).stream()
                 .map(User::getEmail)

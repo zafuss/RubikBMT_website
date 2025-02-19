@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Role;
+import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
-import zafus.rubikbmt.rubikbmt_website.entities.User;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateTeacher;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateUser;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateUser;
 import zafus.rubikbmt.rubikbmt_website.services.RoleService;
@@ -91,10 +90,12 @@ public class UserController {
 
     @GetMapping("/users/add")
     public String showFormAdd(Model model) {
+        model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("user", new RequestCreateUser());
-        model.addAttribute("roles", roleService.findAll());
+
         return "user/add";
     }
+
 
     @PostMapping("/users/add")
     public String addUser(@ModelAttribute RequestCreateUser user, @RequestParam List<String> roles) {
@@ -109,6 +110,9 @@ public class UserController {
         userService.save(user);
         return "redirect:/users";
     }
+
+
+
     @PostMapping("/users/edit")
     public String edit(@ModelAttribute RequestUpdateUser user, @RequestParam List<String> roles) {
         Set<Role> selectedRoles = new HashSet<>();
