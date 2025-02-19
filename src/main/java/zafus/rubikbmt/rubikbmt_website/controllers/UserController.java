@@ -90,7 +90,7 @@ public class UserController {
 
     @GetMapping("/users/add")
     public String showFormAdd(Model model) {
-        model.addAttribute("allRoles", roleService.findAll());
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("user", new RequestCreateUser());
 
         return "user/add";
