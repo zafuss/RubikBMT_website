@@ -27,7 +27,7 @@ public class Course {
     private int numOfSessions;
     private long totalFee;
     @ManyToOne
-    private CubeType cubeType;
+    private CubeSubject cubeSubject;
     @ManyToOne
     private Level level;
 }

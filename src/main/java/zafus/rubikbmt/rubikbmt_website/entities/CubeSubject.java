@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CubeType {
+public class CubeSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

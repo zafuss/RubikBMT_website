@@ -90,12 +90,11 @@ public class UserController {
 
     @GetMapping("/users/add")
     public String showFormAdd(Model model) {
-        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("user", new RequestCreateUser());
 
         return "user/add";
     }
-
 
     @PostMapping("/users/add")
     public String addUser(@ModelAttribute RequestCreateUser user, @RequestParam List<String> roles) {
