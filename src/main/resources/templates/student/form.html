@@ -1,0 +1,71 @@
+<!doctype html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('Quản lý giáo viên')}"></head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <div class="layout-page">
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="card p-4">
+                        <h5 th:text="${student.id == null ? 'Thêm học viên' : 'Chỉnh sửa học viên'}"></h5>
+                        <form th:action="@{/students/save}" th:object="${student}" method="post" class="needs-validation" novalidate>
+                            <input type="hidden" th:field="*{id}" />
+
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">Họ:</label>
+                                <input type="text" id="firstName" th:field="*{firstName}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập họ.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Tên:</label>
+                                <input type="text" id="lastName" th:field="*{lastName}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập tên.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" id="email" th:field="*{email}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập số điện thoại.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- Core JS -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

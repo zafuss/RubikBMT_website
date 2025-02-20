@@ -14,11 +14,11 @@ public class StudentCourseDetail {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @ManyToOne
-    private User student;
+    private Student student;
     @ManyToOne
     private Course course;
     @ManyToOne
-    private User teacher;
+    private Teacher teacher;
     private long fee;
     private long paid;
     private int studied;
