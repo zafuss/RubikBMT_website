@@ -21,4 +21,7 @@ public class Level {
     @ManyToOne
     @JoinColumn(name = "rating_id", nullable = true)
     private LevelRating levelRating;
+
+    @ManyToOne
+    private CubeSubject cubeSubject;
 }
