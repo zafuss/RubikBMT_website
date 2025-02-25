@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRegisterStudentRepository;
-import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateRegisterStudent;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +36,7 @@ public class RegisterStudentService {
     public RegisterStudent update(RegisterStudent registerStudent) {
         return studentRepository.save(registerStudent);
     }
-    public RegisterStudent updateStudent(RequestUpdateStudent request) {
+    public RegisterStudent updateStudent(RequestUpdateRegisterStudent request) {
         try {
             RegisterStudent existingRegisterStudent = studentRepository.findById(request.getId())
                     .orElseThrow(() -> new RuntimeException("Student not found"));

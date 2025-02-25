@@ -12,13 +12,14 @@ import zafus.rubikbmt.rubikbmt_website.entities.Event;
 import zafus.rubikbmt.rubikbmt_website.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserRepository extends JpaRepository<User, String> {
 
     Page<User> findByEmailContaining(String email, Pageable pageable);
 
     Page<User> findByPhoneNumberContaining(String phoneNumber, Pageable pageable);
-
+    Optional<User> findByEmailOrPhoneNumber(String email, String phoneNumber);
 
     List<User> findByEmailContaining(String email);
 

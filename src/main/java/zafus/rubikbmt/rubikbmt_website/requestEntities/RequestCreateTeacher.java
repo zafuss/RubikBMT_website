@@ -24,13 +24,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class RequestCreateTeacher {
-    @ValidUserName
-    @Size(min = 1, max = 50, message = "Tên Tài Khoản phải có từ 1 đến 50 ký tự")
-    private String userName;
-    @Pattern(regexp =  "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#@$%&? \"]).*$", message = "Mặt khẩu không hợp lệ")
-    private String passwordHash;
-    private String repasswordHash;
-    @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
     @ValidEmail
     private String email;
@@ -38,8 +31,7 @@ public class RequestCreateTeacher {
     @Pattern(regexp = "^[0-9]*$", message = "Phone phải là số")
     @ValidPhoneNumber
     private String phoneNumber;
-    private LocalDateTime createDate;
-    private String avatarUrl;
+
     private String firstName;
     private String lastName;
     private String description;

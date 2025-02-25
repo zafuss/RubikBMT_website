@@ -30,6 +30,7 @@ import zafus.rubikbmt.rubikbmt_website.utilities.RandomUtils;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -84,6 +85,15 @@ public class UserService  implements UserDetailsService {
         }
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
+    public void saveDefaultUser(@NotNull User requestUser) {
+        try {
+            userRepository.save(requestUser);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
     public void update(@NotNull RequestUpdateUser requestUser) {
@@ -130,7 +140,9 @@ public class UserService  implements UserDetailsService {
         return user;
 
     }
-
+    public Optional<User> findByEmailOrPhoneNumber(String email, String phoneNumber) {
+        return userRepository.findByEmailOrPhoneNumber(email, phoneNumber);
+    }
     public void updatePrincipal(User user) {
         UserDetails userDetails = user;
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),

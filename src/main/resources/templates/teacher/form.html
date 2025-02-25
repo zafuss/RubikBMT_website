@@ -18,7 +18,7 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="card p-4">
                         <h5 th:text="${teacher.id == null ? 'Thêm giáo viên' : 'Chỉnh sửa giáo viên'}"></h5>
-                        <form th:action="@{/teachers/save}" th:object="${teacher}" method="post" class="needs-validation" novalidate>
+                        <form th:action="@{/teachers/edit}" th:object="${teacher}" method="post" class="needs-validation" novalidate>
                             <input type="hidden" th:field="*{id}" />
 
                             <div class="mb-3">

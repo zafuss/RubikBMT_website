@@ -19,6 +19,9 @@ public class RoleService {
     public List<Role> findAll() {
         return roleRepository.findAll();
     }
+    public List<Role> findAllVisibleRole() {
+        return roleRepository.findAll().stream().filter((r) -> !r.isHide()).toList();
+    }
 
     public Role findById(String id) {
         return roleRepository.findById(id).orElse(null);

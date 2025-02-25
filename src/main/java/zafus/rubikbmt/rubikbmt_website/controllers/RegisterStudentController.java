@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import zafus.rubikbmt.rubikbmt_website.entities.*;
-import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateRegisterStudent;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
 import zafus.rubikbmt.rubikbmt_website.services.RegisterStudentService;
@@ -89,7 +89,7 @@ public class RegisterStudentController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute("student") @Valid RequestUpdateStudent student,
+    public String updateStudent(@ModelAttribute("student") @Valid RequestUpdateRegisterStudent student,
                                 BindingResult bindingResult,
                                 @RequestParam("isConfirmed") boolean isConfirmed,  Model model ) {
         if (bindingResult.hasErrors()) {

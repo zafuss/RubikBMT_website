@@ -9,13 +9,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import zafus.rubikbmt.rubikbmt_website.entities.Role;
+import zafus.rubikbmt.rubikbmt_website.entities.Student;
 import zafus.rubikbmt.rubikbmt_website.entities.Teacher;
+import zafus.rubikbmt.rubikbmt_website.entities.User;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRoleRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.ITeacherRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.IUserRepository;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateStudent;
 import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestCreateTeacher;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
+import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateTeacher;
+import zafus.rubikbmt.rubikbmt_website.utilities.PasswordGenerator;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -31,10 +38,11 @@ public class TeacherService  {
     @Transactional
     public void saveTeacher(@NotNull RequestCreateTeacher requestUser, Set<Role> roles) {
         try {
+            String password = PasswordGenerator.generatePassword(requestUser.getEmail(), requestUser.getPhoneNumber());
             Teacher teacher = new Teacher();
-            teacher.setUserName(requestUser.getUserName());
+            teacher.setUserName(requestUser.getEmail());
             teacher.setEmail(requestUser.getEmail());
-            teacher.setPasswordHash(new BCryptPasswordEncoder().encode(requestUser.getPasswordHash()));
+            teacher.setPasswordHash(new BCryptPasswordEncoder().encode(password));
             teacher.setFirstName(requestUser.getFirstName());
             teacher.setLastName(requestUser.getLastName());
             teacher.setRoles(roles);
@@ -49,8 +57,36 @@ public class TeacherService  {
         }
     }
 
+    @Transactional
+    public void saveTeacherFromUser(User user, RequestCreateTeacher requestUser, Set<Role> updatedRoles) {
+        if (user instanceof Student) {
+            throw new IllegalStateException("Người dùng đã tồn tại dưới dạng giáo viên.");
+        }
+        teacherRepository.insertTeacher(
+                requestUser.getDescription(),
+                user.getId()
+        );
+    }
+
     public Teacher getTeacherById(String id) {
         return teacherRepository.findById(id).orElse(null);
+    }
+
+
+    @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
+    public void update(@NotNull RequestUpdateTeacher requestUser) {
+        try {
+            Teacher user = teacherRepository.findById(requestUser.getId()).orElse(null);
+            user.setEmail(requestUser.getEmail());
+            user.setPhoneNumber(requestUser.getPhoneNumber());
+            user.setFirstName(requestUser.getFirstName());
+            user.setLastName(requestUser.getLastName());
+            user.setDescription(requestUser.getDescription());
+
+            teacherRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public Page<Teacher> searchTeachers(String keyword, String searchType, Pageable pageable) {

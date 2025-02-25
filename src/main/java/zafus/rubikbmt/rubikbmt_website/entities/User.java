@@ -27,7 +27,6 @@ public class User implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private String id;
 
-    @Column(unique = true, nullable = false)
     private String userName;
 
     @Column(nullable = false)
@@ -63,7 +62,18 @@ public class User implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .toList();
     }
-
+    public User(String userName, String email, String passwordHash, String firstName, String lastName,
+                Set<Role> roles, String phoneNumber) {
+        this.userName = userName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+        this.phoneNumber = phoneNumber;
+        this.createDate = LocalDateTime.now(); // Đặt mặc định
+        this.enabled = true;                   // Đặt mặc định
+    }
     @Override
     public String getPassword() {
         return passwordHash;

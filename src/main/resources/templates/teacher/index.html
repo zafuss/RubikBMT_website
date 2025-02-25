@@ -26,15 +26,16 @@
                 <!-- Content -->
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <a href="/teachers/addTeacher" class="btn btn-primary mb-3">Thêm giáo viên</a>
                         <!-- Basic Bootstrap Table -->
                         <div class="card">
-                            <h5 class="card-header">Danh sách người dùng</h5>
-                            <a href="/api/export/downloadUsersExcel"
-                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">
-                                Xuất Excel
-                            </a>
+                            <h5 class="card-header">Danh sách giáo viên</h5>
+<!--                            <a href="/api/export/downloadUsersExcel"-->
+<!--                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">-->
+<!--                                Xuất Excel-->
+<!--                            </a>-->
 
-                            <a href="/users" class="btn btn-primary position-absolute"
+                            <a href="/teachers" class="btn btn-primary position-absolute"
                                style="top: 3.5rem; right: 1rem;">Làm Mới</a>
 
                             <!-- Search Form -->
@@ -64,6 +65,7 @@
                                         <th>Họ và tên</th>
                                         <th>Email</th>
                                         <th>SDT</th>
+                                        <th>Mô tả</th>
                                         <th>Ngày tạo</th>
                                         <th>Trạng thái</th>
                                         <th>Role</th>
@@ -77,6 +79,7 @@
                                         <td th:text="${user.lastName} + ' ' + ${user.firstName}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.phoneNumber}"></td>
+                                        <td th:text="${user.description}"></td>
                                         <td th:text="${user.createDate}"></td>
                                         <td th:text="${user.isEnabled() == true ? 'Hoạt động' : 'Bị khóa'}"></td>
                                         <td>
@@ -90,7 +93,7 @@
 <!--                                               onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>-->
 <!--                                        </td>-->
                                         <td>
-                                            <a th:href="@{users/detail(id=${user.id})}"
+                                            <a th:href="@{teachers/detail(id=${user.id})}"
                                                class="btn btn-secondary" type="button">Chi tiết</a>
                                             <a th:href="@{teachers/edit(id=${user.id})}"
                                                class="btn btn-primary" type="button">Sửa</a>

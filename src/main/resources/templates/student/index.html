@@ -26,15 +26,16 @@
                 <!-- Content -->
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <a href="/students/addStudent" class="btn btn-primary mb-3">Thêm học viên</a>
                         <!-- Basic Bootstrap Table -->
                         <div class="card">
-                            <h5 class="card-header">Danh sách người dùng</h5>
-                            <a href="/api/export/downloadUsersExcel"
-                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">
-                                Xuất Excel
-                            </a>
+                            <h5 class="card-header">Danh sách học viên</h5>
+<!--                            <a href="/api/export/downloadUsersExcel"-->
+<!--                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">-->
+<!--                                Xuất Excel-->
+<!--                            </a>-->
 
-                            <a href="/users" class="btn btn-primary position-absolute"
+                            <a href="/students" class="btn btn-primary position-absolute"
                                style="top: 3.5rem; right: 1rem;">Làm Mới</a>
 
                             <!-- Search Form -->
@@ -62,8 +63,11 @@
                                         <th>STT</th>
                                         <th>Tên đăng nhập</th>
                                         <th>Họ và tên</th>
+                                        <th>Ngày sinh</th>
                                         <th>Email</th>
                                         <th>SDT</th>
+                                        <th>Tên phụ huynh</th>
+                                        <th>SDT phụ huynh</th>
                                         <th>Ngày tạo</th>
                                         <th>Số khoá đã học</th>
                                         <th>Trạng thái</th>
@@ -76,8 +80,11 @@
                                         <td th:text="${(currentPage * size) + stat.index + 1}"></td>
                                         <td th:text="${user.username}"></td>
                                         <td th:text="${user.lastName} + ' ' + ${user.firstName}"></td>
+                                        <td th:text="${user.birthday}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.phoneNumber}"></td>
+                                        <td th:text="${user.parentName}"></td>
+                                        <td th:text="${user.parentPhoneNumber}"></td>
                                         <td th:text="${user.createDate}"></td>
                                         <td th:text="${user.studiedCourse}"></td>
                                         <td th:text="${user.isEnabled() == true ? 'Hoạt động' : 'Bị khóa'}"></td>
@@ -92,7 +99,7 @@
 <!--                                               onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>-->
 <!--                                        </td>-->
                                         <td>
-                                            <a th:href="@{users/detail(id=${user.id})}"
+                                            <a th:href="@{students/detail(id=${user.id})}"
                                                class="btn btn-secondary" type="button">Chi tiết</a>
                                             <a th:href="@{students/edit(id=${user.id})}"
                                                class="btn btn-primary" type="button">Sửa</a>

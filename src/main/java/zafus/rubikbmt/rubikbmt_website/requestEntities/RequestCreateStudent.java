@@ -14,6 +14,7 @@ import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidEmail;
 import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidPhoneNumber;
 import zafus.rubikbmt.rubikbmt_website.validators.annotations.ValidUserName;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -25,11 +26,7 @@ import java.util.Set;
 @Setter
 public class RequestCreateStudent {
     @ValidUserName
-    @Size(min = 1, max = 50, message = "Tên Tài Khoản phải có từ 1 đến 50 ký tự")
-    private String userName;
-    @Pattern(regexp =  "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#@$%&? \"]).*$", message = "Mặt khẩu không hợp lệ")
-    private String passwordHash;
-    private String repasswordHash;
+
     @Size(min = 1, max = 50, message = "Email phải có từ 1 đến 50 ký tự")
     @Email(message = "Không đúng định dạng Email")
     @ValidEmail
@@ -43,5 +40,8 @@ public class RequestCreateStudent {
     private String firstName;
     private String lastName;
     private int studiedCourse;
+    private LocalDate birthday;
+    private String parentName;
+    private String parentPhoneNumber;
     private String role = "STUDENT";
 }
