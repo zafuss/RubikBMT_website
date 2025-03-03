@@ -1,0 +1,39 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Dạy Giáo Viên</title>
+</head>
+
+<body>
+<h2>Lịch Dạy Giáo Viên</h2>
+<div id="calendar"></div>
+
+<!-- FullCalendar (CSS đã tích hợp sẵn) -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const calendarEl = document.getElementById('calendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek', // Dạng lịch tuần có giờ cụ thể
+            locale: 'vi',                // Hiển thị ngôn ngữ Tiếng Việt
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'timeGridWeek,timeGridDay'
+            },
+            events: async function (fetchInfo, successCallback, failureCallback) {
+                try {
+                    const response = await fetch('/api/schedule');
+                    const data = await response.json();
+                    successCallback(data);
+                } catch (error) {
+                    console.error('Lỗi tải lịch:', error);
+                    failureCallback(error);
+                }
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+</body>

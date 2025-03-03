@@ -21,7 +21,7 @@ public interface ITeacherRepository extends JpaRepository<Teacher, String> {
     @Query("SELECT t FROM Teacher t")
     Page<Teacher> findAllTeachers(Pageable pageable);
     @Modifying
-    @Query(value = "INSERT INTO teacher (description, id) " +
+    @Query(value = "INSERT INTO teachers (description, id) " +
             "VALUES (:description, :id)", nativeQuery = true)
     void insertTeacher(@Param("description") String description,
                        @Param("id") String id);

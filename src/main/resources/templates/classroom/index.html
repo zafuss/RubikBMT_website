@@ -26,26 +26,25 @@
                 <!-- Content -->
                 <div th:fragment="content">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <a href="/students/addStudent" class="btn btn-primary mb-3">Thêm học viên</a>
+                        <a href="/classrooms/addClassroom" class="btn btn-primary mb-3">Thêm lớp học</a>
                         <!-- Basic Bootstrap Table -->
                         <div class="card">
-                            <h5 class="card-header">Danh sách học viên</h5>
-<!--                            <a href="/api/export/downloadUsersExcel"-->
-<!--                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">-->
-<!--                                Xuất Excel-->
-<!--                            </a>-->
+                            <h5 class="card-header">Danh sách lớp học</h5>
+                            <!--                            <a href="/api/export/downloadUsersExcel"-->
+                            <!--                               class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">-->
+                            <!--                                Xuất Excel-->
+                            <!--                            </a>-->
 
-                            <a href="/students" class="btn btn-primary position-absolute"
+                            <a href="/classrooms" class="btn btn-primary position-absolute"
                                style="top: 3.5rem; right: 1rem;">Làm Mới</a>
 
                             <!-- Search Form -->
-                            <form id="searchForm" action="/students" method="get" class="mb-4 p-3">
+                            <form id="searchForm" action="/classrooms" method="get" class="mb-4 p-3">
                                 <div class="mb-3">
                                     <label for="searchType" class="form-label">Tìm kiếm theo:</label>
                                     <select id="searchType" name="searchType" class="form-select">
-                                        <option value="userName">Tên người dùng</option>
-                                        <option value="email">Email</option>
-                                        <option value="phoneNumber">Số điện thoại</option>
+                                        <option value="course">Tên khoá học</option>
+                                        <option value="teacher">Giáo viên</option>
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
@@ -61,50 +60,36 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên đăng nhập</th>
-                                        <th>Họ và tên</th>
-                                        <th>Ngày sinh</th>
-                                        <th>Email</th>
-                                        <th>SDT</th>
-                                        <th>Tên phụ huynh</th>
-                                        <th>SDT phụ huynh</th>
-                                        <th>Ngày tạo</th>
-                                        <th>Số khoá đã học</th>
-                                        <th>Trạng thái</th>
-                                        <th>Role</th>
+                                        <th>Tên lớp học</th>
+                                        <th>Khoá học</th>
+                                        <th>Mô tả</th>
+                                        <th>Giáo viên chủ nhiệm</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Ngày kết thúc dự kiến</th>
+                                        <th>Ngày kết thúc thực tế</th>
+                                        <th>Học phí chung</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                    <tr th:each="user, stat : ${students}">
+                                    <tr th:each="classroom, stat : ${classrooms}">
                                         <td th:text="${(currentPage * size) + stat.index + 1}"></td>
-                                        <td th:text="${user.username}"></td>
-                                        <td th:text="${user.lastName} + ' ' + ${user.firstName}"></td>
-                                        <td th:text="${user.birthday}"></td>
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.phoneNumber}"></td>
-                                        <td th:text="${user.parentName}"></td>
-                                        <td th:text="${user.parentPhoneNumber}"></td>
-                                        <td th:text="${user.createDate}"></td>
-                                        <td th:text="${user.studiedCourse}"></td>
-                                        <td th:text="${user.isEnabled() == true ? 'Hoạt động' : 'Bị khóa'}"></td>
+                                        <td th:text="${classroom.name}"></td>
+                                        <td th:text="${classroom.course.name}"></td>
+                                        <td th:text="${classroom.description}"></td>
+                                        <td th:text="${classroom.teacher.lastName} + ' ' + ${classroom.teacher.firstName}"></td>
+                                        <td th:text="${classroom.startDate}"></td>
+                                        <td th:text="${classroom.expectedEndDate}"></td>
+                                        <td th:text="${classroom.actualEndDate}"></td>
+                                        <td th:text="${classroom.actualFee}"></td>
+
                                         <td>
-                                            <ul>
-                                                <li th:each="role : ${user.roles}" th:text="${role.roleName}"></li> <!-- Hiển thị Role -->
-                                            </ul>
-                                        </td>
-<!--                                        <td>-->
-<!--                                            <a th:href="@{/students/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Sửa</a>-->
-<!--                                            <a th:href="@{/students/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger"-->
-<!--                                               onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>-->
-<!--                                        </td>-->
-                                        <td>
-                                            <a th:href="@{students/detail(id=${user.id})}"
-                                               class="btn btn-secondary" type="button">Chi tiết</a>
-                                            <a th:href="@{students/edit(id=${user.id})}"
+                                            <a th:href="@{sessions/by-classroom(classroomId=${classroom.id})}"
+                                               class="btn btn-secondary" type="button">Xem lịch dạy</a>
+                                            <a th:href="@{classroomDetails/by-classroom(classroomId=${classroom.id})}"
+                                               class="btn btn-secondary" type="button">Danh sách học viên</a>
+                                            <a th:href="@{classrooms/edit(id=${classroom.id})}"
                                                class="btn btn-primary" type="button">Sửa</a>
-                                            <a th:href="@{classroomDetails/by-student(studentId=${user.id})}"
-                                               class="btn btn-primary" type="button">Danh sách lớp</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -115,7 +100,7 @@
                             <div id="pagination" class="mt-4 p-3">
                                 <ul class="pagination">
                                     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
-                                        <a th:href="@{/students(page=${i}, size=${size}, keyword=${keyword})}"
+                                        <a th:href="@{/classrooms(page=${i}, size=${size}, keyword=${keyword})}"
                                            th:text="${i + 1}"
                                            th:classappend="${i == currentPage} ? 'active' : ''"
                                            class="page-link"></a>

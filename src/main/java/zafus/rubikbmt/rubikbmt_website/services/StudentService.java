@@ -20,6 +20,7 @@ import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateStudent;
 import zafus.rubikbmt.rubikbmt_website.utilities.PasswordGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -113,6 +114,10 @@ public class StudentService {
 
     public Student getStudentById(String id) {
         return studentRepository.findById(id).orElse(null);
+    }
+
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
     public Page<Student> searchStudents(String keyword, String searchType, Pageable pageable) {

@@ -11,4 +11,8 @@ import lombok.*;
 @Table(name = "teachers") // Tạo bảng riêng cho Teacher
 public class Teacher extends User {
     private String description;
+
+    public String getFullName() {
+        return getLastName() + " " + getFirstName();
+    }
 }

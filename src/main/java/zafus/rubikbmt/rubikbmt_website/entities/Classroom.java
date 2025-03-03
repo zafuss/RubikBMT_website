@@ -2,27 +2,28 @@ package zafus.rubikbmt.rubikbmt_website.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentCourseDetail {
+@Entity
+public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @ManyToOne
-    private Student student;
-    @ManyToOne
-    private Course course;
+    private String name;
+    private long actualFee;
+    private String description;
+    private LocalDateTime startDate;
+    private LocalDateTime expectedEndDate;
+    private LocalDateTime actualEndDate;
     @ManyToOne
     private Teacher teacher;
-    private long fee;
-    private long paid;
-    private int studied;
-    private Date startDate;
-    private Date expectedEndDate;
-    private Date actualEndDate;
+
+    @ManyToOne
+    private Course course;
 }

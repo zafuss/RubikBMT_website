@@ -397,6 +397,25 @@
               </a>
           </ul>
         </li>
+        <li th:if="${roles.contains('SuperAdmin') || roles.contains('Admin') || roles.contains('Teacher')} " class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bxs-component"></i>
+            <div class="text-truncate" data-i18n="Layouts">Quản lý lớp học</div>
+          </a>
+          <ul class="menu-sub" sec:authorize="hasAnyRole('ROLE_SUPER_ADMIN')">
+            <li class="menu-item">
+              <a href="/classrooms/addClassroom" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+                <div class="text-truncate" data-i18n="Tables">Thêm lớp học</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/classrooms" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div class="text-truncate" data-i18n="Tables">Danh sách lớp học</div>
+              </a>
+          </ul>
+        </li>
       </ul>
     </aside>
     <!-- / Menu -->

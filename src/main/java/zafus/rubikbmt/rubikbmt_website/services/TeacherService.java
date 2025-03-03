@@ -11,10 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import zafus.rubikbmt.rubikbmt_website.entities.Role;
-import zafus.rubikbmt.rubikbmt_website.entities.Student;
-import zafus.rubikbmt.rubikbmt_website.entities.Teacher;
-import zafus.rubikbmt.rubikbmt_website.entities.User;
+import zafus.rubikbmt.rubikbmt_website.entities.*;
 import zafus.rubikbmt.rubikbmt_website.repositories.IRoleRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.ITeacherRepository;
 import zafus.rubikbmt.rubikbmt_website.repositories.IUserRepository;
@@ -25,6 +22,7 @@ import zafus.rubikbmt.rubikbmt_website.requestEntities.RequestUpdateTeacher;
 import zafus.rubikbmt.rubikbmt_website.utilities.PasswordGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,6 +32,10 @@ public class TeacherService  {
 
     @Autowired
     private IUserRepository userRepository;
+
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
+    }
 
     @Transactional
     public void saveTeacher(@NotNull RequestCreateTeacher requestUser, Set<Role> roles) {
