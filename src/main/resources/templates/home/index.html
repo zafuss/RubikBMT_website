@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head th:replace="~{library/lib.html::head('RUBIK BMT')}"></head>
 
@@ -18,8 +17,8 @@
                     <!-- </div> -->
                 </div>
                 <div class="col-md-6">
-<!--                    <h1 class="display-4">RUBIK BMT ACADEMY</h1>-->
-                    <img class="home-logo mb-3" src="/images/newLogo.png";>
+                    <!--                    <h1 class="display-4">RUBIK BMT ACADEMY</h1>-->
+                    <img class="home-logo mb-3" src="/images/newLogo.png" ;>
                     <p class="lead">Học viện có sứ mệnh nâng tầm mạnh mẽ nhận thức và trí tuệ của trẻ em Việt Nam.
                         Là môi trường lý tưởng để khai phá tiềm năng của trẻ.</p>
                     <button type="button" class="btn btn-light btn-lg">
@@ -33,7 +32,8 @@
     <section id="mentors" class="d-flex align-items-center text-center">
         <div class="" style="width: 100vw;">
             <div style=" margin-bottom: 30px; background: linear-gradient(90deg, #fed44c, #30ade3,#b855fe);">
-                <h1 style="padding: 35px; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">CHỌN 1 HUẤN LUYỆN VIÊN ĐỂ BẮT ĐẦU</h1>
+                <h1 style="padding: 35px; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">CHỌN 1 HUẤN LUYỆN
+                    VIÊN ĐỂ BẮT ĐẦU</h1>
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -135,18 +135,18 @@
 
                     </div>
                 </div>
-<!--                <div class="col-lg-4 col-md-4 mb-4">-->
-<!--                    <div class="card h-100 border-0 shadow-sm">-->
-<!--                        <a href="https://www.instagram.com/rubikbmt" target="_blank">-->
-<!--                            <div class="card-body d-flex align-items-center">-->
-<!--                                <img src="/images/iconIg.png" class="icon me-3" alt="Icon 7">-->
-<!--                                <div>-->
-<!--                                    <h5 class="card-title fw-bold">Instagram</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="col-lg-4 col-md-4 mb-4">-->
+                <!--                    <div class="card h-100 border-0 shadow-sm">-->
+                <!--                        <a href="https://www.instagram.com/rubikbmt" target="_blank">-->
+                <!--                            <div class="card-body d-flex align-items-center">-->
+                <!--                                <img src="/images/iconIg.png" class="icon me-3" alt="Icon 7">-->
+                <!--                                <div>-->
+                <!--                                    <h5 class="card-title fw-bold">Instagram</h5>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="col-lg-4 col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <a href="https://shopee.vn/rubikbmtstore" target="_blank">
@@ -190,7 +190,7 @@
                         <div class="info">
                             <div class="circle-image">
                                 <img src="/images/Tuantinhtao.jpg" alt="Tuan tinh tao image"
-                                     class="img-fluid rounded-circle">
+                                    class="img-fluid rounded-circle">
                             </div>
                             <h3 class="mt-4">Lê Văn Tuấn</h3>
                             <p>Nhà sáng lập Học viện Rubik BMT</p>
@@ -214,9 +214,9 @@
         </div>
     </section>
     <section id="ranking" class="d-flex align-items-center text-center">
-        <div class="container my-5 " >
-                <h1 class="mb-5 text-white">Bảng xếp hạng giải đấu Back To School</h1>
-            <div id="form-container"  class="p-4 shadow-sm rounded bg-white">
+        <div class="container my-5 ">
+            <h1 class="mb-5 text-white">Bảng xếp hạng giải đấu Back To School</h1>
+            <div id="form-container" class="p-4 shadow-sm rounded bg-white">
 
 
                 <div class="d-flex flex-wrap justify-content-between">
@@ -228,7 +228,7 @@
                     </div>
 
                     <!-- Div bên phải -->
-                    <div id="result"  style="max-width: 500px; overflow-x: auto;">
+                    <div id="result" style="max-width: 500px; overflow-x: auto;">
                         <!-- Nội dung của div result -->
                     </div>
                 </div>
@@ -236,17 +236,17 @@
                     <div class="table-responsive" style="height: 67vh; overflow-y: auto;">
                         <table class="table">
                             <thead class="thead-dark">
-                            <tr>
-                                <th>Hạng</th>
-                                <th>Họ và tên</th>
-                                <th>Ao5</th>
-                                <th>Best</th>
-                                <th>Worst</th>
-                                <th>Solves</th>
-                            </tr>
+                                <tr>
+                                    <th>Hạng</th>
+                                    <th>Họ và tên</th>
+                                    <th>Ao5</th>
+                                    <th>Best</th>
+                                    <th>Worst</th>
+                                    <th>Solves</th>
+                                </tr>
                             </thead>
                             <tbody id="round-details-table-body">
-                            <!-- Rows will be added here dynamically -->
+                                <!-- Rows will be added here dynamically -->
                             </tbody>
                         </table>
                     </div>
@@ -265,20 +265,25 @@
                         <div th:if="${latestArticles.size() > 0}">
                             <a th:href="@{/articles/detail/{id}(id=${latestArticles[0].id})}" class="">
                                 <div class="thumbnail-container mb-3">
-                                    <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 15px;">
+                                    <div
+                                        style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 15px;">
                                         <img th:if="${latestArticles[0].thumbnail != null}"
-                                             th:src="${latestArticles[0].thumbnail.startsWith('http') ? latestArticles[0].thumbnail : '/getimage/' + latestArticles[0].thumbnail}"
-                                             alt="Thumbnail" class="img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                                            th:src="${latestArticles[0].thumbnail.startsWith('http') ? latestArticles[0].thumbnail : '/getimage/' + latestArticles[0].thumbnail}"
+                                            alt="Thumbnail" class="img-fluid"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                                     </div>
                                 </div>
                                 <div th:if="${latestArticles[0].isHot}">
                                     <span>
-                                        <img src="/images/hot.png" alt="Hot Article" style="height: 24px; vertical-align: middle; margin-right: 5px; margin-bottom: 15px;" />
+                                        <img src="/images/hot.png" alt="Hot Article"
+                                            style="height: 24px; vertical-align: middle; margin-right: 5px; margin-bottom: 15px;" />
                                     </span>
-                                    <h6 style="font-weight: bold; font-size: xx-large; margin: 0; display: inline;" th:text="${latestArticles[0].title}"></h6>
+                                    <h6 style="font-weight: bold; font-size: xx-large; margin: 0; display: inline;"
+                                        th:text="${latestArticles[0].title}"></h6>
                                 </div>
                                 <div th:if="${!latestArticles[0].isHot}">
-                                    <h6 style="font-weight: bold; font-size: xx-large; margin: 0; display: inline;" th:text="${latestArticles[0].title}"></h6>
+                                    <h6 style="font-weight: bold; font-size: xx-large; margin: 0; display: inline;"
+                                        th:text="${latestArticles[0].title}"></h6>
                                 </div>
                                 <div class="row">
                                     <!-- Hàng thứ hai: Description -->
@@ -290,7 +295,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 mb-3" >
+                    <div class="col-md-4 mb-3">
                         <div>
 
                             <div th:each="article, stat : ${latestArticles}" th:if="${stat.index > 0}">
@@ -299,7 +304,8 @@
                                         <div class="col-3 d-flex align-items-center mb-3">
                                             <div class="small-thumbnail-container">
                                                 <img th:if="${article.thumbnail != null}"
-                                                     th:src="${article.thumbnail.startsWith('http') ? article.thumbnail : '/getimage/' + article.thumbnail}" alt="Thumbnail" class="">
+                                                    th:src="${article.thumbnail.startsWith('http') ? article.thumbnail : '/getimage/' + article.thumbnail}"
+                                                    alt="Thumbnail" class="">
                                             </div>
                                         </div>
                                         <div th:classappend="'col-9'">
@@ -307,12 +313,13 @@
                                                 <!-- Hàng đầu: Title -->
                                                 <div th:if="${article.isHot}" class="col-12">
                                                     <span>
-                                                        <img src="/images/hot.png" alt="Hot Article" style="height: 16px; vertical-align: middle; margin-bottom: 3px;" />
+                                                        <img src="/images/hot.png" alt="Hot Article"
+                                                            style="height: 16px; vertical-align: middle; margin-bottom: 3px;" />
                                                     </span>
-                                                    <span th:text="${article.title}" ></span>
+                                                    <span th:text="${article.title}"></span>
                                                 </div>
                                                 <div th:if="${!article.isHot}" class="col-12">
-                                                    <span th:text="${article.title}" ></span>
+                                                    <span th:text="${article.title}"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -320,7 +327,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <a class="more" th:href="@{/articles/list}" >
+                            <a class="more" th:href="@{/articles/list}">
                                 Xem tất cả bài viết <i class="fas fa-chevron-right"></i>
                             </a>
                         </div>
@@ -376,52 +383,58 @@
                 <span class="dialog-close" onclick="closeDialog()">&times;</span>
             </div>
             <div class="dialog-content">
-                <form th:action="@{/students/register}" th:object="${student}" method="post">
+                <form th:action="@{/registerStudents/register}" th:object="${student}" method="post">
                     <div class="row">
                         <div class="form-group col-lg-6 mb-0">
                             <label for="lastName">Họ và tên đệm học viên:</label>
-                            <input class="form-control"  type="text" id="lastName" th:field="*{firstName}" oninput="clearError(this.id+'Error')">
+                            <input class="form-control" type="text" id="lastName" th:field="*{firstName}"
+                                oninput="clearError(this.id+'Error')">
                             <span class="text-danger" id="lastNameError" th:if="${#fields.hasErrors('firstName')}"
-                                  th:errors="*{firstName}"></span>
+                                th:errors="*{firstName}"></span>
                         </div>
                         <div class="form-group col-lg-6 mb-0">
                             <label for="firstName">Tên học viên:</label>
-                            <input class="form-control"  type="text" id="firstName" th:field="*{lastName}" oninput="clearError(this.id+'Error')">
+                            <input class="form-control" type="text" id="firstName" th:field="*{lastName}"
+                                oninput="clearError(this.id+'Error')">
                             <span class="text-danger" id="firstNameError" th:if="${#fields.hasErrors('lastName')}"
-                                  th:errors="*{lastName}"></span>
+                                th:errors="*{lastName}"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="parentName">Tên phụ huynh:</label>
-                        <input class="form-control"  type="text" id="parentName" th:field="*{parentName}" oninput="clearError(this.id+'Error')">
+                        <input class="form-control" type="text" id="parentName" th:field="*{parentName}"
+                            oninput="clearError(this.id+'Error')">
                         <span class="text-danger" id="parentNameError" th:if="${#fields.hasErrors('parentName')}"
-                              th:errors="*{parentName}"></span>
+                            th:errors="*{parentName}"></span>
                     </div>
                     <div class="form-group">
                         <label for="dateOfBirth">Ngày tháng năm sinh:</label>
-                        <input class="form-control"  type="date" id="dateOfBirth" th:field="*{dateOfBirth}" oninput="clearError(this.id+'Error')">
+                        <input class="form-control" type="date" id="dateOfBirth" th:field="*{dateOfBirth}"
+                            oninput="clearError(this.id+'Error')">
                         <span class="text-danger" id="dateOfBirthError" th:if="${#fields.hasErrors('dateOfBirth')}"
-                              th:errors="*{dateOfBirth}"></span>
+                            th:errors="*{dateOfBirth}"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="phoneNumber">Số điện thoại:</label>
-                        <input class="form-control"  type="text" id="phoneNumber" th:field="*{phoneNumber}" oninput="clearError(this.id+'Error')">
+                        <input class="form-control" type="text" id="phoneNumber" th:field="*{phoneNumber}"
+                            oninput="clearError(this.id+'Error')">
                         <span class="text-danger" id="phoneNumberError" th:if="${#fields.hasErrors('phoneNumber')}"
-                              th:errors="*{phoneNumber}"></span>
+                            th:errors="*{phoneNumber}"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input class="form-control"  type="email" id="email" th:field="*{email}" oninput="clearError(this.id+'Error')">
+                        <input class="form-control" type="email" id="email" th:field="*{email}"
+                            oninput="clearError(this.id+'Error')">
                         <span class="text-danger" id="emailError" th:if="${#fields.hasErrors('email')}"
-                              th:errors="*{email}"></span>
+                            th:errors="*{email}"></span>
                     </div>
-<!--                        <label>Hình thức</label>-->
-<!--                    <div th:each="type : ${learningTypes}">-->
-<!--                        <input type="radio" th:field="*{learningType}" th:value="${type.learningType}" th:id="${type}">-->
-<!--                        <label th:for="${type}" th:text="${type.learningType}"></label>-->
-<!--                    </div>-->
+                    <!--                        <label>Hình thức</label>-->
+                    <!--                    <div th:each="type : ${learningTypes}">-->
+                    <!--                        <input type="radio" th:field="*{learningType}" th:value="${type.learningType}" th:id="${type}">-->
+                    <!--                        <label th:for="${type}" th:text="${type.learningType}"></label>-->
+                    <!--                    </div>-->
 
                     <div class="form-group">
                         <label>Hình thức</label>
@@ -479,4 +492,5 @@
 
 </body>
 <footer th:replace="~{library/lib.html::footer}"></footer>
+
 </html>

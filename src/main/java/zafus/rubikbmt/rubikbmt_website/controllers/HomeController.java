@@ -12,7 +12,6 @@ import zafus.rubikbmt.rubikbmt_website.services.CompetitionService;
 import zafus.rubikbmt.rubikbmt_website.services.LearningTypeService;
 import zafus.rubikbmt.rubikbmt_website.services.MentorService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -59,7 +58,7 @@ public class HomeController {
         List<Mentor> mentors = mentorService.findAll();
         model.addAttribute("learningTypes", learningTypes);
         model.addAttribute("mentors", mentors);
-        model.addAttribute("student", new Student());
+        model.addAttribute("student", new RegisterStudent());
         model.addAttribute("latestArticles", articleService.findTop6LatestArticles(""));
         return "home/index";
     }

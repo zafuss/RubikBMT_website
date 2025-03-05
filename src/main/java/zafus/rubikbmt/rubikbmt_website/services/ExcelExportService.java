@@ -1,17 +1,13 @@
 package zafus.rubikbmt.rubikbmt_website.services;
 
-import jakarta.validation.constraints.Null;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import zafus.rubikbmt.rubikbmt_website.entities.Candidate;
-import zafus.rubikbmt.rubikbmt_website.entities.Student;
+import zafus.rubikbmt.rubikbmt_website.entities.RegisterStudent;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -91,7 +87,7 @@ public class ExcelExportService {
         workbook.write(outputStream);
         workbook.close();
     }
-    public void exportStudentToExcel(List<Student> students, OutputStream outputStream) throws IOException {
+    public void exportStudentToExcel(List<RegisterStudent> registerStudents, OutputStream outputStream) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Danh Sach");
 
@@ -105,19 +101,19 @@ public class ExcelExportService {
 
         // Fill data rows
         int rowNum = 1;
-        for (Student student : students) {
+        for (RegisterStudent registerStudent : registerStudents) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(student.getFirstName());
-            row.createCell(1).setCellValue(student.getLastName());
-            row.createCell(2).setCellValue(student.getDateOfBirth() != null ? student.getDateOfBirth().toString() : "NULL");
-            row.createCell(3).setCellValue(student.getPhoneNumber());
-            row.createCell(4).setCellValue(student.getEmail());
-            row.createCell(5).setCellValue(student.getParentName());
-            row.createCell(6).setCellValue(student.getMentor().getLastName() + " " + student.getMentor().getFirstName());
-            row.createCell(7).setCellValue(student.getRegistrationDate() != null ? student.getRegistrationDate().toString() : "");
-            row.createCell(8).setCellValue(student.getConfirmationDate() != null ? student.getConfirmationDate().toString() : "Chưa xác nhận");
-            row.createCell(9).setCellValue(student.getLearningType().getLearningType());
-            row.createCell(10).setCellValue(student.getNote());
+            row.createCell(0).setCellValue(registerStudent.getFirstName());
+            row.createCell(1).setCellValue(registerStudent.getLastName());
+            row.createCell(2).setCellValue(registerStudent.getDateOfBirth() != null ? registerStudent.getDateOfBirth().toString() : "NULL");
+            row.createCell(3).setCellValue(registerStudent.getPhoneNumber());
+            row.createCell(4).setCellValue(registerStudent.getEmail());
+            row.createCell(5).setCellValue(registerStudent.getParentName());
+            row.createCell(6).setCellValue(registerStudent.getMentor().getLastName() + " " + registerStudent.getMentor().getFirstName());
+            row.createCell(7).setCellValue(registerStudent.getRegistrationDate() != null ? registerStudent.getRegistrationDate().toString() : "");
+            row.createCell(8).setCellValue(registerStudent.getConfirmationDate() != null ? registerStudent.getConfirmationDate().toString() : "Chưa xác nhận");
+            row.createCell(9).setCellValue(registerStudent.getLearningType().getLearningType());
+            row.createCell(10).setCellValue(registerStudent.getNote());
         }
 
         // Resize columns to fit the content

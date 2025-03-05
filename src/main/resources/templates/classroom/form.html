@@ -1,0 +1,76 @@
+<!doctype html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed layout-compact"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/admin/assets/"
+        data-template="vertical-menu-template-free"
+        data-style="light">
+<head th:replace="~{library/lib_admin.html::head('Quản lý lớp học')}"></head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <div class="layout-page">
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="card p-4">
+                        <h5 th:text=" 'Chỉnh sửa lớp học'"></h5>
+                        <form th:action="@{/classrooms/edit}" th:object="${classroom}" method="post" class="needs-validation" novalidate>
+                            <input type="hidden" th:field="*{id}" />
+
+
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Tên lớp:</label>
+                                <input type="text" id="lastName" th:field="*{name}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập tên.</div>
+                            </div>
+<!--                            <div class="mb-3">-->
+<!--                                <label for="birthday" class="form-label">Ngày sinh:</label>-->
+<!--                                <input type="date" id="birthday" th:field="*{birthday}"-->
+<!--                                       th:value="${#temporals.format(student.birthday, 'yyyy-MM-dd')}"-->
+<!--                                       class="form-control" placeholder=" Nhập ngày sinh" required/>-->
+<!--                            </div>-->
+                            <div class="mb-3">
+                                <label for="text" class="form-label">Mô tả:</label>
+                                <input type="text" id="text" th:field="*{description}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập mô tả.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="number" class="form-label">Học phí:</label>
+                                <input type="number" id="number" th:field="*{actualFee}" class="form-control" required />
+                                <div class="invalid-feedback">Vui lòng nhập học phí.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giáo viên chủ nhiệm</label>
+                                <select class="form-select" th:field="*{teacher.id}">
+                                    <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.lastName} + ' ' + ${teacher.firstName}"></option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- Core JS -->
+<script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+<script src="/admin/assets/vendor/js/bootstrap.js"></script>
+<script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/admin/assets/vendor/js/menu.js"></script>
+
+<!-- Vendors JS -->
+<script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- Main JS -->
+<script src="/admin/assets/js/main.js"></script>
+<!-- Page JS -->
+<script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+</html>

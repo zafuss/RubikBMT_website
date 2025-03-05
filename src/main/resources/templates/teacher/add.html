@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr"
+      data-theme="theme-default" data-assets-path="/admin/assets/"
+      data-template="vertical-menu-template-free" data-style="light">
+<head th:replace="~{library/lib_admin.html::head('User Management')}">
+    <style>
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+
+        .modal {
+            z-index: 1050 !important;
+        }
+    </style>
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <aside th:replace="~{library/lib_admin.html::sidebar}"></aside>
+        <div class="layout-page">
+            <nav th:replace="~{library/lib_admin.html::navbar}"></nav>
+
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <!-- Basic Bootstrap Table -->
+                    <div class="card">
+                        <h5 class="card-header">Thêm giáo viên mới</h5>
+
+                        <div class="card-body">
+                            <!-- Form thêm user -->
+                            <form id="addTeacherForm" th:action="@{/teachers/addTeacher}" th:object="${teacher}" method="post">
+                                <div th:if="${error}" class="alert alert-danger" role="alert">
+                                    <p th:text="${error}"></p>
+                                </div>
+                                <div th:if="${showConfirmation}" class="alert alert-warning" role="alert">
+                                    <p>Người dùng đã tồn tại với thông tin sau:</p>
+                                    <ul>
+                                        <li>Tên đăng nhập: <span th:text="${existingUser.username}"></span></li>
+                                        <li>Email: <span th:text="${existingUser.email}"></span></li>
+                                        <li>Số điện thoại: <span th:text="${existingUser.phoneNumber}"></span></li>
+                                    </ul>
+                                    <p>Bạn có muốn thêm vai trò "Giáo viên" cho người dùng này không?</p>
+                                    <button type="submit" class="btn btn-primary" name="confirmAddRole" value="true" onclick="showConfirmAddStudentModal()">Xác nhận</button>
+                                </div>
+
+                                <input type="hidden" name="confirm" id="confirm" value="false"/>
+
+
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Họ và tên đệm:</label>
+                                    <input type="text" id="lastName" th:field="*{lastName}"
+                                           class="form-control" placeholder="Nhập họ và tên đệm" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">Tên:</label>
+                                    <input type="text" id="firstName" th:field="*{firstName}"
+                                           class="form-control" placeholder="Nhập tên" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" id="email" th:field="*{email}"
+                                           class="form-control" placeholder="Nhập email" required/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                                    <input type="text" id="phoneNumber" th:field="*{phoneNumber}"
+                                           class="form-control" placeholder="Nhập số điện thoại" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Mô tả:</label>
+                                    <input type="text" id="description" th:field="*{description}"
+                                           class="form-control" placeholder="Nhập mô tả" required/>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-primary" onclick="showConfirmModal()">Thêm giáo viên mới</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <div id="confirmModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận thông tin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn thêm giáo viên mới?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showConfirmModal() {
+            new bootstrap.Modal(document.getElementById('confirmModal')).show();
+        }
+
+        function submitForm() {
+            document.getElementById('addTeacherForm').submit();
+        }
+
+        function showConfirmAddStudentModal() {
+            document.getElementById('confirm').value = 'true';
+            submitForm();
+        }
+    </script>
+
+    <script src="/admin/assets/vendor/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/admin/assets/vendor/js/menu.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <!-- Main JS -->
+    <script src="/admin/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/admin/assets/js/dashboards-analytics.js"></script>
+</body>
+
+</html>
